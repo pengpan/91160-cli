@@ -156,7 +156,7 @@ public class CoreService {
                 .orElseGet(JSONObject::new);
     }
 
-    public List<Map<String, String>> getMember() {
+    public List<Map<String, Object>> getMember() {
         String url = "https://user.91160.com/member.html";
         String html = mainClient.htmlPage(url);
         Document document = Jsoup.parse(html);
@@ -164,12 +164,12 @@ public class CoreService {
         if (tbody == null) {
             throw new RuntimeException("就诊人为空");
         }
-        List<Map<String, String>> memberList = new ArrayList<>();
+        List<Map<String, Object>> memberList = new ArrayList<>();
         Elements trs = tbody.getElementsByTag("tr");
         for (Element tr : trs) {
             String id = StrUtil.removePrefix(tr.id(), "mem");
             Elements tds = tr.getElementsByTag("td");
-            Map<String, String> member = new LinkedHashMap<>();
+            Map<String, Object> member = new LinkedHashMap<>();
             member.put("id", id);
             member.put("name", tds.get(0).text());
             member.put("sex", tds.get(1).text());

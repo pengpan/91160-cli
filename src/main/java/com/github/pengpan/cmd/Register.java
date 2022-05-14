@@ -56,6 +56,7 @@ public class Register implements Runnable {
 
         JSONObject config = JSON.parseObject(content);
 
+        String memberId = config.getString("memberId");
         String cityId = config.getString("cityId");
         String unitId = config.getString("unitId");
         String bigDeptId = config.getString("bigDeptId");
@@ -63,7 +64,7 @@ public class Register implements Runnable {
         String doctorId = config.getString("doctorId");
         String weekId = config.getString("weekId");
         String dayId = config.getString("dayId");
-        if (StrUtil.hasBlank(cityId, unitId, bigDeptId, deptId, doctorId, weekId, dayId)) {
+        if (StrUtil.hasBlank(memberId, cityId, unitId, bigDeptId, deptId, doctorId, weekId, dayId)) {
             System.out.println("配置文件存在为空的属性");
             System.exit(-1);
         }
@@ -81,7 +82,7 @@ public class Register implements Runnable {
         s.setUnitId(unitId);
         s.setDeptId(deptId);
         s.setDoctorId(doctorId);
-        s.setMemberId(null);
+        s.setMemberId(memberId);
         s.setWeeks(StrUtil.split(weekId, ","));
         s.setDays(StrUtil.split(dayId, ","));
 

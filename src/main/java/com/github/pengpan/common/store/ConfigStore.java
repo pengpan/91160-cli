@@ -23,6 +23,8 @@ public class ConfigStore {
 
     private static String dayId;
 
+    private static String memberId;
+
     public static String getCityId() {
         return cityId;
     }
@@ -79,8 +81,17 @@ public class ConfigStore {
         ConfigStore.dayId = dayId;
     }
 
+    public static String getMemberId() {
+        return memberId;
+    }
+
+    public static void setMemberId(String memberId) {
+        ConfigStore.memberId = memberId;
+    }
+
     public static String toJson() {
         Map<String, Object> map = new LinkedHashMap<>();
+        map.put("memberId", memberId);
         map.put("cityId", cityId);
         map.put("unitId", unitId);
         map.put("bigDeptId", bigDeptId);

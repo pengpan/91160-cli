@@ -26,6 +26,7 @@ public class Init implements Runnable {
     @Override
     public void run() {
         login();
+        choseObj(ChoseObjEnum.MEMBER);
         choseObj(ChoseObjEnum.CITY);
         choseObj(ChoseObjEnum.UNIT);
         choseObj(ChoseObjEnum.BIG_DEPT);

@@ -18,6 +18,16 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 public enum ChoseObjEnum {
 
+    MEMBER(ChoseObj.builder()
+            .attrId("id")
+            .attrName("name")
+            .banner("=====请选择就诊人=====")
+            .inputTips("请输入就诊人编号: ")
+            .data(() -> new CoreService().getMember())
+            .getValue(ConfigStore::getMemberId)
+            .setValue(ConfigStore::setMemberId)
+            .build()),
+
     CITY(ChoseObj.builder()
             .attrId("cityId")
             .attrName("name")
