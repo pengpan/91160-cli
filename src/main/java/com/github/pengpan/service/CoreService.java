@@ -6,7 +6,6 @@ import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.io.resource.ResourceUtil;
 import cn.hutool.core.lang.Assert;
 import cn.hutool.core.lang.TypeReference;
-import cn.hutool.core.thread.ThreadUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.crypto.SecureUtil;
 import cn.hutool.crypto.asymmetric.KeyType;
@@ -181,13 +180,7 @@ public class CoreService {
         return memberList;
     }
 
-    public void submit(SubmitBody body) {
-        // 检测参数
-        // store config
-        ThreadUtil.newThread(() -> brushTicketTask(body), "brush-ticket").start();
-    }
-
-    public void brushTicketTask(SubmitBody body) {
+    public void brushTicketTask(SubmitBody body, int sleepTime) {
         System.out.println("挂号开始");
 
         LocalDate now = LocalDate.now();
@@ -231,9 +224,9 @@ public class CoreService {
             schInfoList.forEach(System.out::println);
 
             if (CollUtil.isEmpty(schInfoList)) {
-                // 休眠10S
+                // 休眠
                 try {
-                    TimeUnit.SECONDS.sleep(10);
+                    TimeUnit.SECONDS.sleep(sleepTime);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }

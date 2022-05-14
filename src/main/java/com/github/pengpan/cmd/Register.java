@@ -34,9 +34,23 @@ public class Register implements Runnable {
             description = "91160的密码")
     private String password;
 
+    @Option(
+            name = {"-s", "--sleep-time"},
+            title = "休眠时间，单位秒",
+            description = "刷号休眠时间，默认10秒")
+    private Integer sleepTime;
+
     @Override
     public void run() {
         CoreService coreService = new CoreService();
+
+        if (sleepTime == null) {
+            sleepTime = 10;
+        } else if (sleepTime < 0) {
+            System.out.println("休眠时间不能小于0");
+        } else if (sleepTime < 5) {
+            System.out.println("不建议休眠时间小于5秒，容易触发限制访问");
+        }
 
         if (!FileUtil.exist(configFile)) {
             System.out.println("配置文件不存在，请检查文件路径");
@@ -87,11 +101,10 @@ public class Register implements Runnable {
         s.setDays(JSON.parseArray(dayId, String.class));
 
         try {
-            coreService.brushTicketTask(s);
+            coreService.brushTicketTask(s, sleepTime);
         } catch (Exception e) {
             e.printStackTrace();
             System.exit(-1);
         }
-
     }
 }
