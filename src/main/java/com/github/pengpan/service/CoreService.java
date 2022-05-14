@@ -6,7 +6,6 @@ import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.io.resource.ResourceUtil;
 import cn.hutool.core.lang.Assert;
 import cn.hutool.core.lang.TypeReference;
-import cn.hutool.core.thread.ThreadUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.crypto.SecureUtil;
 import cn.hutool.crypto.asymmetric.KeyType;
@@ -72,8 +71,8 @@ public class CoreService {
     }
 
     public boolean login(String username, String password) {
-        Assert.notBlank(username);
-        Assert.notBlank(password);
+        Assert.notBlank(username, "用户名不能为空");
+        Assert.notBlank(password, "密码不能为空");
         RSA rsa = SecureUtil.rsa(null, SystemConstant.PUBLIC_KEY);
         username = Base64.encode(rsa.encrypt(username, KeyType.PublicKey));
         password = Base64.encode(rsa.encrypt(password, KeyType.PublicKey));
@@ -156,7 +155,7 @@ public class CoreService {
                 .orElseGet(JSONObject::new);
     }
 
-    public List<Map<String, String>> getMember() {
+    public List<Map<String, Object>> getMember() {
         String url = "https://user.91160.com/member.html";
         String html = mainClient.htmlPage(url);
         Document document = Jsoup.parse(html);
@@ -164,12 +163,12 @@ public class CoreService {
         if (tbody == null) {
             throw new RuntimeException("就诊人为空");
         }
-        List<Map<String, String>> memberList = new ArrayList<>();
+        List<Map<String, Object>> memberList = new ArrayList<>();
         Elements trs = tbody.getElementsByTag("tr");
         for (Element tr : trs) {
             String id = StrUtil.removePrefix(tr.id(), "mem");
             Elements tds = tr.getElementsByTag("td");
-            Map<String, String> member = new LinkedHashMap<>();
+            Map<String, Object> member = new LinkedHashMap<>();
             member.put("id", id);
             member.put("name", tds.get(0).text());
             member.put("sex", tds.get(1).text());
@@ -181,13 +180,7 @@ public class CoreService {
         return memberList;
     }
 
-    public void submit(SubmitBody body) {
-        // 检测参数
-        // store config
-        ThreadUtil.newThread(() -> brushTicketTask(body), "brush-ticket").start();
-    }
-
-    public void brushTicketTask(SubmitBody body) {
+    public void brushTicketTask(SubmitBody body, int sleepTime) {
         System.out.println("挂号开始");
 
         LocalDate now = LocalDate.now();
@@ -231,9 +224,9 @@ public class CoreService {
             schInfoList.forEach(System.out::println);
 
             if (CollUtil.isEmpty(schInfoList)) {
-                // 休眠10S
+                // 休眠
                 try {
-                    TimeUnit.SECONDS.sleep(10);
+                    TimeUnit.SECONDS.sleep(sleepTime);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
