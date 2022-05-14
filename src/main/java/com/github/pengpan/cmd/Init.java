@@ -1,13 +1,16 @@
 package com.github.pengpan.cmd;
 
 import cn.hutool.core.collection.CollUtil;
+import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.util.StrUtil;
 import com.github.pengpan.common.store.AccountStore;
+import com.github.pengpan.common.store.ConfigStore;
 import com.github.pengpan.enums.ChoseObjEnum;
 import com.github.pengpan.service.CoreService;
 import com.github.pengpan.vo.ChoseObj;
 import io.airlift.airline.Command;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -30,7 +33,9 @@ public class Init implements Runnable {
         choseObj(ChoseObjEnum.DOCTOR);
         choseObj(ChoseObjEnum.WEEK);
         choseObj(ChoseObjEnum.DAY);
-        System.out.println("数据初始化成功");
+        storeConfig();
+        System.out.println("init success.");
+        System.exit(0);
     }
 
     private void login() {
@@ -89,7 +94,7 @@ public class Init implements Runnable {
         } while (!choseSuccess);
     }
 
-    public boolean checkInput(List<Object> ids, String id) {
+    private boolean checkInput(List<Object> ids, String id) {
         if (CollUtil.isEmpty(ids) || StrUtil.isBlank(id)) {
             return false;
         }
@@ -103,6 +108,13 @@ public class Init implements Runnable {
             }
         }
         return true;
+    }
+
+    private void storeConfig() {
+        String config = ConfigStore.toJson();
+        File file = new File("config.json");
+        FileUtil.writeUtf8String(config, file);
+        System.out.println("The file config.json has been generated.");
     }
 
 }
