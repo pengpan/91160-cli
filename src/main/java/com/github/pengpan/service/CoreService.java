@@ -72,8 +72,8 @@ public class CoreService {
     }
 
     public boolean login(String username, String password) {
-        Assert.notBlank(username);
-        Assert.notBlank(password);
+        Assert.notBlank(username, "用户名不能为空");
+        Assert.notBlank(password, "密码不能为空");
         RSA rsa = SecureUtil.rsa(null, SystemConstant.PUBLIC_KEY);
         username = Base64.encode(rsa.encrypt(username, KeyType.PublicKey));
         password = Base64.encode(rsa.encrypt(password, KeyType.PublicKey));
