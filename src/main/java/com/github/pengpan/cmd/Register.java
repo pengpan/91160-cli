@@ -83,8 +83,8 @@ public class Register implements Runnable {
         s.setDeptId(deptId);
         s.setDoctorId(doctorId);
         s.setMemberId(memberId);
-        s.setWeeks(StrUtil.split(weekId, ","));
-        s.setDays(StrUtil.split(dayId, ","));
+        s.setWeeks(JSON.parseArray(weekId, String.class));
+        s.setDays(JSON.parseArray(dayId, String.class));
 
         try {
             coreService.brushTicketTask(s);
