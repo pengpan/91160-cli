@@ -1,0 +1,37 @@
+[
+  {
+    "name": "星期一",
+    "value": "1",
+    "alias": "一"
+  },
+  {
+    "name": "星期二",
+    "value": "2",
+    "alias": "二"
+  },
+  {
+    "name": "星期三",
+    "value": "3",
+    "alias": "三"
+  },
+  {
+    "name": "星期四",
+    "value": "4",
+    "alias": "四"
+  },
+  {
+    "name": "星期五",
+    "value": "5",
+    "alias": "五"
+  },
+  {
+    "name": "星期六",
+    "value": "6",
+    "alias": "六"
+  },
+  {
+    "name": "星期天",
+    "value": "7",
+    "alias": "日"
+  }
+]

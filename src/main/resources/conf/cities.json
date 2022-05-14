@@ -1,0 +1,2599 @@
+[
+  {
+    "name": "深圳",
+    "match": "深圳|sz|sz",
+    "cityId": "5",
+    "pinyin": "sz",
+    "sanzima": "sz"
+  },
+  {
+    "name": "北京",
+    "match": "北京|bj|bj",
+    "cityId": "2912",
+    "pinyin": "bj",
+    "sanzima": "bj"
+  },
+  {
+    "name": "珠海",
+    "match": "珠海|zh|zh",
+    "cityId": "2916",
+    "pinyin": "zh",
+    "sanzima": "zh"
+  },
+  {
+    "name": "广州",
+    "match": "广州|gz|gz",
+    "cityId": "2918",
+    "pinyin": "gz",
+    "sanzima": "gz"
+  },
+  {
+    "name": "汕头",
+    "match": "汕头|st|st",
+    "cityId": "2919",
+    "pinyin": "st",
+    "sanzima": "st"
+  },
+  {
+    "name": "东莞",
+    "match": "东莞|dg|dg",
+    "cityId": "2920",
+    "pinyin": "dg",
+    "sanzima": "dg"
+  },
+  {
+    "name": "汕尾",
+    "match": "汕尾|sw|sw",
+    "cityId": "2921",
+    "pinyin": "sw",
+    "sanzima": "sw"
+  },
+  {
+    "name": "佛山",
+    "match": "佛山|fs|fs",
+    "cityId": "2922",
+    "pinyin": "fs",
+    "sanzima": "fs"
+  },
+  {
+    "name": "韶关",
+    "match": "韶关|sg|sg",
+    "cityId": "2923",
+    "pinyin": "sg",
+    "sanzima": "sg"
+  },
+  {
+    "name": "河源",
+    "match": "河源|hy|hy",
+    "cityId": "2924",
+    "pinyin": "hy",
+    "sanzima": "hy"
+  },
+  {
+    "name": "潮州",
+    "match": "潮州|cz|cz",
+    "cityId": "2925",
+    "pinyin": "cz",
+    "sanzima": "cz"
+  },
+  {
+    "name": "阳江",
+    "match": "阳江|yj|yj",
+    "cityId": "2926",
+    "pinyin": "yj",
+    "sanzima": "yj"
+  },
+  {
+    "name": "惠州",
+    "match": "惠州|huizhou|huizhou",
+    "cityId": "2927",
+    "pinyin": "huizhou",
+    "sanzima": "huizhou"
+  },
+  {
+    "name": "云浮",
+    "match": "云浮|yf|yf",
+    "cityId": "2928",
+    "pinyin": "yf",
+    "sanzima": "yf"
+  },
+  {
+    "name": "湛江",
+    "match": "湛江|zhanjiang|zhanjiang",
+    "cityId": "2929",
+    "pinyin": "zhanjiang",
+    "sanzima": "zhanjiang"
+  },
+  {
+    "name": "江门",
+    "match": "江门|jm|jm",
+    "cityId": "2930",
+    "pinyin": "jm",
+    "sanzima": "jm"
+  },
+  {
+    "name": "揭阳",
+    "match": "揭阳|jy|jy",
+    "cityId": "2931",
+    "pinyin": "jy",
+    "sanzima": "jy"
+  },
+  {
+    "name": "肇庆",
+    "match": "肇庆|zq|zq",
+    "cityId": "2932",
+    "pinyin": "zq",
+    "sanzima": "zq"
+  },
+  {
+    "name": "茂名",
+    "match": "茂名|mm|mm",
+    "cityId": "2933",
+    "pinyin": "mm",
+    "sanzima": "mm"
+  },
+  {
+    "name": "中山",
+    "match": "中山|zs|zs",
+    "cityId": "2934",
+    "pinyin": "zs",
+    "sanzima": "zs"
+  },
+  {
+    "name": "梅州",
+    "match": "梅州|mz|mz",
+    "cityId": "2935",
+    "pinyin": "mz",
+    "sanzima": "mz"
+  },
+  {
+    "name": "清远",
+    "match": "清远|qy|qy",
+    "cityId": "2936",
+    "pinyin": "qy",
+    "sanzima": "qy"
+  },
+  {
+    "name": "临汾",
+    "match": "临汾|linfen|linfen",
+    "cityId": "2938",
+    "pinyin": "linfen",
+    "sanzima": "linfen"
+  },
+  {
+    "name": "吕梁",
+    "match": "吕梁|lvliang|lvliang",
+    "cityId": "2939",
+    "pinyin": "lvliang",
+    "sanzima": "lvliang"
+  },
+  {
+    "name": "大同",
+    "match": "大同|datong|datong",
+    "cityId": "2940",
+    "pinyin": "datong",
+    "sanzima": "datong"
+  },
+  {
+    "name": "太原",
+    "match": "太原|ty|ty",
+    "cityId": "2941",
+    "pinyin": "ty",
+    "sanzima": "ty"
+  },
+  {
+    "name": "忻州",
+    "match": "忻州|xinzhou|xinzhou",
+    "cityId": "2942",
+    "pinyin": "xinzhou",
+    "sanzima": "xinzhou"
+  },
+  {
+    "name": "晋中",
+    "match": "晋中|jinzhong|jinzhong",
+    "cityId": "2943",
+    "pinyin": "jinzhong",
+    "sanzima": "jinzhong"
+  },
+  {
+    "name": "长治",
+    "match": "长治|changzhi|changzhi",
+    "cityId": "2944",
+    "pinyin": "changzhi",
+    "sanzima": "changzhi"
+  },
+  {
+    "name": "晋城",
+    "match": "晋城|jincheng|jincheng",
+    "cityId": "2945",
+    "pinyin": "jincheng",
+    "sanzima": "jincheng"
+  },
+  {
+    "name": "朔州",
+    "match": "朔州|suozhou|suozhou",
+    "cityId": "2946",
+    "pinyin": "suozhou",
+    "sanzima": "suozhou"
+  },
+  {
+    "name": "阳泉",
+    "match": "阳泉|yangquan|yangquan",
+    "cityId": "2947",
+    "pinyin": "yangquan",
+    "sanzima": "yangquan"
+  },
+  {
+    "name": "运城",
+    "match": "运城|yuncheng|yuncheng",
+    "cityId": "2948",
+    "pinyin": "yuncheng",
+    "sanzima": "yuncheng"
+  },
+  {
+    "name": "东营",
+    "match": "东营|dongy|dongy",
+    "cityId": "2950",
+    "pinyin": "dongy",
+    "sanzima": "dongy"
+  },
+  {
+    "name": "临沂",
+    "match": "临沂|linyi|linyi",
+    "cityId": "2951",
+    "pinyin": "linyi",
+    "sanzima": "linyi"
+  },
+  {
+    "name": "德州",
+    "match": "德州|dezhou|dezhou",
+    "cityId": "2952",
+    "pinyin": "dezhou",
+    "sanzima": "dezhou"
+  },
+  {
+    "name": "威海",
+    "match": "威海|weihai|weihai",
+    "cityId": "2953",
+    "pinyin": "weihai",
+    "sanzima": "weihai"
+  },
+  {
+    "name": "日照",
+    "match": "日照|rizhao|rizhao",
+    "cityId": "2954",
+    "pinyin": "rizhao",
+    "sanzima": "rizhao"
+  },
+  {
+    "name": "枣庄",
+    "match": "枣庄|zaozhuang|zaozhuang",
+    "cityId": "2955",
+    "pinyin": "zaozhuang",
+    "sanzima": "zaozhuang"
+  },
+  {
+    "name": "泰安",
+    "match": "泰安|taian|taian",
+    "cityId": "2956",
+    "pinyin": "taian",
+    "sanzima": "taian"
+  },
+  {
+    "name": "济宁",
+    "match": "济宁|jining|jining",
+    "cityId": "2957",
+    "pinyin": "jining",
+    "sanzima": "jining"
+  },
+  {
+    "name": "济南",
+    "match": "济南|jn|jn",
+    "cityId": "2958",
+    "pinyin": "jn",
+    "sanzima": "jn"
+  },
+  {
+    "name": "淄博",
+    "match": "淄博|zibo|zibo",
+    "cityId": "2959",
+    "pinyin": "zibo",
+    "sanzima": "zibo"
+  },
+  {
+    "name": "滨州",
+    "match": "滨州|binzhou|binzhou",
+    "cityId": "2960",
+    "pinyin": "binzhou",
+    "sanzima": "binzhou"
+  },
+  {
+    "name": "潍坊",
+    "match": "潍坊|weifang|weifang",
+    "cityId": "2961",
+    "pinyin": "weifang",
+    "sanzima": "weifang"
+  },
+  {
+    "name": "烟台",
+    "match": "烟台|yantai|yantai",
+    "cityId": "2962",
+    "pinyin": "yantai",
+    "sanzima": "yantai"
+  },
+  {
+    "name": "聊城",
+    "match": "聊城|liaocheng|liaocheng",
+    "cityId": "2963",
+    "pinyin": "liaocheng",
+    "sanzima": "liaocheng"
+  },
+  {
+    "name": "菏泽",
+    "match": "菏泽|heze|heze",
+    "cityId": "2965",
+    "pinyin": "heze",
+    "sanzima": "heze"
+  },
+  {
+    "name": "青岛",
+    "match": "青岛|qd|qd",
+    "cityId": "2966",
+    "pinyin": "qd",
+    "sanzima": "qd"
+  },
+  {
+    "name": "临沧",
+    "match": "临沧|lincang|lincang",
+    "cityId": "2968",
+    "pinyin": "lincang",
+    "sanzima": "lincang"
+  },
+  {
+    "name": "丽江",
+    "match": "丽江|lijiang|lijiang",
+    "cityId": "2969",
+    "pinyin": "lijiang",
+    "sanzima": "lijiang"
+  },
+  {
+    "name": "保山",
+    "match": "保山|baoshan|baoshan",
+    "cityId": "2970",
+    "pinyin": "baoshan",
+    "sanzima": "baoshan"
+  },
+  {
+    "name": "大理州",
+    "match": "大理州|dali|dali",
+    "cityId": "2971",
+    "pinyin": "dali",
+    "sanzima": "dali"
+  },
+  {
+    "name": "德宏州",
+    "match": "德宏州|dehong|dehong",
+    "cityId": "2972",
+    "pinyin": "dehong",
+    "sanzima": "dehong"
+  },
+  {
+    "name": "怒江",
+    "match": "怒江|nujiang|nujiang",
+    "cityId": "2973",
+    "pinyin": "nujiang",
+    "sanzima": "nujiang"
+  },
+  {
+    "name": "思茅",
+    "match": "思茅|simao|simao",
+    "cityId": "2974",
+    "pinyin": "simao",
+    "sanzima": "simao"
+  },
+  {
+    "name": "文山州",
+    "match": "文山州|wenshan|wenshan",
+    "cityId": "2975",
+    "pinyin": "wenshan",
+    "sanzima": "wenshan"
+  },
+  {
+    "name": "昆明",
+    "match": "昆明|km|km",
+    "cityId": "2976",
+    "pinyin": "km",
+    "sanzima": "km"
+  },
+  {
+    "name": "昭通",
+    "match": "昭通|zhaotong|zhaotong",
+    "cityId": "2977",
+    "pinyin": "zhaotong",
+    "sanzima": "zhaotong"
+  },
+  {
+    "name": "曲靖",
+    "match": "曲靖|qujing|qujing",
+    "cityId": "2978",
+    "pinyin": "qujing",
+    "sanzima": "qujing"
+  },
+  {
+    "name": "楚雄州",
+    "match": "楚雄州|cuxiong|cuxiong",
+    "cityId": "2979",
+    "pinyin": "cuxiong",
+    "sanzima": "cuxiong"
+  },
+  {
+    "name": "玉溪",
+    "match": "玉溪|yuxi|yuxi",
+    "cityId": "2980",
+    "pinyin": "yuxi",
+    "sanzima": "yuxi"
+  },
+  {
+    "name": "红河州",
+    "match": "红河州|honghe|honghe",
+    "cityId": "2981",
+    "pinyin": "honghe",
+    "sanzima": "honghe"
+  },
+  {
+    "name": "西双版纳",
+    "match": "西双版纳|xsbn|xsbn",
+    "cityId": "2982",
+    "pinyin": "xsbn",
+    "sanzima": "xsbn"
+  },
+  {
+    "name": "迪庆",
+    "match": "迪庆|diqing|diqing",
+    "cityId": "2983",
+    "pinyin": "diqing",
+    "sanzima": "diqing"
+  },
+  {
+    "name": "西宁",
+    "match": "西宁|xining|xining",
+    "cityId": "2985",
+    "pinyin": "xining",
+    "sanzima": "xining"
+  },
+  {
+    "name": "海东",
+    "match": "海东|haidong|haidong",
+    "cityId": "2986",
+    "pinyin": "haidong",
+    "sanzima": "haidong"
+  },
+  {
+    "name": "玉树",
+    "match": "玉树|yushu|yushu",
+    "cityId": "2987",
+    "pinyin": "yushu",
+    "sanzima": "yushu"
+  },
+  {
+    "name": "黄南",
+    "match": "黄南|huangnan|huangnan",
+    "cityId": "2988",
+    "pinyin": "huangnan",
+    "sanzima": "huangnan"
+  },
+  {
+    "name": "海南州",
+    "match": "海南州|hainanzizhizhou|hainanzizhizhou",
+    "cityId": "2989",
+    "pinyin": "hainanzizhizhou",
+    "sanzima": "hainanzizhizhou"
+  },
+  {
+    "name": "海北州",
+    "match": "海北州|haibei|haibei",
+    "cityId": "2990",
+    "pinyin": "haibei",
+    "sanzima": "haibei"
+  },
+  {
+    "name": "果洛",
+    "match": "果洛|guoluo|guoluo",
+    "cityId": "2991",
+    "pinyin": "guoluo",
+    "sanzima": "guoluo"
+  },
+  {
+    "name": "海西",
+    "match": "海西|haiximenggu|haiximenggu",
+    "cityId": "2992",
+    "pinyin": "haiximenggu",
+    "sanzima": "haiximenggu"
+  },
+  {
+    "name": "福州",
+    "match": "福州|fz|fz",
+    "cityId": "2994",
+    "pinyin": "fz",
+    "sanzima": "fz"
+  },
+  {
+    "name": "龙岩",
+    "match": "龙岩|longyan|longyan",
+    "cityId": "2995",
+    "pinyin": "longyan",
+    "sanzima": "longyan"
+  },
+  {
+    "name": "南平",
+    "match": "南平|nanping|nanping",
+    "cityId": "2996",
+    "pinyin": "nanping",
+    "sanzima": "nanping"
+  },
+  {
+    "name": "宁德",
+    "match": "宁德|ningde|ningde",
+    "cityId": "2997",
+    "pinyin": "ningde",
+    "sanzima": "ningde"
+  },
+  {
+    "name": "莆田",
+    "match": "莆田|putian|putian",
+    "cityId": "2998",
+    "pinyin": "putian",
+    "sanzima": "putian"
+  },
+  {
+    "name": "泉州",
+    "match": "泉州|quanzhou|quanzhou",
+    "cityId": "2999",
+    "pinyin": "quanzhou",
+    "sanzima": "quanzhou"
+  },
+  {
+    "name": "三明",
+    "match": "三明|sanming|sanming",
+    "cityId": "3000",
+    "pinyin": "sanming",
+    "sanzima": "sanming"
+  },
+  {
+    "name": "厦门",
+    "match": "厦门|xm|xm",
+    "cityId": "3001",
+    "pinyin": "xm",
+    "sanzima": "xm"
+  },
+  {
+    "name": "漳州",
+    "match": "漳州|zhangzhou|zhangzhou",
+    "cityId": "3002",
+    "pinyin": "zhangzhou",
+    "sanzima": "zhangzhou"
+  },
+  {
+    "name": "武夷山",
+    "match": "武夷山|wys|wys",
+    "cityId": "3003",
+    "pinyin": "wys",
+    "sanzima": "wys"
+  },
+  {
+    "name": "亳州",
+    "match": "亳州|bozhou|bozhou",
+    "cityId": "3005",
+    "pinyin": "bozhou",
+    "sanzima": "bozhou"
+  },
+  {
+    "name": "六安",
+    "match": "六安|la|la",
+    "cityId": "3006",
+    "pinyin": "la",
+    "sanzima": "la"
+  },
+  {
+    "name": "合肥",
+    "match": "合肥|hf|hf",
+    "cityId": "3007",
+    "pinyin": "hf",
+    "sanzima": "hf"
+  },
+  {
+    "name": "安庆",
+    "match": "安庆|anqing|anqing",
+    "cityId": "3008",
+    "pinyin": "anqing",
+    "sanzima": "anqing"
+  },
+  {
+    "name": "宣城",
+    "match": "宣城|xuancheng|xuancheng",
+    "cityId": "3009",
+    "pinyin": "xuancheng",
+    "sanzima": "xuancheng"
+  },
+  {
+    "name": "宿州",
+    "match": "宿州|suzhou|suzhou",
+    "cityId": "3010",
+    "pinyin": "suzhou",
+    "sanzima": "suzhou"
+  },
+  {
+    "name": "巢湖",
+    "match": "巢湖|chaohu|chaohu",
+    "cityId": "3011",
+    "pinyin": "chaohu",
+    "sanzima": "chaohu"
+  },
+  {
+    "name": "池州",
+    "match": "池州|chizhou|chizhou",
+    "cityId": "3012",
+    "pinyin": "chizhou",
+    "sanzima": "chizhou"
+  },
+  {
+    "name": "淮北",
+    "match": "淮北|huaibei|huaibei",
+    "cityId": "3013",
+    "pinyin": "huaibei",
+    "sanzima": "huaibei"
+  },
+  {
+    "name": "淮南",
+    "match": "淮南|huainan|huainan",
+    "cityId": "3014",
+    "pinyin": "huainan",
+    "sanzima": "huainan"
+  },
+  {
+    "name": "滁州",
+    "match": "滁州|chuzhou|chuzhou",
+    "cityId": "3015",
+    "pinyin": "chuzhou",
+    "sanzima": "chuzhou"
+  },
+  {
+    "name": "芜湖",
+    "match": "芜湖|wuhu|wuhu",
+    "cityId": "3016",
+    "pinyin": "wuhu",
+    "sanzima": "wuhu"
+  },
+  {
+    "name": "蚌埠",
+    "match": "蚌埠|bengbu|bengbu",
+    "cityId": "3017",
+    "pinyin": "bengbu",
+    "sanzima": "bengbu"
+  },
+  {
+    "name": "铜陵",
+    "match": "铜陵|tongling|tongling",
+    "cityId": "3018",
+    "pinyin": "tongling",
+    "sanzima": "tongling"
+  },
+  {
+    "name": "阜阳",
+    "match": "阜阳|fuyang|fuyang",
+    "cityId": "3019",
+    "pinyin": "fuyang",
+    "sanzima": "fuyang"
+  },
+  {
+    "name": "马鞍山",
+    "match": "马鞍山|mas|mas",
+    "cityId": "3020",
+    "pinyin": "mas",
+    "sanzima": "mas"
+  },
+  {
+    "name": "黄山",
+    "match": "黄山|huangshan|huangshan",
+    "cityId": "3021",
+    "pinyin": "huangshan",
+    "sanzima": "huangshan"
+  },
+  {
+    "name": "宁波",
+    "match": "宁波|nb|nb",
+    "cityId": "3023",
+    "pinyin": "nb",
+    "sanzima": "nb"
+  },
+  {
+    "name": "杭州",
+    "match": "杭州|hz|hz",
+    "cityId": "3024",
+    "pinyin": "hz",
+    "sanzima": "hz"
+  },
+  {
+    "name": "湖州",
+    "match": "湖州|huzhou|huzhou",
+    "cityId": "3025",
+    "pinyin": "huzhou",
+    "sanzima": "huzhou"
+  },
+  {
+    "name": "嘉兴",
+    "match": "嘉兴|jiaxing|jiaxing",
+    "cityId": "3026",
+    "pinyin": "jiaxing",
+    "sanzima": "jiaxing"
+  },
+  {
+    "name": "金华",
+    "match": "金华|jh|jh",
+    "cityId": "3027",
+    "pinyin": "jh",
+    "sanzima": "jh"
+  },
+  {
+    "name": "舟山",
+    "match": "舟山|zhoushan|zhoushan",
+    "cityId": "3028",
+    "pinyin": "zhoushan",
+    "sanzima": "zhoushan"
+  },
+  {
+    "name": "丽水",
+    "match": "丽水|lishui|lishui",
+    "cityId": "3029",
+    "pinyin": "lishui",
+    "sanzima": "lishui"
+  },
+  {
+    "name": "衢州",
+    "match": "衢州|qz|qz",
+    "cityId": "3030",
+    "pinyin": "qz",
+    "sanzima": "qz"
+  },
+  {
+    "name": "绍兴",
+    "match": "绍兴|sx|sx",
+    "cityId": "3031",
+    "pinyin": "sx",
+    "sanzima": "sx"
+  },
+  {
+    "name": "温州",
+    "match": "温州|wenzhou|wenzhou",
+    "cityId": "3032",
+    "pinyin": "wenzhou",
+    "sanzima": "wenzhou"
+  },
+  {
+    "name": "台州",
+    "match": "台州|tz|tz",
+    "cityId": "3033",
+    "pinyin": "tz",
+    "sanzima": "tz"
+  },
+  {
+    "name": "兰州",
+    "match": "兰州|lanzhou|lanzhou",
+    "cityId": "3035",
+    "pinyin": "lanzhou",
+    "sanzima": "lanzhou"
+  },
+  {
+    "name": "张掖",
+    "match": "张掖|zys|zys",
+    "cityId": "3036",
+    "pinyin": "zys",
+    "sanzima": "zys"
+  },
+  {
+    "name": "武威",
+    "match": "武威|wuwei|wuwei",
+    "cityId": "3037",
+    "pinyin": "wuwei",
+    "sanzima": "wuwei"
+  },
+  {
+    "name": "天水",
+    "match": "天水|tianshui|tianshui",
+    "cityId": "3038",
+    "pinyin": "tianshui",
+    "sanzima": "tianshui"
+  },
+  {
+    "name": "庆阳",
+    "match": "庆阳|qingyang|qingyang",
+    "cityId": "3039",
+    "pinyin": "qingyang",
+    "sanzima": "qingyang"
+  },
+  {
+    "name": "平凉",
+    "match": "平凉|pingliang|pingliang",
+    "cityId": "3040",
+    "pinyin": "pingliang",
+    "sanzima": "pingliang"
+  },
+  {
+    "name": "陇南",
+    "match": "陇南|longnan|longnan",
+    "cityId": "3041",
+    "pinyin": "longnan",
+    "sanzima": "longnan"
+  },
+  {
+    "name": "酒泉",
+    "match": "酒泉|jiuquan|jiuquan",
+    "cityId": "3042",
+    "pinyin": "jiuquan",
+    "sanzima": "jiuquan"
+  },
+  {
+    "name": "金昌",
+    "match": "金昌|jinchang|jinchang",
+    "cityId": "3043",
+    "pinyin": "jinchang",
+    "sanzima": "jinchang"
+  },
+  {
+    "name": "嘉峪关",
+    "match": "嘉峪关|jyg|jyg",
+    "cityId": "3044",
+    "pinyin": "jyg",
+    "sanzima": "jyg"
+  },
+  {
+    "name": "定西",
+    "match": "定西|dingxi|dingxi",
+    "cityId": "3045",
+    "pinyin": "dingxi",
+    "sanzima": "dingxi"
+  },
+  {
+    "name": "白银",
+    "match": "白银|baiyin|baiyin",
+    "cityId": "3046",
+    "pinyin": "baiyin",
+    "sanzima": "baiyin"
+  },
+  {
+    "name": "甘南",
+    "match": "甘南|gnzz|gnzz",
+    "cityId": "3047",
+    "pinyin": "gnzz",
+    "sanzima": "gnzz"
+  },
+  {
+    "name": "临夏",
+    "match": "临夏|lxhz|lxhz",
+    "cityId": "3048",
+    "pinyin": "lxhz",
+    "sanzima": "lxhz"
+  },
+  {
+    "name": "山南",
+    "match": "山南|sldq|sldq",
+    "cityId": "3050",
+    "pinyin": "sldq",
+    "sanzima": "sldq"
+  },
+  {
+    "name": "拉萨",
+    "match": "拉萨|las|las",
+    "cityId": "3051",
+    "pinyin": "las",
+    "sanzima": "las"
+  },
+  {
+    "name": "日喀则",
+    "match": "日喀则|rkz|rkz",
+    "cityId": "3052",
+    "pinyin": "rkz",
+    "sanzima": "rkz"
+  },
+  {
+    "name": "昌都",
+    "match": "昌都|changd|changd",
+    "cityId": "3053",
+    "pinyin": "changd",
+    "sanzima": "changd"
+  },
+  {
+    "name": "林芝",
+    "match": "林芝|lzdq|lzdq",
+    "cityId": "3054",
+    "pinyin": "lzdq",
+    "sanzima": "lzdq"
+  },
+  {
+    "name": "那曲",
+    "match": "那曲|lqdq|lqdq",
+    "cityId": "3055",
+    "pinyin": "lqdq",
+    "sanzima": "lqdq"
+  },
+  {
+    "name": "阿里",
+    "match": "阿里|rldq|rldq",
+    "cityId": "3056",
+    "pinyin": "rldq",
+    "sanzima": "rldq"
+  },
+  {
+    "name": "鞍山",
+    "match": "鞍山|anshan|anshan",
+    "cityId": "3058",
+    "pinyin": "anshan",
+    "sanzima": "anshan"
+  },
+  {
+    "name": "葫芦岛",
+    "match": "葫芦岛|hld|hld",
+    "cityId": "3059",
+    "pinyin": "hld",
+    "sanzima": "hld"
+  },
+  {
+    "name": "本溪",
+    "match": "本溪|benxi|benxi",
+    "cityId": "3060",
+    "pinyin": "benxi",
+    "sanzima": "benxi"
+  },
+  {
+    "name": "锦州",
+    "match": "锦州|jinzhou|jinzhou",
+    "cityId": "3061",
+    "pinyin": "jinzhou",
+    "sanzima": "jinzhou"
+  },
+  {
+    "name": "朝阳",
+    "match": "朝阳|chaoyang|chaoyang",
+    "cityId": "3062",
+    "pinyin": "chaoyang",
+    "sanzima": "chaoyang"
+  },
+  {
+    "name": "辽阳",
+    "match": "辽阳|liaoyang|liaoyang",
+    "cityId": "3063",
+    "pinyin": "liaoyang",
+    "sanzima": "liaoyang"
+  },
+  {
+    "name": "大连",
+    "match": "大连|dl|dl",
+    "cityId": "3064",
+    "pinyin": "dl",
+    "sanzima": "dl"
+  },
+  {
+    "name": "盘锦",
+    "match": "盘锦|panjin|panjin",
+    "cityId": "3065",
+    "pinyin": "panjin",
+    "sanzima": "panjin"
+  },
+  {
+    "name": "丹东",
+    "match": "丹东|dandong|dandong",
+    "cityId": "3066",
+    "pinyin": "dandong",
+    "sanzima": "dandong"
+  },
+  {
+    "name": "沈阳",
+    "match": "沈阳|sy|sy",
+    "cityId": "3067",
+    "pinyin": "sy",
+    "sanzima": "sy"
+  },
+  {
+    "name": "抚顺",
+    "match": "抚顺|fushun|fushun",
+    "cityId": "3068",
+    "pinyin": "fushun",
+    "sanzima": "fushun"
+  },
+  {
+    "name": "铁岭",
+    "match": "铁岭|tieling|tieling",
+    "cityId": "3069",
+    "pinyin": "tieling",
+    "sanzima": "tieling"
+  },
+  {
+    "name": "阜新",
+    "match": "阜新|fuxin|fuxin",
+    "cityId": "3070",
+    "pinyin": "fuxin",
+    "sanzima": "fuxin"
+  },
+  {
+    "name": "营口",
+    "match": "营口|yinkou|yinkou",
+    "cityId": "3071",
+    "pinyin": "yinkou",
+    "sanzima": "yinkou"
+  },
+  {
+    "name": "南京",
+    "match": "南京|nj|nj",
+    "cityId": "3073",
+    "pinyin": "nj",
+    "sanzima": "nj"
+  },
+  {
+    "name": "南通",
+    "match": "南通|nantong|nantong",
+    "cityId": "3074",
+    "pinyin": "nantong",
+    "sanzima": "nantong"
+  },
+  {
+    "name": "宿迁",
+    "match": "宿迁|suqian|suqian",
+    "cityId": "3075",
+    "pinyin": "suqian",
+    "sanzima": "suqian"
+  },
+  {
+    "name": "常州",
+    "match": "常州|changzhou|changzhou",
+    "cityId": "3076",
+    "pinyin": "changzhou",
+    "sanzima": "changzhou"
+  },
+  {
+    "name": "徐州",
+    "match": "徐州|xuzhou|xuzhou",
+    "cityId": "3077",
+    "pinyin": "xuzhou",
+    "sanzima": "xuzhou"
+  },
+  {
+    "name": "扬州",
+    "match": "扬州|yangzhou|yangzhou",
+    "cityId": "3078",
+    "pinyin": "yangzhou",
+    "sanzima": "yangzhou"
+  },
+  {
+    "name": "无锡",
+    "match": "无锡|wuxi|wuxi",
+    "cityId": "3079",
+    "pinyin": "wuxi",
+    "sanzima": "wuxi"
+  },
+  {
+    "name": "泰州",
+    "match": "泰州|taizhou|taizhou",
+    "cityId": "3080",
+    "pinyin": "taizhou",
+    "sanzima": "taizhou"
+  },
+  {
+    "name": "淮安",
+    "match": "淮安|ha|ha",
+    "cityId": "3081",
+    "pinyin": "ha",
+    "sanzima": "ha"
+  },
+  {
+    "name": "盐城",
+    "match": "盐城|yancheng|yancheng",
+    "cityId": "3082",
+    "pinyin": "yancheng",
+    "sanzima": "yancheng"
+  },
+  {
+    "name": "苏州",
+    "match": "苏州|su|su",
+    "cityId": "3083",
+    "pinyin": "su",
+    "sanzima": "su"
+  },
+  {
+    "name": "连云港",
+    "match": "连云港|lyg|lyg",
+    "cityId": "3084",
+    "pinyin": "lyg",
+    "sanzima": "lyg"
+  },
+  {
+    "name": "镇江",
+    "match": "镇江|zhenjiang|zhenjiang",
+    "cityId": "3085",
+    "pinyin": "zhenjiang",
+    "sanzima": "zhenjiang"
+  },
+  {
+    "name": "银川",
+    "match": "银川|yc|yc",
+    "cityId": "3087",
+    "pinyin": "yc",
+    "sanzima": "yc"
+  },
+  {
+    "name": "固原",
+    "match": "固原|guy|guy",
+    "cityId": "3088",
+    "pinyin": "guy",
+    "sanzima": "guy"
+  },
+  {
+    "name": "吴忠",
+    "match": "吴忠|wz|wz",
+    "cityId": "3089",
+    "pinyin": "wz",
+    "sanzima": "wz"
+  },
+  {
+    "name": "石嘴山",
+    "match": "石嘴山|szs|szs",
+    "cityId": "3090",
+    "pinyin": "szs",
+    "sanzima": "szs"
+  },
+  {
+    "name": "中卫",
+    "match": "中卫|zw|zw",
+    "cityId": "3091",
+    "pinyin": "zw",
+    "sanzima": "zw"
+  },
+  {
+    "name": "攀枝花",
+    "match": "攀枝花|pzh|pzh",
+    "cityId": "3093",
+    "pinyin": "pzh",
+    "sanzima": "pzh"
+  },
+  {
+    "name": "乐山",
+    "match": "乐山|leshan|leshan",
+    "cityId": "3094",
+    "pinyin": "leshan",
+    "sanzima": "leshan"
+  },
+  {
+    "name": "内江",
+    "match": "内江|neijiang|neijiang",
+    "cityId": "3095",
+    "pinyin": "neijiang",
+    "sanzima": "neijiang"
+  },
+  {
+    "name": "凉山州",
+    "match": "凉山州|ls|ls",
+    "cityId": "3096",
+    "pinyin": "ls",
+    "sanzima": "ls"
+  },
+  {
+    "name": "南充",
+    "match": "南充|nc|nc",
+    "cityId": "3097",
+    "pinyin": "nc",
+    "sanzima": "nc"
+  },
+  {
+    "name": "宜宾",
+    "match": "宜宾|yb|yb",
+    "cityId": "3098",
+    "pinyin": "yb",
+    "sanzima": "yb"
+  },
+  {
+    "name": "巴中",
+    "match": "巴中|bz|bz",
+    "cityId": "3099",
+    "pinyin": "bz",
+    "sanzima": "bz"
+  },
+  {
+    "name": "广元",
+    "match": "广元|guangyuan|guangyuan",
+    "cityId": "3100",
+    "pinyin": "guangyuan",
+    "sanzima": "guangyuan"
+  },
+  {
+    "name": "广安",
+    "match": "广安|ga|ga",
+    "cityId": "3101",
+    "pinyin": "ga",
+    "sanzima": "ga"
+  },
+  {
+    "name": "德阳",
+    "match": "德阳|deyang|deyang",
+    "cityId": "3102",
+    "pinyin": "deyang",
+    "sanzima": "deyang"
+  },
+  {
+    "name": "成都",
+    "match": "成都|cd|cd",
+    "cityId": "3103",
+    "pinyin": "cd",
+    "sanzima": "cd"
+  },
+  {
+    "name": "泸州",
+    "match": "泸州|luzhou|luzhou",
+    "cityId": "3104",
+    "pinyin": "luzhou",
+    "sanzima": "luzhou"
+  },
+  {
+    "name": "甘孜州",
+    "match": "甘孜州|ganzi|ganzi",
+    "cityId": "3105",
+    "pinyin": "ganzi",
+    "sanzima": "ganzi"
+  },
+  {
+    "name": "眉山",
+    "match": "眉山|ms|ms",
+    "cityId": "3106",
+    "pinyin": "ms",
+    "sanzima": "ms"
+  },
+  {
+    "name": "绵阳",
+    "match": "绵阳|my|my",
+    "cityId": "3107",
+    "pinyin": "my",
+    "sanzima": "my"
+  },
+  {
+    "name": "自贡",
+    "match": "自贡|zigong|zigong",
+    "cityId": "3108",
+    "pinyin": "zigong",
+    "sanzima": "zigong"
+  },
+  {
+    "name": "资阳",
+    "match": "资阳|zy|zy",
+    "cityId": "3109",
+    "pinyin": "zy",
+    "sanzima": "zy"
+  },
+  {
+    "name": "达州",
+    "match": "达州|dz|dz",
+    "cityId": "3110",
+    "pinyin": "dz",
+    "sanzima": "dz"
+  },
+  {
+    "name": "遂宁",
+    "match": "遂宁|sn|sn",
+    "cityId": "3111",
+    "pinyin": "sn",
+    "sanzima": "sn"
+  },
+  {
+    "name": "阿坝州",
+    "match": "阿坝州|ab|ab",
+    "cityId": "3112",
+    "pinyin": "ab",
+    "sanzima": "ab"
+  },
+  {
+    "name": "雅安",
+    "match": "雅安|ya|ya",
+    "cityId": "3113",
+    "pinyin": "ya",
+    "sanzima": "ya"
+  },
+  {
+    "name": "贵阳",
+    "match": "贵阳|gy|gy",
+    "cityId": "3115",
+    "pinyin": "gy",
+    "sanzima": "gy"
+  },
+  {
+    "name": "六盘水",
+    "match": "六盘水|lps|lps",
+    "cityId": "3116",
+    "pinyin": "lps",
+    "sanzima": "lps"
+  },
+  {
+    "name": "安顺",
+    "match": "安顺|anshun|anshun",
+    "cityId": "3117",
+    "pinyin": "anshun",
+    "sanzima": "anshun"
+  },
+  {
+    "name": "毕节",
+    "match": "毕节|bijie|bijie",
+    "cityId": "3118",
+    "pinyin": "bijie",
+    "sanzima": "bijie"
+  },
+  {
+    "name": "遵义",
+    "match": "遵义|zunyi|zunyi",
+    "cityId": "3119",
+    "pinyin": "zunyi",
+    "sanzima": "zunyi"
+  },
+  {
+    "name": "铜仁",
+    "match": "铜仁|tr|tr",
+    "cityId": "3120",
+    "pinyin": "tr",
+    "sanzima": "tr"
+  },
+  {
+    "name": "黔东南州",
+    "match": "黔东南州|qdn|qdn",
+    "cityId": "3121",
+    "pinyin": "qdn",
+    "sanzima": "qdn"
+  },
+  {
+    "name": "黔南州",
+    "match": "黔南州|qn|qn",
+    "cityId": "3122",
+    "pinyin": "qn",
+    "sanzima": "qn"
+  },
+  {
+    "name": "黔西南州",
+    "match": "黔西南州|qxn|qxn",
+    "cityId": "3123",
+    "pinyin": "qxn",
+    "sanzima": "qxn"
+  },
+  {
+    "name": "哈尔滨",
+    "match": "哈尔滨|hrb|hrb",
+    "cityId": "3125",
+    "pinyin": "hrb",
+    "sanzima": "hrb"
+  },
+  {
+    "name": "伊春",
+    "match": "伊春|yichun|yichun",
+    "cityId": "3126",
+    "pinyin": "yichun",
+    "sanzima": "yichun"
+  },
+  {
+    "name": "大庆",
+    "match": "大庆|dq|dq",
+    "cityId": "3127",
+    "pinyin": "dq",
+    "sanzima": "dq"
+  },
+  {
+    "name": "双鸭山",
+    "match": "双鸭山|sys|sys",
+    "cityId": "3128",
+    "pinyin": "sys",
+    "sanzima": "sys"
+  },
+  {
+    "name": "鹤岗",
+    "match": "鹤岗|hegang|hegang",
+    "cityId": "3129",
+    "pinyin": "hegang",
+    "sanzima": "hegang"
+  },
+  {
+    "name": "佳木斯",
+    "match": "佳木斯|jms|jms",
+    "cityId": "3130",
+    "pinyin": "jms",
+    "sanzima": "jms"
+  },
+  {
+    "name": "黑河",
+    "match": "黑河|heihe|heihe",
+    "cityId": "3131",
+    "pinyin": "heihe",
+    "sanzima": "heihe"
+  },
+  {
+    "name": "牡丹江",
+    "match": "牡丹江|mdj|mdj",
+    "cityId": "3132",
+    "pinyin": "mdj",
+    "sanzima": "mdj"
+  },
+  {
+    "name": "鸡西",
+    "match": "鸡西|jixi|jixi",
+    "cityId": "3133",
+    "pinyin": "jixi",
+    "sanzima": "jixi"
+  },
+  {
+    "name": "七台河",
+    "match": "七台河|qth|qth",
+    "cityId": "3134",
+    "pinyin": "qth",
+    "sanzima": "qth"
+  },
+  {
+    "name": "绥化市",
+    "match": "绥化市|suihua|suihua",
+    "cityId": "3135",
+    "pinyin": "suihua",
+    "sanzima": "suihua"
+  },
+  {
+    "name": "齐齐哈尔",
+    "match": "齐齐哈尔|qqhr|qqhr",
+    "cityId": "3136",
+    "pinyin": "qqhr",
+    "sanzima": "qqhr"
+  },
+  {
+    "name": "大兴安岭",
+    "match": "大兴安岭|dxal|dxal",
+    "cityId": "3137",
+    "pinyin": "dxal",
+    "sanzima": "dxal"
+  },
+  {
+    "name": "乌鲁木齐市",
+    "match": "乌鲁木齐市|wlmq|wlmq",
+    "cityId": "3139",
+    "pinyin": "wlmq",
+    "sanzima": "wlmq"
+  },
+  {
+    "name": "五家渠",
+    "match": "五家渠|wjq|wjq",
+    "cityId": "3140",
+    "pinyin": "wjq",
+    "sanzima": "wjq"
+  },
+  {
+    "name": "伊犁哈萨克自治州",
+    "match": "伊犁哈萨克自治州|ylhsk|ylhsk",
+    "cityId": "3141",
+    "pinyin": "ylhsk",
+    "sanzima": "ylhsk"
+  },
+  {
+    "name": "克孜勒苏柯尔克孜自治州",
+    "match": "克孜勒苏柯尔克孜自治州|kzlsk|kzlsk",
+    "cityId": "3142",
+    "pinyin": "kzlsk",
+    "sanzima": "kzlsk"
+  },
+  {
+    "name": "克拉玛依市",
+    "match": "克拉玛依市|klmy|klmy",
+    "cityId": "3143",
+    "pinyin": "klmy",
+    "sanzima": "klmy"
+  },
+  {
+    "name": "博尔塔拉蒙古自治州",
+    "match": "博尔塔拉蒙古自治州|brtl|brtl",
+    "cityId": "3144",
+    "pinyin": "brtl",
+    "sanzima": "brtl"
+  },
+  {
+    "name": "吐鲁番市",
+    "match": "吐鲁番市|tlf|tlf",
+    "cityId": "3145",
+    "pinyin": "tlf",
+    "sanzima": "tlf"
+  },
+  {
+    "name": "和田地区",
+    "match": "和田地区|htdq|htdq",
+    "cityId": "3146",
+    "pinyin": "htdq",
+    "sanzima": "htdq"
+  },
+  {
+    "name": "哈密市",
+    "match": "哈密市|hmdq|hmdq",
+    "cityId": "3147",
+    "pinyin": "hmdq",
+    "sanzima": "hmdq"
+  },
+  {
+    "name": "喀什地区",
+    "match": "喀什地区|ksdq|ksdq",
+    "cityId": "3148",
+    "pinyin": "ksdq",
+    "sanzima": "ksdq"
+  },
+  {
+    "name": "塔城地区",
+    "match": "塔城地区|tcdq|tcdq",
+    "cityId": "3150",
+    "pinyin": "tcdq",
+    "sanzima": "tcdq"
+  },
+  {
+    "name": "巴音郭楞蒙古自治州",
+    "match": "巴音郭楞蒙古自治州|bygl|bygl",
+    "cityId": "3151",
+    "pinyin": "bygl",
+    "sanzima": "bygl"
+  },
+  {
+    "name": "昌吉回族自治州",
+    "match": "昌吉回族自治州|changji|changji",
+    "cityId": "3152",
+    "pinyin": "changji",
+    "sanzima": "changji"
+  },
+  {
+    "name": "石河子",
+    "match": "石河子|shz|shz",
+    "cityId": "3153",
+    "pinyin": "shz",
+    "sanzima": "shz"
+  },
+  {
+    "name": "阿克苏地区",
+    "match": "阿克苏地区|aksdq|aksdq",
+    "cityId": "3154",
+    "pinyin": "aksdq",
+    "sanzima": "aksdq"
+  },
+  {
+    "name": "阿勒泰地区",
+    "match": "阿勒泰地区|alt|alt",
+    "cityId": "3155",
+    "pinyin": "alt",
+    "sanzima": "alt"
+  },
+  {
+    "name": "阿拉尔",
+    "match": "阿拉尔|alr|alr",
+    "cityId": "3156",
+    "pinyin": "alr",
+    "sanzima": "alr"
+  },
+  {
+    "name": "海口",
+    "match": "海口|haikou|haikou",
+    "cityId": "3158",
+    "pinyin": "haikou",
+    "sanzima": "haikou"
+  },
+  {
+    "name": "白沙",
+    "match": "白沙|baisha|baisha",
+    "cityId": "3159",
+    "pinyin": "baisha",
+    "sanzima": "baisha"
+  },
+  {
+    "name": "三亚",
+    "match": "三亚|sanya|sanya",
+    "cityId": "3160",
+    "pinyin": "sanya",
+    "sanzima": "sanya"
+  },
+  {
+    "name": "琼中",
+    "match": "琼中|qiongzhong|qiongzhong",
+    "cityId": "3161",
+    "pinyin": "qiongzhong",
+    "sanzima": "qiongzhong"
+  },
+  {
+    "name": "东方",
+    "match": "东方|dongfang|dongfang",
+    "cityId": "3162",
+    "pinyin": "dongfang",
+    "sanzima": "dongfang"
+  },
+  {
+    "name": "昌江",
+    "match": "昌江|changjiang|changjiang",
+    "cityId": "3163",
+    "pinyin": "changjiang",
+    "sanzima": "changjiang"
+  },
+  {
+    "name": "万宁",
+    "match": "万宁|wanning|wanning",
+    "cityId": "3164",
+    "pinyin": "wanning",
+    "sanzima": "wanning"
+  },
+  {
+    "name": "保亭",
+    "match": "保亭|baoting|baoting",
+    "cityId": "3165",
+    "pinyin": "baoting",
+    "sanzima": "baoting"
+  },
+  {
+    "name": "琼海",
+    "match": "琼海|qionghai|qionghai",
+    "cityId": "3166",
+    "pinyin": "qionghai",
+    "sanzima": "qionghai"
+  },
+  {
+    "name": "乐东",
+    "match": "乐东|ledong|ledong",
+    "cityId": "3167",
+    "pinyin": "ledong",
+    "sanzima": "ledong"
+  },
+  {
+    "name": "文昌",
+    "match": "文昌|wenchang|wenchang",
+    "cityId": "3168",
+    "pinyin": "wenchang",
+    "sanzima": "wenchang"
+  },
+  {
+    "name": "陵水",
+    "match": "陵水|lingshui|lingshui",
+    "cityId": "3169",
+    "pinyin": "lingshui",
+    "sanzima": "lingshui"
+  },
+  {
+    "name": "儋州",
+    "match": "儋州|zhanzhou|zhanzhou",
+    "cityId": "3170",
+    "pinyin": "zhanzhou",
+    "sanzima": "zhanzhou"
+  },
+  {
+    "name": "五指山",
+    "match": "五指山|wzs|wzs",
+    "cityId": "3171",
+    "pinyin": "wzs",
+    "sanzima": "wzs"
+  },
+  {
+    "name": "澄迈",
+    "match": "澄迈|cmx|cmx",
+    "cityId": "3172",
+    "pinyin": "cmx",
+    "sanzima": "cmx"
+  },
+  {
+    "name": "南沙群岛",
+    "match": "南沙群岛|nsqd|nsqd",
+    "cityId": "3173",
+    "pinyin": "nsqd",
+    "sanzima": "nsqd"
+  },
+  {
+    "name": "屯昌",
+    "match": "屯昌|tcx|tcx",
+    "cityId": "3174",
+    "pinyin": "tcx",
+    "sanzima": "tcx"
+  },
+  {
+    "name": "西沙群岛",
+    "match": "西沙群岛|xsqd|xsqd",
+    "cityId": "3175",
+    "pinyin": "xsqd",
+    "sanzima": "xsqd"
+  },
+  {
+    "name": "定安",
+    "match": "定安|dax|dax",
+    "cityId": "3176",
+    "pinyin": "dax",
+    "sanzima": "dax"
+  },
+  {
+    "name": "中沙群岛",
+    "match": "中沙群岛|zsqd|zsqd",
+    "cityId": "3177",
+    "pinyin": "zsqd",
+    "sanzima": "zsqd"
+  },
+  {
+    "name": "临高",
+    "match": "临高|lgx|lgx",
+    "cityId": "3178",
+    "pinyin": "lgx",
+    "sanzima": "lgx"
+  },
+  {
+    "name": "白山市",
+    "match": "白山市|baishan|baishan",
+    "cityId": "3181",
+    "pinyin": "baishan",
+    "sanzima": "baishan"
+  },
+  {
+    "name": "白城市",
+    "match": "白城市|baicheng|baicheng",
+    "cityId": "3182",
+    "pinyin": "baicheng",
+    "sanzima": "baicheng"
+  },
+  {
+    "name": "吉林市",
+    "match": "吉林市|jilin|jilin",
+    "cityId": "3183",
+    "pinyin": "jilin",
+    "sanzima": "jilin"
+  },
+  {
+    "name": "长春市",
+    "match": "长春市|cc|cc",
+    "cityId": "3184",
+    "pinyin": "cc",
+    "sanzima": "cc"
+  },
+  {
+    "name": "四平市",
+    "match": "四平市|siping|siping",
+    "cityId": "3185",
+    "pinyin": "siping",
+    "sanzima": "siping"
+  },
+  {
+    "name": "辽源市",
+    "match": "辽源市|liaoyuan|liaoyuan",
+    "cityId": "3186",
+    "pinyin": "liaoyuan",
+    "sanzima": "liaoyuan"
+  },
+  {
+    "name": "通化市",
+    "match": "通化市|tonghua|tonghua",
+    "cityId": "3187",
+    "pinyin": "tonghua",
+    "sanzima": "tonghua"
+  },
+  {
+    "name": "松原市",
+    "match": "松原市|songyuan|songyuan",
+    "cityId": "3188",
+    "pinyin": "songyuan",
+    "sanzima": "songyuan"
+  },
+  {
+    "name": "延边朝鲜族自治州",
+    "match": "延边朝鲜族自治州|ybcx|ybcx",
+    "cityId": "3189",
+    "pinyin": "ybcx",
+    "sanzima": "ybcx"
+  },
+  {
+    "name": "咸阳",
+    "match": "咸阳|xianyang|xianyang",
+    "cityId": "3191",
+    "pinyin": "xianyang",
+    "sanzima": "xianyang"
+  },
+  {
+    "name": "商洛",
+    "match": "商洛|shangluo|shangluo",
+    "cityId": "3192",
+    "pinyin": "shangluo",
+    "sanzima": "shangluo"
+  },
+  {
+    "name": "安康",
+    "match": "安康|ankang|ankang",
+    "cityId": "3193",
+    "pinyin": "ankang",
+    "sanzima": "ankang"
+  },
+  {
+    "name": "宝鸡",
+    "match": "宝鸡|baoji|baoji",
+    "cityId": "3194",
+    "pinyin": "baoji",
+    "sanzima": "baoji"
+  },
+  {
+    "name": "延安",
+    "match": "延安|yanan|yanan",
+    "cityId": "3195",
+    "pinyin": "yanan",
+    "sanzima": "yanan"
+  },
+  {
+    "name": "榆林",
+    "match": "榆林|yulin|yulin",
+    "cityId": "3196",
+    "pinyin": "yulin",
+    "sanzima": "yulin"
+  },
+  {
+    "name": "汉中",
+    "match": "汉中|hangzhong|hangzhong",
+    "cityId": "3197",
+    "pinyin": "hangzhong",
+    "sanzima": "hangzhong"
+  },
+  {
+    "name": "渭南",
+    "match": "渭南|weinan|weinan",
+    "cityId": "3198",
+    "pinyin": "weinan",
+    "sanzima": "weinan"
+  },
+  {
+    "name": "西安",
+    "match": "西安|xa|xa",
+    "cityId": "3199",
+    "pinyin": "xa",
+    "sanzima": "xa"
+  },
+  {
+    "name": "铜川",
+    "match": "铜川|tongchuan|tongchuan",
+    "cityId": "3200",
+    "pinyin": "tongchuan",
+    "sanzima": "tongchuan"
+  },
+  {
+    "name": "石家庄",
+    "match": "石家庄|shijiazhuang|shijiazhuang",
+    "cityId": "3202",
+    "pinyin": "shijiazhuang",
+    "sanzima": "shijiazhuang"
+  },
+  {
+    "name": "邢台",
+    "match": "邢台|xingtai|xingtai",
+    "cityId": "3203",
+    "pinyin": "xingtai",
+    "sanzima": "xingtai"
+  },
+  {
+    "name": "邯郸",
+    "match": "邯郸|hd|hd",
+    "cityId": "3204",
+    "pinyin": "hd",
+    "sanzima": "hd"
+  },
+  {
+    "name": "衡水",
+    "match": "衡水|hs|hs",
+    "cityId": "3205",
+    "pinyin": "hs",
+    "sanzima": "hs"
+  },
+  {
+    "name": "秦皇岛",
+    "match": "秦皇岛|qhd|qhd",
+    "cityId": "3206",
+    "pinyin": "qhd",
+    "sanzima": "qhd"
+  },
+  {
+    "name": "沧州",
+    "match": "沧州|cangzhou|cangzhou",
+    "cityId": "3207",
+    "pinyin": "cangzhou",
+    "sanzima": "cangzhou"
+  },
+  {
+    "name": "承德",
+    "match": "承德|chengde|chengde",
+    "cityId": "3208",
+    "pinyin": "chengde",
+    "sanzima": "chengde"
+  },
+  {
+    "name": "张家口",
+    "match": "张家口|zjk|zjk",
+    "cityId": "3209",
+    "pinyin": "zjk",
+    "sanzima": "zjk"
+  },
+  {
+    "name": "廊坊",
+    "match": "廊坊|lf|lf",
+    "cityId": "3210",
+    "pinyin": "lf",
+    "sanzima": "lf"
+  },
+  {
+    "name": "唐山",
+    "match": "唐山|tangshan|tangshan",
+    "cityId": "3211",
+    "pinyin": "tangshan",
+    "sanzima": "tangshan"
+  },
+  {
+    "name": "保定",
+    "match": "保定|baoding|baoding",
+    "cityId": "3212",
+    "pinyin": "baoding",
+    "sanzima": "baoding"
+  },
+  {
+    "name": "北海",
+    "match": "北海|beihai|beihai",
+    "cityId": "3214",
+    "pinyin": "beihai",
+    "sanzima": "beihai"
+  },
+  {
+    "name": "南宁",
+    "match": "南宁|nn|nn",
+    "cityId": "3215",
+    "pinyin": "nn",
+    "sanzima": "nn"
+  },
+  {
+    "name": "崇左",
+    "match": "崇左|chongzuo|chongzuo",
+    "cityId": "3216",
+    "pinyin": "chongzuo",
+    "sanzima": "chongzuo"
+  },
+  {
+    "name": "来宾",
+    "match": "来宾|laibin|laibin",
+    "cityId": "3217",
+    "pinyin": "laibin",
+    "sanzima": "laibin"
+  },
+  {
+    "name": "柳州",
+    "match": "柳州|liuzhou|liuzhou",
+    "cityId": "3218",
+    "pinyin": "liuzhou",
+    "sanzima": "liuzhou"
+  },
+  {
+    "name": "桂林",
+    "match": "桂林|guiling|guiling",
+    "cityId": "3219",
+    "pinyin": "guiling",
+    "sanzima": "guiling"
+  },
+  {
+    "name": "梧州",
+    "match": "梧州|wuzhou|wuzhou",
+    "cityId": "3220",
+    "pinyin": "wuzhou",
+    "sanzima": "wuzhou"
+  },
+  {
+    "name": "河池",
+    "match": "河池|hechi|hechi",
+    "cityId": "3221",
+    "pinyin": "hechi",
+    "sanzima": "hechi"
+  },
+  {
+    "name": "玉林",
+    "match": "玉林|yuling|yuling",
+    "cityId": "3222",
+    "pinyin": "yuling",
+    "sanzima": "yuling"
+  },
+  {
+    "name": "百色",
+    "match": "百色|baise|baise",
+    "cityId": "3223",
+    "pinyin": "baise",
+    "sanzima": "baise"
+  },
+  {
+    "name": "贵港",
+    "match": "贵港|guigang|guigang",
+    "cityId": "3224",
+    "pinyin": "guigang",
+    "sanzima": "guigang"
+  },
+  {
+    "name": "贺州",
+    "match": "贺州|hezhou|hezhou",
+    "cityId": "3225",
+    "pinyin": "hezhou",
+    "sanzima": "hezhou"
+  },
+  {
+    "name": "钦州",
+    "match": "钦州|qinzhou|qinzhou",
+    "cityId": "3226",
+    "pinyin": "qinzhou",
+    "sanzima": "qinzhou"
+  },
+  {
+    "name": "防城港",
+    "match": "防城港|fcg|fcg",
+    "cityId": "3227",
+    "pinyin": "fcg",
+    "sanzima": "fcg"
+  },
+  {
+    "name": "呼和浩特",
+    "match": "呼和浩特|hhht|hhht",
+    "cityId": "3229",
+    "pinyin": "hhht",
+    "sanzima": "hhht"
+  },
+  {
+    "name": "锡林郭勒",
+    "match": "锡林郭勒|xlgl|xlgl",
+    "cityId": "3230",
+    "pinyin": "xlgl",
+    "sanzima": "xlgl"
+  },
+  {
+    "name": "阿拉善",
+    "match": "阿拉善|alsm|alsm",
+    "cityId": "3231",
+    "pinyin": "alsm",
+    "sanzima": "alsm"
+  },
+  {
+    "name": "鄂尔多斯",
+    "match": "鄂尔多斯|erds|erds",
+    "cityId": "3232",
+    "pinyin": "erds",
+    "sanzima": "erds"
+  },
+  {
+    "name": "巴彦淖尔",
+    "match": "巴彦淖尔|bynr|bynr",
+    "cityId": "3233",
+    "pinyin": "bynr",
+    "sanzima": "bynr"
+  },
+  {
+    "name": "呼伦贝尔",
+    "match": "呼伦贝尔|hlbr|hlbr",
+    "cityId": "3234",
+    "pinyin": "hlbr",
+    "sanzima": "hlbr"
+  },
+  {
+    "name": "乌兰察布",
+    "match": "乌兰察布|wlcb|wlcb",
+    "cityId": "3235",
+    "pinyin": "wlcb",
+    "sanzima": "wlcb"
+  },
+  {
+    "name": "乌海",
+    "match": "乌海|wuhai|wuhai",
+    "cityId": "3236",
+    "pinyin": "wuhai",
+    "sanzima": "wuhai"
+  },
+  {
+    "name": "包头",
+    "match": "包头|baotong|baotong",
+    "cityId": "3237",
+    "pinyin": "baotong",
+    "sanzima": "baotong"
+  },
+  {
+    "name": "兴安",
+    "match": "兴安|xam|xam",
+    "cityId": "3238",
+    "pinyin": "xam",
+    "sanzima": "xam"
+  },
+  {
+    "name": "赤峰",
+    "match": "赤峰|chifeng|chifeng",
+    "cityId": "3239",
+    "pinyin": "chifeng",
+    "sanzima": "chifeng"
+  },
+  {
+    "name": "通辽",
+    "match": "通辽|tongliao|tongliao",
+    "cityId": "3240",
+    "pinyin": "tongliao",
+    "sanzima": "tongliao"
+  },
+  {
+    "name": "郑州",
+    "match": "郑州|zz|zz",
+    "cityId": "3242",
+    "pinyin": "zz",
+    "sanzima": "zz"
+  },
+  {
+    "name": "驻马店",
+    "match": "驻马店|zmd|zmd",
+    "cityId": "3243",
+    "pinyin": "zmd",
+    "sanzima": "zmd"
+  },
+  {
+    "name": "鹤壁",
+    "match": "鹤壁|hebi|hebi",
+    "cityId": "3244",
+    "pinyin": "hebi",
+    "sanzima": "hebi"
+  },
+  {
+    "name": "许昌",
+    "match": "许昌|xuchang|xuchang",
+    "cityId": "3245",
+    "pinyin": "xuchang",
+    "sanzima": "xuchang"
+  },
+  {
+    "name": "焦作",
+    "match": "焦作|jz|jz",
+    "cityId": "3246",
+    "pinyin": "jz",
+    "sanzima": "jz"
+  },
+  {
+    "name": "濮阳",
+    "match": "濮阳|puyang|puyang",
+    "cityId": "3247",
+    "pinyin": "puyang",
+    "sanzima": "puyang"
+  },
+  {
+    "name": "漯河",
+    "match": "漯河|lh|lh",
+    "cityId": "3248",
+    "pinyin": "lh",
+    "sanzima": "lh"
+  },
+  {
+    "name": "济源",
+    "match": "济源|jiyuan|jiyuan",
+    "cityId": "3249",
+    "pinyin": "jiyuan",
+    "sanzima": "jiyuan"
+  },
+  {
+    "name": "洛阳",
+    "match": "洛阳|ly|ly",
+    "cityId": "3250",
+    "pinyin": "ly",
+    "sanzima": "ly"
+  },
+  {
+    "name": "新乡",
+    "match": "新乡|xinxiang|xinxiang",
+    "cityId": "3251",
+    "pinyin": "xinxiang",
+    "sanzima": "xinxiang"
+  },
+  {
+    "name": "开封",
+    "match": "开封|kf|kf",
+    "cityId": "3252",
+    "pinyin": "kf",
+    "sanzima": "kf"
+  },
+  {
+    "name": "平顶山",
+    "match": "平顶山|pds|pds",
+    "cityId": "3253",
+    "pinyin": "pds",
+    "sanzima": "pds"
+  },
+  {
+    "name": "安阳",
+    "match": "安阳|ay|ay",
+    "cityId": "3254",
+    "pinyin": "ay",
+    "sanzima": "ay"
+  },
+  {
+    "name": "商丘",
+    "match": "商丘|sq|sq",
+    "cityId": "3255",
+    "pinyin": "sq",
+    "sanzima": "sq"
+  },
+  {
+    "name": "周口",
+    "match": "周口|zk|zk",
+    "cityId": "3256",
+    "pinyin": "zk",
+    "sanzima": "zk"
+  },
+  {
+    "name": "南阳",
+    "match": "南阳|ny|ny",
+    "cityId": "3257",
+    "pinyin": "ny",
+    "sanzima": "ny"
+  },
+  {
+    "name": "信阳",
+    "match": "信阳|xinyang|xinyang",
+    "cityId": "3258",
+    "pinyin": "xinyang",
+    "sanzima": "xinyang"
+  },
+  {
+    "name": "三门峡",
+    "match": "三门峡|smx|smx",
+    "cityId": "3259",
+    "pinyin": "smx",
+    "sanzima": "smx"
+  },
+  {
+    "name": "娄底",
+    "match": "娄底|ld|ld",
+    "cityId": "3261",
+    "pinyin": "ld",
+    "sanzima": "ld"
+  },
+  {
+    "name": "岳阳",
+    "match": "岳阳|yueyang|yueyang",
+    "cityId": "3262",
+    "pinyin": "yueyang",
+    "sanzima": "yueyang"
+  },
+  {
+    "name": "常德",
+    "match": "常德|changde|changde",
+    "cityId": "3263",
+    "pinyin": "changde",
+    "sanzima": "changde"
+  },
+  {
+    "name": "张家界",
+    "match": "张家界|zjj|zjj",
+    "cityId": "3264",
+    "pinyin": "zjj",
+    "sanzima": "zjj"
+  },
+  {
+    "name": "怀化",
+    "match": "怀化|hh|hh",
+    "cityId": "3265",
+    "pinyin": "hh",
+    "sanzima": "hh"
+  },
+  {
+    "name": "株洲",
+    "match": "株洲|zhuzhou|zhuzhou",
+    "cityId": "3266",
+    "pinyin": "zhuzhou",
+    "sanzima": "zhuzhou"
+  },
+  {
+    "name": "永州",
+    "match": "永州|yongzhou|yongzhou",
+    "cityId": "3267",
+    "pinyin": "yongzhou",
+    "sanzima": "yongzhou"
+  },
+  {
+    "name": "湘潭",
+    "match": "湘潭|xt|xt",
+    "cityId": "3268",
+    "pinyin": "xt",
+    "sanzima": "xt"
+  },
+  {
+    "name": "湘西州",
+    "match": "湘西州|xx|xx",
+    "cityId": "3269",
+    "pinyin": "xx",
+    "sanzima": "xx"
+  },
+  {
+    "name": "益阳",
+    "match": "益阳|yiyang|yiyang",
+    "cityId": "3270",
+    "pinyin": "yiyang",
+    "sanzima": "yiyang"
+  },
+  {
+    "name": "衡阳",
+    "match": "衡阳|hengyang|hengyang",
+    "cityId": "3271",
+    "pinyin": "hengyang",
+    "sanzima": "hengyang"
+  },
+  {
+    "name": "邵阳",
+    "match": "邵阳|shaoyang|shaoyang",
+    "cityId": "3272",
+    "pinyin": "shaoyang",
+    "sanzima": "shaoyang"
+  },
+  {
+    "name": "郴州",
+    "match": "郴州|chenzhou|chenzhou",
+    "cityId": "3273",
+    "pinyin": "chenzhou",
+    "sanzima": "chenzhou"
+  },
+  {
+    "name": "长沙",
+    "match": "长沙|cs|cs",
+    "cityId": "3274",
+    "pinyin": "cs",
+    "sanzima": "cs"
+  },
+  {
+    "name": "武汉",
+    "match": "武汉|wh|wh",
+    "cityId": "3276",
+    "pinyin": "wh",
+    "sanzima": "wh"
+  },
+  {
+    "name": "黄石",
+    "match": "黄石|huangshi|huangshi",
+    "cityId": "3277",
+    "pinyin": "huangshi",
+    "sanzima": "huangshi"
+  },
+  {
+    "name": "黄冈",
+    "match": "黄冈|huanggang|huanggang",
+    "cityId": "3278",
+    "pinyin": "huanggang",
+    "sanzima": "huanggang"
+  },
+  {
+    "name": "随州",
+    "match": "随州|suizhou|suizhou",
+    "cityId": "3279",
+    "pinyin": "suizhou",
+    "sanzima": "suizhou"
+  },
+  {
+    "name": "鄂州",
+    "match": "鄂州|ez|ez",
+    "cityId": "3280",
+    "pinyin": "ez",
+    "sanzima": "ez"
+  },
+  {
+    "name": "襄阳",
+    "match": "襄阳|xiangyang|xiangyang",
+    "cityId": "3281",
+    "pinyin": "xiangyang",
+    "sanzima": "xiangyang"
+  },
+  {
+    "name": "荆门",
+    "match": "荆门|jingmenshi|jingmenshi",
+    "cityId": "3282",
+    "pinyin": "jingmenshi",
+    "sanzima": "jingmenshi"
+  },
+  {
+    "name": "荆州",
+    "match": "荆州|jingzhou|jingzhou",
+    "cityId": "3283",
+    "pinyin": "jingzhou",
+    "sanzima": "jingzhou"
+  },
+  {
+    "name": "神农架",
+    "match": "神农架|snj|snj",
+    "cityId": "3284",
+    "pinyin": "snj",
+    "sanzima": "snj"
+  },
+  {
+    "name": "潜江",
+    "match": "潜江|qianjiang|qianjiang",
+    "cityId": "3285",
+    "pinyin": "qianjiang",
+    "sanzima": "qianjiang"
+  },
+  {
+    "name": "宜昌",
+    "match": "宜昌|yichang|yichang",
+    "cityId": "3286",
+    "pinyin": "yichang",
+    "sanzima": "yichang"
+  },
+  {
+    "name": "孝感",
+    "match": "孝感|xiaogan|xiaogan",
+    "cityId": "3287",
+    "pinyin": "xiaogan",
+    "sanzima": "xiaogan"
+  },
+  {
+    "name": "天门",
+    "match": "天门|tianmen|tianmen",
+    "cityId": "3288",
+    "pinyin": "tianmen",
+    "sanzima": "tianmen"
+  },
+  {
+    "name": "咸宁",
+    "match": "咸宁|xianning|xianning",
+    "cityId": "3289",
+    "pinyin": "xianning",
+    "sanzima": "xianning"
+  },
+  {
+    "name": "十堰",
+    "match": "十堰|shiyan|shiyan",
+    "cityId": "3290",
+    "pinyin": "shiyan",
+    "sanzima": "shiyan"
+  },
+  {
+    "name": "仙桃",
+    "match": "仙桃|xiantao|xiantao",
+    "cityId": "3291",
+    "pinyin": "xiantao",
+    "sanzima": "xiantao"
+  },
+  {
+    "name": "恩施",
+    "match": "恩施|ns|ns",
+    "cityId": "3292",
+    "pinyin": "ns",
+    "sanzima": "ns"
+  },
+  {
+    "name": "鹰潭",
+    "match": "鹰潭|yingtan|yingtan",
+    "cityId": "3294",
+    "pinyin": "yingtan",
+    "sanzima": "yingtan"
+  },
+  {
+    "name": "上饶",
+    "match": "上饶|shangrao|shangrao",
+    "cityId": "3295",
+    "pinyin": "shangrao",
+    "sanzima": "shangrao"
+  },
+  {
+    "name": "九江",
+    "match": "九江|jiujiang|jiujiang",
+    "cityId": "3296",
+    "pinyin": "jiujiang",
+    "sanzima": "jiujiang"
+  },
+  {
+    "name": "南昌",
+    "match": "南昌|nanchang|nanchang",
+    "cityId": "3297",
+    "pinyin": "nanchang",
+    "sanzima": "nanchang"
+  },
+  {
+    "name": "吉安",
+    "match": "吉安|jian|jian",
+    "cityId": "3298",
+    "pinyin": "jian",
+    "sanzima": "jian"
+  },
+  {
+    "name": "宜春",
+    "match": "宜春|yic|yic",
+    "cityId": "3299",
+    "pinyin": "yic",
+    "sanzima": "yic"
+  },
+  {
+    "name": "抚州",
+    "match": "抚州|fuzhou|fuzhou",
+    "cityId": "3300",
+    "pinyin": "fuzhou",
+    "sanzima": "fuzhou"
+  },
+  {
+    "name": "新余",
+    "match": "新余|xinyu|xinyu",
+    "cityId": "3301",
+    "pinyin": "xinyu",
+    "sanzima": "xinyu"
+  },
+  {
+    "name": "景德镇",
+    "match": "景德镇|jdz|jdz",
+    "cityId": "3302",
+    "pinyin": "jdz",
+    "sanzima": "jdz"
+  },
+  {
+    "name": "萍乡",
+    "match": "萍乡|px|px",
+    "cityId": "3303",
+    "pinyin": "px",
+    "sanzima": "px"
+  },
+  {
+    "name": "赣州",
+    "match": "赣州|ganzhou|ganzhou",
+    "cityId": "3304",
+    "pinyin": "ganzhou",
+    "sanzima": "ganzhou"
+  },
+  {
+    "name": "上海",
+    "match": "上海|sh|sh",
+    "cityId": "3306",
+    "pinyin": "sh",
+    "sanzima": "sh"
+  },
+  {
+    "name": "天津",
+    "match": "天津|tj|tj",
+    "cityId": "3308",
+    "pinyin": "tj",
+    "sanzima": "tj"
+  },
+  {
+    "name": "三沙",
+    "match": "三沙||",
+    "cityId": "14974",
+    "pinyin": "",
+    "sanzima": ""
+  },
+  {
+    "name": "澳门",
+    "match": "澳门|mac|mac",
+    "cityId": "3312",
+    "pinyin": "mac",
+    "sanzima": "mac"
+  },
+  {
+    "name": "香港",
+    "match": "香港|hk|hk",
+    "cityId": "3314",
+    "pinyin": "hk",
+    "sanzima": "hk"
+  },
+  {
+    "name": "重庆",
+    "match": "重庆|cq|cq",
+    "cityId": "3316",
+    "pinyin": "cq",
+    "sanzima": "cq"
+  },
+  {
+    "name": "宜州",
+    "match": "宜州|yizhou|yizhou",
+    "cityId": "14251",
+    "pinyin": "yizhou",
+    "sanzima": "yizhou"
+  },
+  {
+    "name": "自治区直辖县级行政区划",
+    "match": "自治区直辖县级行政区划|659000000000|659000000000",
+    "cityId": "14956",
+    "pinyin": "659000000000",
+    "sanzima": "659000000000"
+  },
+  {
+    "name": "县级",
+    "match": "县级|chongjin|chongjin",
+    "cityId": "14973",
+    "pinyin": "chongjin",
+    "sanzima": "chongjin"
+  },
+  {
+    "name": "雄安新区",
+    "match": "雄安新区|130629020079|130629020079",
+    "cityId": "21532",
+    "pinyin": "130629020079",
+    "sanzima": "130629020079"
+  }
+]
