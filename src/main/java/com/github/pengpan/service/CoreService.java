@@ -238,6 +238,14 @@ public class CoreService {
                 login(body.getUserName(), body.getPassword());
             }
 
+            // 判断会员ID是否正确
+            boolean exist = getMember().stream()
+                    .map(x -> String.valueOf(x.get("id")))
+                    .anyMatch(x -> StrUtil.equals(x, body.getMemberId()));
+            if (!exist) {
+                throw new RuntimeException("就诊人编码不正确，请检查");
+            }
+
             // 获取有效的参数列表
             List<RegisterForm> formList = schInfoList.stream().parallel()
                     .flatMap(x -> buildForm(x, body).stream())

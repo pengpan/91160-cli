@@ -32,6 +32,10 @@ public class Init implements Runnable {
         choseObj(ChoseObjEnum.BIG_DEPT);
         choseObj(ChoseObjEnum.DEPT);
         choseObj(ChoseObjEnum.DOCTOR);
+
+        System.out.println(StrUtil.format("查看医生号源: https://www.91160.com/doctors/index/unit_id-{}/docid-{}.html",
+                ConfigStore.getUnitId(), ConfigStore.getDoctorId()));
+
         choseObj(ChoseObjEnum.WEEK);
         choseObj(ChoseObjEnum.DAY);
         storeConfig();
