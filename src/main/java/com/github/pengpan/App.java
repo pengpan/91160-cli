@@ -5,7 +5,11 @@ import com.github.pengpan.cmd.Register;
 import com.github.pengpan.cmd.Version;
 import io.airlift.airline.Cli;
 import io.airlift.airline.Help;
+import org.springframework.beans.factory.NoSuchBeanDefinitionException;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.context.annotation.ComponentScan;
 
+@ComponentScan
 public class App {
 
     public static void main(String[] args) {
@@ -20,6 +24,14 @@ public class App {
                                 Init.class,
                                 Register.class
                         );
-        builder.build().parse(args).run();
+
+        Runnable runnable = builder.build().parse(args);
+
+        try {
+            new AnnotationConfigApplicationContext(App.class)
+                    .getBean(runnable.getClass()).run();
+        } catch (NoSuchBeanDefinitionException e) {
+            runnable.run();
+        }
     }
 }

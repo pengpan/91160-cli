@@ -9,7 +9,11 @@ import com.github.pengpan.service.CoreService;
 import com.github.pengpan.vo.SubmitBody;
 import io.airlift.airline.Command;
 import io.airlift.airline.Option;
+import org.springframework.stereotype.Component;
 
+import javax.annotation.Resource;
+
+@Component
 @Command(name = "register", description = "挂号")
 public class Register implements Runnable {
 
@@ -40,10 +44,11 @@ public class Register implements Runnable {
             description = "刷号休眠时间，默认10秒")
     private Integer sleepTime;
 
+    @Resource
+    private CoreService coreService;
+
     @Override
     public void run() {
-        CoreService coreService = new CoreService();
-
         if (sleepTime == null) {
             sleepTime = 10;
         } else if (sleepTime < 0) {

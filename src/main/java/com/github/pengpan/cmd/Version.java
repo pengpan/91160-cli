@@ -1,11 +1,13 @@
 package com.github.pengpan.cmd;
 
 import io.airlift.airline.Command;
+import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 
+@Component
 @Command(name = "version", description = "Show version information")
 public class Version implements Runnable {
 
