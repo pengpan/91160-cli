@@ -7,6 +7,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 
+/**
+ * @author pengpan
+ */
 @Component
 @Command(name = "version", description = "Show version information")
 public class Version implements Runnable {

@@ -18,6 +18,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 
+/**
+ * @author pengpan
+ */
 @Component
 @Command(name = "init", description = "初始化数据")
 public class Init implements Runnable {

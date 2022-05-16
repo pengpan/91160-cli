@@ -13,6 +13,9 @@ import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
 
+/**
+ * @author pengpan
+ */
 @Component
 @Command(name = "register", description = "挂号")
 public class Register implements Runnable {

@@ -2,6 +2,9 @@ package com.github.pengpan.common.store;
 
 import cn.hutool.core.util.StrUtil;
 
+/**
+ * @author pengpan
+ */
 public class AccountStore {
 
     private static String userName;

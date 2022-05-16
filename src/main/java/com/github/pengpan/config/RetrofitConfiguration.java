@@ -15,6 +15,9 @@ import retrofit2.Retrofit;
 
 import java.util.concurrent.TimeUnit;
 
+/**
+ * @author pengpan
+ */
 @Configuration
 public class RetrofitConfiguration {
 

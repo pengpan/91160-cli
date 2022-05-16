@@ -3,6 +3,9 @@ package com.github.pengpan.vo;
 import com.alibaba.fastjson.annotation.JSONField;
 import lombok.Data;
 
+/**
+ * @author pengpan
+ */
 @Data
 public class ScheduleInfo {
 

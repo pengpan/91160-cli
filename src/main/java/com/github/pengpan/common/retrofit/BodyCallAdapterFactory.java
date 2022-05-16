@@ -10,6 +10,9 @@ import java.lang.reflect.Type;
 import java.util.Objects;
 import java.util.concurrent.CompletableFuture;
 
+/**
+ * @author pengpan
+ */
 public final class BodyCallAdapterFactory extends CallAdapter.Factory {
 
     @Override
