@@ -1,21 +1,24 @@
 package com.github.pengpan;
 
+import cn.hutool.extra.spring.EnableSpringUtil;
 import com.github.pengpan.cmd.Init;
 import com.github.pengpan.cmd.Register;
 import com.github.pengpan.cmd.Version;
 import io.airlift.airline.Cli;
 import io.airlift.airline.Help;
-import org.springframework.beans.factory.NoSuchBeanDefinitionException;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.annotation.ComponentScan;
 
 /**
  * @author pengpan
  */
+@EnableSpringUtil
 @ComponentScan
 public class App {
 
     public static void main(String[] args) {
+        new AnnotationConfigApplicationContext(App.class);
+
         String version = Version.readVersionFromResources();
 
         Cli.CliBuilder<Runnable> builder =
@@ -27,14 +30,6 @@ public class App {
                                 Init.class,
                                 Register.class
                         );
-
-        Runnable runnable = builder.build().parse(args);
-
-        try {
-            new AnnotationConfigApplicationContext(App.class)
-                    .getBean(runnable.getClass()).run();
-        } catch (NoSuchBeanDefinitionException e) {
-            runnable.run();
-        }
+        builder.build().parse(args).run();
     }
 }

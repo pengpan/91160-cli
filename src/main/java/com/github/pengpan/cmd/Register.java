@@ -2,6 +2,7 @@ package com.github.pengpan.cmd;
 
 import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.util.StrUtil;
+import cn.hutool.extra.spring.SpringUtil;
 import cn.hutool.json.JSONUtil;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
@@ -9,14 +10,10 @@ import com.github.pengpan.service.CoreService;
 import com.github.pengpan.vo.SubmitBody;
 import io.airlift.airline.Command;
 import io.airlift.airline.Option;
-import org.springframework.stereotype.Component;
-
-import javax.annotation.Resource;
 
 /**
  * @author pengpan
  */
-@Component
 @Command(name = "register", description = "挂号")
 public class Register implements Runnable {
 
@@ -47,11 +44,9 @@ public class Register implements Runnable {
             description = "刷号休眠时间，默认10秒")
     private Integer sleepTime;
 
-    @Resource
-    private CoreService coreService;
-
     @Override
     public void run() {
+        CoreService coreService = SpringUtil.getBean(CoreService.class);
         if (sleepTime == null) {
             sleepTime = 10;
         } else if (sleepTime < 0) {
