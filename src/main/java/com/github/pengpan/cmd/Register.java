@@ -2,6 +2,7 @@ package com.github.pengpan.cmd;
 
 import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.util.StrUtil;
+import cn.hutool.extra.spring.SpringUtil;
 import cn.hutool.json.JSONUtil;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
@@ -10,6 +11,9 @@ import com.github.pengpan.vo.SubmitBody;
 import io.airlift.airline.Command;
 import io.airlift.airline.Option;
 
+/**
+ * @author pengpan
+ */
 @Command(name = "register", description = "挂号")
 public class Register implements Runnable {
 
@@ -42,8 +46,7 @@ public class Register implements Runnable {
 
     @Override
     public void run() {
-        CoreService coreService = new CoreService();
-
+        CoreService coreService = SpringUtil.getBean(CoreService.class);
         if (sleepTime == null) {
             sleepTime = 10;
         } else if (sleepTime < 0) {

@@ -3,6 +3,7 @@ package com.github.pengpan.cmd;
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.util.StrUtil;
+import cn.hutool.extra.spring.SpringUtil;
 import com.github.pengpan.common.store.AccountStore;
 import com.github.pengpan.common.store.ConfigStore;
 import com.github.pengpan.enums.ChoseObjEnum;
@@ -16,12 +17,15 @@ import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 
+/**
+ * @author pengpan
+ */
 @Command(name = "init", description = "初始化数据")
 public class Init implements Runnable {
 
-    private final CoreService coreService = new CoreService();
-
     private final Scanner in = new Scanner(System.in);
+
+    private final CoreService coreService = SpringUtil.getBean(CoreService.class);
 
     @Override
     public void run() {
@@ -75,7 +79,7 @@ public class Init implements Runnable {
         ChoseObj choseObj = choseObjEnum.getChoseObj();
         System.out.println(choseObj.getBanner());
         List<Object> ids = new ArrayList<>();
-        List<Map<String, Object>> data = choseObj.getData().get();
+        List<Map<String, Object>> data = choseObj.getData().apply(coreService);
         for (int i = 0; i < data.size(); i++) {
             Map<String, Object> datum = data.get(i);
             String id = String.valueOf("index".equals(choseObj.getAttrId()) ? (i + 1) : datum.get(choseObj.getAttrId()));

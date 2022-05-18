@@ -7,6 +7,9 @@ import okhttp3.HttpUrl;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * @author pengpan
+ */
 public class CookieManager implements CookieJar {
 
     @Override

@@ -12,6 +12,9 @@ import java.lang.annotation.Annotation;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 
+/**
+ * @author pengpan
+ */
 public final class ResponseCallAdapterFactory extends CallAdapter.Factory {
 
     @Override

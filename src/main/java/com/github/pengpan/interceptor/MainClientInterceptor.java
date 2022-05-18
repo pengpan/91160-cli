@@ -7,6 +7,9 @@ import okhttp3.Response;
 
 import java.io.IOException;
 
+/**
+ * @author pengpan
+ */
 public class MainClientInterceptor implements Interceptor {
 
     @Override

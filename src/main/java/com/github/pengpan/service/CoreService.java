@@ -15,28 +15,21 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.JSONPath;
-import com.alibaba.fastjson.support.retrofit.Retrofit2ConverterFactory;
 import com.github.pengpan.client.MainClient;
-import com.github.pengpan.common.cookie.CookieManager;
 import com.github.pengpan.common.cookie.CookieStore;
-import com.github.pengpan.common.retrofit.BasicTypeConverterFactory;
-import com.github.pengpan.common.retrofit.BodyCallAdapterFactory;
-import com.github.pengpan.common.retrofit.ResponseCallAdapterFactory;
 import com.github.pengpan.constant.SystemConstant;
 import com.github.pengpan.enums.DataTypeEnum;
-import com.github.pengpan.interceptor.MainClientInterceptor;
 import com.github.pengpan.vo.RegisterForm;
 import com.github.pengpan.vo.ScheduleInfo;
 import com.github.pengpan.vo.SubmitBody;
-import okhttp3.ConnectionPool;
-import okhttp3.OkHttpClient;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+import org.springframework.stereotype.Service;
 import retrofit2.Response;
-import retrofit2.Retrofit;
 
+import javax.annotation.Resource;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
@@ -44,31 +37,14 @@ import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 import java.util.stream.LongStream;
 
+/**
+ * @author pengpan
+ */
+@Service
 public class CoreService {
 
-    private static final MainClient mainClient;
-
-    static {
-        OkHttpClient okHttpClient = new OkHttpClient.Builder()
-                .addInterceptor(new MainClientInterceptor())
-                .followRedirects(false)
-                .cookieJar(new CookieManager())
-                .connectionPool(new ConnectionPool(200, 2, TimeUnit.MINUTES))
-                .connectTimeout(10000, TimeUnit.MILLISECONDS)
-                .readTimeout(10000, TimeUnit.MILLISECONDS)
-                .writeTimeout(10000, TimeUnit.MILLISECONDS)
-                .build();
-
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("https://www.91160.com/")
-                .client(okHttpClient)
-                .addCallAdapterFactory(new BodyCallAdapterFactory())
-                .addCallAdapterFactory(new ResponseCallAdapterFactory())
-                .addConverterFactory(new BasicTypeConverterFactory())
-                .addConverterFactory(Retrofit2ConverterFactory.create())
-                .build();
-        mainClient = retrofit.create(MainClient.class);
-    }
+    @Resource
+    private MainClient mainClient;
 
     public boolean login(String username, String password) {
         Assert.notBlank(username, "用户名不能为空");

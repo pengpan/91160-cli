@@ -7,6 +7,9 @@ import com.alibaba.fastjson.serializer.SerializerFeature;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+/**
+ * @author pengpan
+ */
 public class ConfigStore {
 
     private static String cityId;

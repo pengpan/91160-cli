@@ -6,6 +6,9 @@ import okhttp3.Cookie;
 
 import java.util.*;
 
+/**
+ * @author pengpan
+ */
 public class CookieStore {
 
     public static final Map<String, List<Cookie>> cookieStore = new HashMap<>();

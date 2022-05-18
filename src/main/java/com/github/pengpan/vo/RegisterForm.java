@@ -3,6 +3,9 @@ package com.github.pengpan.vo;
 import lombok.Builder;
 import lombok.Data;
 
+/**
+ * @author pengpan
+ */
 @Data
 @Builder
 public class RegisterForm {

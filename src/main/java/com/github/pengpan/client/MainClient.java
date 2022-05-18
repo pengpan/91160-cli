@@ -7,6 +7,9 @@ import retrofit2.http.*;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * @author pengpan
+ */
 public interface MainClient {
 
     @GET

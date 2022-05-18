@@ -9,6 +9,9 @@ import java.io.IOException;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Type;
 
+/**
+ * @author pengpan
+ */
 public final class BasicTypeConverterFactory extends Converter.Factory {
 
     @Override

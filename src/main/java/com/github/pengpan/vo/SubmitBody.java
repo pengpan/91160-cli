@@ -4,6 +4,9 @@ import lombok.Data;
 
 import java.util.List;
 
+/**
+ * @author pengpan
+ */
 @Data
 public class SubmitBody {
 
