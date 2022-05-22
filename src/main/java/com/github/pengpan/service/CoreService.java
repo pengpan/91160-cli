@@ -101,24 +101,28 @@ public class CoreService {
     }
 
     public List<Map<String, Object>> getDoctor(String unitId, String deptId) {
+        JSONObject data = dept(unitId, deptId);
+        return Optional.ofNullable(data).map(x -> x.getJSONArray("doc")).orElseGet(JSONArray::new).stream()
+                .map(JSON::toJSONString)
+                .map(x -> JSON.<Map<String, Object>>parseObject(x, new TypeReference<LinkedHashMap<String, Object>>() {
+                }.getType()))
+                .collect(Collectors.toList());
+    }
+
+    public JSONObject dept(String unitId, String deptId) {
         Assert.notBlank(unitId);
         Assert.notBlank(deptId);
         String url = "https://gate.91160.com/guahao/v1/pc/sch/dep";
         String date = DateUtil.today();
         int page = 0;
         String userKey = CookieStore.accessHash();
-        JSONObject result = mainClient.getDoctor(url, unitId, deptId, date, page, userKey);
+        JSONObject result = mainClient.dept(url, unitId, deptId, date, page, userKey);
         String resultCode = result.getString("result_code");
         String errorCode = result.getString("error_code");
         if (!"1".equals(resultCode) || !"200".equals(errorCode)) {
-            return new ArrayList<>();
+            return new JSONObject();
         }
-        JSONObject data = result.getJSONObject("data");
-        return Optional.ofNullable(data).map(x -> x.getJSONArray("doc")).orElseGet(JSONArray::new).stream()
-                .map(JSON::toJSONString)
-                .map(x -> JSON.<Map<String, Object>>parseObject(x, new TypeReference<LinkedHashMap<String, Object>>() {
-                }.getType()))
-                .collect(Collectors.toList());
+        return result.getJSONObject("data");
     }
 
     public JSONObject brushTicket(String docId) {
