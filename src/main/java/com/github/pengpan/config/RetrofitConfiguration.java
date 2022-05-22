@@ -6,6 +6,7 @@ import com.github.pengpan.common.cookie.CookieManager;
 import com.github.pengpan.common.retrofit.BasicTypeConverterFactory;
 import com.github.pengpan.common.retrofit.BodyCallAdapterFactory;
 import com.github.pengpan.common.retrofit.ResponseCallAdapterFactory;
+import com.github.pengpan.constant.SystemConstant;
 import com.github.pengpan.interceptor.MainClientInterceptor;
 import okhttp3.ConnectionPool;
 import okhttp3.OkHttpClient;
@@ -37,7 +38,7 @@ public class RetrofitConfiguration {
     @Bean
     public Retrofit retrofit(OkHttpClient okHttpClient) {
         return new Retrofit.Builder()
-                .baseUrl("https://www.91160.com/")
+                .baseUrl(SystemConstant.DOMAIN)
                 .client(okHttpClient)
                 .addCallAdapterFactory(new BodyCallAdapterFactory())
                 .addCallAdapterFactory(new ResponseCallAdapterFactory())
