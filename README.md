@@ -1,5 +1,8 @@
 # 91160-cli
 
+## 申明
+- 本项目仅供学习研究，禁止商用！
+
 ## 如何使用
 
 1. [下载jar包](https://github.com/pengpan/91160-cli/releases)
