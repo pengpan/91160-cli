@@ -109,7 +109,7 @@ public class Register implements Runnable {
             coreService.brushTicketTask(s, sleepTime);
             System.exit(0);
         } catch (Exception e) {
-            e.printStackTrace();
+            log.error("", e);
             System.exit(-1);
         }
     }

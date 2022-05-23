@@ -86,7 +86,7 @@ public class Init implements Runnable {
             Map<String, Object> datum = data.get(i);
             String id = String.valueOf("index".equals(choseObj.getAttrId()) ? (i + 1) : datum.get(choseObj.getAttrId()));
             ids.add(id);
-            String name = StrUtil.format("{}. {}", id, datum.get(choseObj.getAttrName()));
+            String name = StrUtil.format("[{}]. {}", id, datum.get(choseObj.getAttrName()));
             log.info(name);
         }
         boolean choseSuccess;

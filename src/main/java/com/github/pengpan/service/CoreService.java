@@ -210,7 +210,7 @@ public class CoreService {
                 try {
                     TimeUnit.SECONDS.sleep(sleepTime);
                 } catch (InterruptedException e) {
-                    e.printStackTrace();
+                    log.error("", e);
                 }
                 continue;
             }

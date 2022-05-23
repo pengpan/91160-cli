@@ -25,7 +25,7 @@ public class Version implements Runnable {
         try (InputStream is = Version.class.getResourceAsStream("/version.properties")) {
             versionProperties.load(is);
         } catch (IOException ex) {
-            ex.printStackTrace();
+            log.error("", ex);
             return UNREADABLE_VERSION;
         }
 
