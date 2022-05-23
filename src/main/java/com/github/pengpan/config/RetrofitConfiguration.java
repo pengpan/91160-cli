@@ -7,6 +7,7 @@ import com.github.pengpan.common.retrofit.BasicTypeConverterFactory;
 import com.github.pengpan.common.retrofit.BodyCallAdapterFactory;
 import com.github.pengpan.common.retrofit.ResponseCallAdapterFactory;
 import com.github.pengpan.constant.SystemConstant;
+import com.github.pengpan.interceptor.LoggingInterceptor;
 import com.github.pengpan.interceptor.MainClientInterceptor;
 import okhttp3.ConnectionPool;
 import okhttp3.OkHttpClient;
@@ -26,6 +27,7 @@ public class RetrofitConfiguration {
     public OkHttpClient okHttpClient() {
         return new OkHttpClient.Builder()
                 .addInterceptor(new MainClientInterceptor())
+                .addInterceptor(new LoggingInterceptor())
                 .followRedirects(false)
                 .cookieJar(new CookieManager())
                 .connectionPool(new ConnectionPool(200, 2, TimeUnit.MINUTES))
