@@ -22,6 +22,7 @@ import com.github.pengpan.enums.DataTypeEnum;
 import com.github.pengpan.vo.RegisterForm;
 import com.github.pengpan.vo.ScheduleInfo;
 import com.github.pengpan.vo.SubmitBody;
+import lombok.extern.slf4j.Slf4j;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -40,6 +41,7 @@ import java.util.stream.LongStream;
 /**
  * @author pengpan
  */
+@Slf4j
 @Service
 public class CoreService {
 
@@ -101,24 +103,29 @@ public class CoreService {
     }
 
     public List<Map<String, Object>> getDoctor(String unitId, String deptId) {
+        JSONObject data = dept(unitId, deptId);
+        return Optional.ofNullable(data).map(x -> x.getJSONArray("doc")).orElseGet(JSONArray::new).stream()
+                .map(JSON::toJSONString)
+                .map(x -> JSON.<Map<String, Object>>parseObject(x, new TypeReference<LinkedHashMap<String, Object>>() {
+                }.getType()))
+                .collect(Collectors.toList());
+    }
+
+    public JSONObject dept(String unitId, String deptId) {
         Assert.notBlank(unitId);
         Assert.notBlank(deptId);
         String url = "https://gate.91160.com/guahao/v1/pc/sch/dep";
         String date = DateUtil.today();
         int page = 0;
         String userKey = CookieStore.accessHash();
-        JSONObject result = mainClient.getDoctor(url, unitId, deptId, date, page, userKey);
+        JSONObject result = mainClient.dept(url, unitId, deptId, date, page, userKey);
         String resultCode = result.getString("result_code");
         String errorCode = result.getString("error_code");
         if (!"1".equals(resultCode) || !"200".equals(errorCode)) {
-            return new ArrayList<>();
+            log.info("获取数据失败: {}", result.toJSONString());
+            return new JSONObject();
         }
-        JSONObject data = result.getJSONObject("data");
-        return Optional.ofNullable(data).map(x -> x.getJSONArray("doc")).orElseGet(JSONArray::new).stream()
-                .map(JSON::toJSONString)
-                .map(x -> JSON.<Map<String, Object>>parseObject(x, new TypeReference<LinkedHashMap<String, Object>>() {
-                }.getType()))
-                .collect(Collectors.toList());
+        return result.getJSONObject("data");
     }
 
     public JSONObject brushTicket(String docId) {
@@ -157,35 +164,18 @@ public class CoreService {
     }
 
     public void brushTicketTask(SubmitBody body, int sleepTime) {
-        System.out.println("挂号开始");
+        log.info("挂号开始");
 
-        LocalDate now = LocalDate.now();
-        Map<String, String> map = new LinkedHashMap<>();
-        LongStream.range(1, 8).mapToObj(now::plusDays).forEach(x -> {
-            String week = String.valueOf(x.getDayOfWeek().getValue());
-            String date = x.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-            map.put(week, date);
-        });
-        List<String> weeks = body.getWeeks().stream()
-                .map(map::get).collect(Collectors.toList());
+        //List<String> keyList = getJSONPathKeys(body);
+        List<String> keyList = getJSONPathKeysNew(body);
 
-        List<String> keyList = new ArrayList<>();
-        for (String day : body.getDays()) {
-            for (String week : weeks) {
-                String key = StrUtil.format("$.sch.{}.{}.{}",
-                        StrUtil.format("{}_{}", body.getDeptId(), body.getDoctorId()),
-                        StrUtil.format("{}_{}_{}", body.getDeptId(), body.getDoctorId(), day),
-                        week);
-                keyList.add(key);
-            }
-        }
-
-        keyList.forEach(System.out::println);
+        keyList.forEach(log::info);
 
         for (; ; ) {
-            System.out.println("努力刷号中...");
+            log.info("努力刷号中...");
 
-            JSONObject ticketData = brushTicket(body.getDoctorId());
+            //JSONObject ticketData = brushTicket(body.getDoctorId());
+            JSONObject ticketData = dept(body.getUnitId(), body.getDeptId());
 
             // 获取有效的schedule_id
             List<ScheduleInfo> schInfoList = keyList.stream().parallel()
@@ -197,14 +187,14 @@ public class CoreService {
                     .sorted(Comparator.comparing(ScheduleInfo::getNumber).reversed())
                     .collect(Collectors.toList());
 
-            schInfoList.forEach(System.out::println);
+            schInfoList.forEach(x -> log.info(JSON.toJSONString(x)));
 
             if (CollUtil.isEmpty(schInfoList)) {
                 // 休眠
                 try {
                     TimeUnit.SECONDS.sleep(sleepTime);
                 } catch (InterruptedException e) {
-                    e.printStackTrace();
+                    log.error("", e);
                 }
                 continue;
             }
@@ -230,12 +220,59 @@ public class CoreService {
             // 挂号
             boolean success = doRegister(formList);
             if (success) {
-                System.out.println("挂号成功");
+                log.info("挂号成功");
                 break;
             }
         }
 
-        System.out.println("挂号结束");
+        log.info("挂号结束");
+    }
+
+    @Deprecated
+    private List<String> getJSONPathKeys(SubmitBody body) {
+        LocalDate now = LocalDate.now();
+        Map<String, String> map = new LinkedHashMap<>();
+        LongStream.range(1, 8).mapToObj(now::plusDays).forEach(x -> {
+            String week = String.valueOf(x.getDayOfWeek().getValue());
+            String date = x.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+            map.put(week, date);
+        });
+        List<String> weeks = body.getWeeks().stream()
+                .map(map::get).collect(Collectors.toList());
+
+        List<String> keyList = new ArrayList<>();
+        for (String day : body.getDays()) {
+            for (String week : weeks) {
+                String key = StrUtil.format("$.sch.{}.{}.{}",
+                        StrUtil.format("{}_{}", body.getDeptId(), body.getDoctorId()),
+                        StrUtil.format("{}_{}_{}", body.getDeptId(), body.getDoctorId(), day),
+                        week);
+                keyList.add(key);
+            }
+        }
+        return keyList;
+    }
+
+    private List<String> getJSONPathKeysNew(SubmitBody body) {
+        LocalDate now = LocalDate.now();
+        Map<String, String> map = new LinkedHashMap<>();
+        for (int i = 0; i < 7; i++) {
+            LocalDate localDate = now.plusDays(i);
+            String k = String.valueOf(localDate.getDayOfWeek().getValue());
+            String v = String.valueOf(i);
+            map.put(k, v);
+        }
+        List<String> weeks = body.getWeeks().stream()
+                .map(map::get).collect(Collectors.toList());
+
+        List<String> keyList = new ArrayList<>();
+        for (String day : body.getDays()) {
+            for (String week : weeks) {
+                String key = StrUtil.format("$.sch.{}.{}.{}", body.getDoctorId(), day, week);
+                keyList.add(key);
+            }
+        }
+        return keyList;
     }
 
     private boolean doRegister(List<RegisterForm> formList) {

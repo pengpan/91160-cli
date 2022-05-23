@@ -7,6 +7,7 @@ Introduction: https://maven.apache.org/plugins/maven-assembly-plugin/index.html
     <id>${project.version}</id>
     <formats>
         <format>tar.gz</format>
+        <format>zip</format>
     </formats>
     <includeBaseDirectory>false</includeBaseDirectory>
     <files>

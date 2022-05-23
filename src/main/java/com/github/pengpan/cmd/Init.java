@@ -10,6 +10,7 @@ import com.github.pengpan.enums.ChoseObjEnum;
 import com.github.pengpan.service.CoreService;
 import com.github.pengpan.vo.ChoseObj;
 import io.airlift.airline.Command;
+import lombok.extern.slf4j.Slf4j;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -20,6 +21,7 @@ import java.util.Scanner;
 /**
  * @author pengpan
  */
+@Slf4j
 @Command(name = "init", description = "初始化数据")
 public class Init implements Runnable {
 
@@ -37,13 +39,13 @@ public class Init implements Runnable {
         choseObj(ChoseObjEnum.DEPT);
         choseObj(ChoseObjEnum.DOCTOR);
 
-        System.out.println(StrUtil.format("查看医生号源: https://www.91160.com/doctors/index/unit_id-{}/docid-{}.html",
+        log.info(StrUtil.format("查看医生号源: https://www.91160.com/doctors/index/unit_id-{}/docid-{}.html",
                 ConfigStore.getUnitId(), ConfigStore.getDoctorId()));
 
         choseObj(ChoseObjEnum.WEEK);
         choseObj(ChoseObjEnum.DAY);
         storeConfig();
-        System.out.println("init success.");
+        log.info("init success.");
         System.exit(0);
     }
 
@@ -62,30 +64,30 @@ public class Init implements Runnable {
                 password = in.nextLine();
             }
 
-            System.out.println("登录中，请稍等...");
+            log.info("登录中，请稍等...");
 
             loginSuccess = coreService.login(userName, password);
             if (loginSuccess) {
                 AccountStore.store(userName, password);
-                System.out.println("登录成功");
+                log.info("登录成功");
             } else {
-                System.out.println("用户名或密码错误，请重新输入！");
+                log.info("用户名或密码错误，请重新输入！");
             }
         } while (!loginSuccess);
     }
 
     private void choseObj(ChoseObjEnum choseObjEnum) {
-        System.out.println();
+        log.info("");
         ChoseObj choseObj = choseObjEnum.getChoseObj();
-        System.out.println(choseObj.getBanner());
+        log.info(choseObj.getBanner());
         List<Object> ids = new ArrayList<>();
         List<Map<String, Object>> data = choseObj.getData().apply(coreService);
         for (int i = 0; i < data.size(); i++) {
             Map<String, Object> datum = data.get(i);
             String id = String.valueOf("index".equals(choseObj.getAttrId()) ? (i + 1) : datum.get(choseObj.getAttrId()));
             ids.add(id);
-            String name = StrUtil.format("{}. {}", id, datum.get(choseObj.getAttrName()));
-            System.out.println(name);
+            String name = StrUtil.format("[{}]. {}", id, datum.get(choseObj.getAttrName()));
+            log.info(name);
         }
         boolean choseSuccess;
         do {
@@ -98,7 +100,7 @@ public class Init implements Runnable {
             if (choseSuccess) {
                 choseObj.getSetValue().accept(id);
             } else {
-                System.out.println("输入有误，请重新输入！");
+                log.info("输入有误，请重新输入！");
             }
         } while (!choseSuccess);
     }
@@ -123,7 +125,7 @@ public class Init implements Runnable {
         String config = ConfigStore.toJson();
         File file = new File("config.json");
         FileUtil.writeUtf8String(config, file);
-        System.out.println("The file config.json has been generated.");
+        log.info("The file config.json has been generated.");
     }
 
 }

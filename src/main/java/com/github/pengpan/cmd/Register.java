@@ -10,10 +10,12 @@ import com.github.pengpan.service.CoreService;
 import com.github.pengpan.vo.SubmitBody;
 import io.airlift.airline.Command;
 import io.airlift.airline.Option;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * @author pengpan
  */
+@Slf4j
 @Command(name = "register", description = "挂号")
 public class Register implements Runnable {
 
@@ -50,24 +52,24 @@ public class Register implements Runnable {
         if (sleepTime == null) {
             sleepTime = 10;
         } else if (sleepTime < 0) {
-            System.out.println("休眠时间不能小于0");
+            log.info("休眠时间不能小于0");
         } else if (sleepTime < 5) {
-            System.out.println("不建议休眠时间小于5秒，容易触发限制访问");
+            log.info("不建议休眠时间小于5秒，容易触发限制访问");
         }
 
         if (!FileUtil.exist(configFile)) {
-            System.out.println("配置文件不存在，请检查文件路径");
+            log.info("配置文件不存在，请检查文件路径");
             System.exit(-1);
         }
 
         String content = FileUtil.readUtf8String(configFile);
         if (StrUtil.isBlank(content)) {
-            System.out.println("配置文件不能为空");
+            log.info("配置文件不能为空");
             System.exit(-1);
         }
 
         if (!JSONUtil.isTypeJSONObject(content)) {
-            System.out.println("配置文件内容不正确");
+            log.info("配置文件内容不正确");
             System.exit(-1);
         }
 
@@ -82,13 +84,13 @@ public class Register implements Runnable {
         String weekId = config.getString("weekId");
         String dayId = config.getString("dayId");
         if (StrUtil.hasBlank(memberId, cityId, unitId, bigDeptId, deptId, doctorId, weekId, dayId)) {
-            System.out.println("配置文件存在为空的属性");
+            log.info("配置文件存在为空的属性");
             System.exit(-1);
         }
 
         boolean login = coreService.login(userName, password);
         if (!login) {
-            System.out.println("登录失败，请检查用户名密码");
+            log.info("登录失败，请检查用户名密码");
             System.exit(-1);
         }
 
@@ -107,7 +109,7 @@ public class Register implements Runnable {
             coreService.brushTicketTask(s, sleepTime);
             System.exit(0);
         } catch (Exception e) {
-            e.printStackTrace();
+            log.error("", e);
             System.exit(-1);
         }
     }

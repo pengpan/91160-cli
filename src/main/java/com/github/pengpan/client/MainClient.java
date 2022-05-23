@@ -31,12 +31,12 @@ public interface MainClient {
     List<Map<String, Object>> getDept(@Field("keyValue") String unitId);
 
     @GET
-    JSONObject getDoctor(@Url String url,
-                         @Query("unit_id") String unitId,
-                         @Query("dep_id") String deptId,
-                         @Query("date") String date,
-                         @Query("p") int page,
-                         @Query("user_key") String userKey);
+    JSONObject dept(@Url String url,
+                    @Query("unit_id") String unitId,
+                    @Query("dep_id") String deptId,
+                    @Query("date") String date,
+                    @Query("p") int page,
+                    @Query("user_key") String userKey);
 
     @FormUrlEncoded
     @POST("/doctors/ajaxgetclass.html")
