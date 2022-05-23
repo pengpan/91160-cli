@@ -22,6 +22,7 @@ import com.github.pengpan.enums.DataTypeEnum;
 import com.github.pengpan.vo.RegisterForm;
 import com.github.pengpan.vo.ScheduleInfo;
 import com.github.pengpan.vo.SubmitBody;
+import lombok.extern.slf4j.Slf4j;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -40,6 +41,7 @@ import java.util.stream.LongStream;
 /**
  * @author pengpan
  */
+@Slf4j
 @Service
 public class CoreService {
 
@@ -161,7 +163,7 @@ public class CoreService {
     }
 
     public void brushTicketTask(SubmitBody body, int sleepTime) {
-        System.out.println("挂号开始");
+        log.info("挂号开始");
 
         LocalDate now = LocalDate.now();
         Map<String, String> map = new LinkedHashMap<>();
@@ -187,7 +189,7 @@ public class CoreService {
         keyList.forEach(System.out::println);
 
         for (; ; ) {
-            System.out.println("努力刷号中...");
+            log.info("努力刷号中...");
 
             JSONObject ticketData = brushTicket(body.getDoctorId());
 
@@ -234,12 +236,12 @@ public class CoreService {
             // 挂号
             boolean success = doRegister(formList);
             if (success) {
-                System.out.println("挂号成功");
+                log.info("挂号成功");
                 break;
             }
         }
 
-        System.out.println("挂号结束");
+        log.info("挂号结束");
     }
 
     private boolean doRegister(List<RegisterForm> formList) {

@@ -1,6 +1,7 @@
 package com.github.pengpan.cmd;
 
 import io.airlift.airline.Command;
+import lombok.extern.slf4j.Slf4j;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -9,6 +10,7 @@ import java.util.Properties;
 /**
  * @author pengpan
  */
+@Slf4j
 @Command(name = "version", description = "Show version information")
 public class Version implements Runnable {
 
@@ -38,7 +40,7 @@ public class Version implements Runnable {
     @Override
     public void run() {
         String version = readVersionFromResources();
-        System.out.println(version);
+        log.info(version);
     }
 
 }
