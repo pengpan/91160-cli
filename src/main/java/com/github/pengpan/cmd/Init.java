@@ -87,14 +87,14 @@ public class Init implements Runnable {
         }
         boolean choseSuccess;
         do {
-            String id = choseObj.getGetValue().get();
+            String id = null;
             while (StrUtil.isBlank(id)) {
                 System.out.print(choseObj.getInputTips());
                 id = in.nextLine();
             }
             choseSuccess = checkInput(ids, id);
             if (choseSuccess) {
-                choseObj.getSetValue().accept(id);
+                choseObj.getStore().accept(id);
             } else {
                 log.info("输入有误，请重新输入！");
             }

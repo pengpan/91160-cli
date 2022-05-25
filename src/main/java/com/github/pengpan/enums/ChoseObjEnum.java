@@ -27,8 +27,7 @@ public enum ChoseObjEnum {
             .banner("=====请选择就诊人=====")
             .inputTips("请输入就诊人编号: ")
             .data(CoreService::getMember)
-            .getValue(ConfigStore::getMemberId)
-            .setValue(ConfigStore::setMemberId)
+            .store(ConfigStore::setMemberId)
             .build()),
 
     CITY(ChoseObj.builder()
@@ -37,8 +36,7 @@ public enum ChoseObjEnum {
             .banner("=====请选择城市=====")
             .inputTips("请输入城市编号: ")
             .data(x -> x.getData(DataTypeEnum.CITIES))
-            .getValue(ConfigStore::getCityId)
-            .setValue(ConfigStore::setCityId)
+            .store(ConfigStore::setCityId)
             .build()),
 
     UNIT(ChoseObj.builder()
@@ -47,8 +45,7 @@ public enum ChoseObjEnum {
             .banner("=====请选择医院=====")
             .inputTips("请输入医院编号: ")
             .data(x -> x.getUnit(ConfigStore.getCityId()))
-            .getValue(ConfigStore::getUnitId)
-            .setValue(ConfigStore::setUnitId)
+            .store(ConfigStore::setUnitId)
             .build()),
 
     BIG_DEPT(ChoseObj.builder()
@@ -57,8 +54,7 @@ public enum ChoseObjEnum {
             .banner("=====请选择大科室=====")
             .inputTips("请输入大科室编号: ")
             .data(x -> x.getDept(ConfigStore.getUnitId()))
-            .getValue(ConfigStore::getBigDeptId)
-            .setValue(ConfigStore::setBigDeptId)
+            .store(ConfigStore::setBigDeptId)
             .build()),
 
     DEPT(ChoseObj.builder()
@@ -76,8 +72,7 @@ public enum ChoseObjEnum {
                         }.getType()))
                         .collect(Collectors.toList());
             })
-            .getValue(ConfigStore::getDeptId)
-            .setValue(ConfigStore::setDeptId)
+            .store(ConfigStore::setDeptId)
             .build()),
 
     DOCTOR(ChoseObj.builder()
@@ -86,8 +81,7 @@ public enum ChoseObjEnum {
             .banner("=====请选择医生=====")
             .inputTips("请输入医生编号: ")
             .data(x -> x.getDoctor(ConfigStore.getUnitId(), ConfigStore.getDeptId()))
-            .getValue(ConfigStore::getDoctorId)
-            .setValue(ConfigStore::setDoctorId)
+            .store(ConfigStore::setDoctorId)
             .build()),
 
     WEEK(ChoseObj.builder()
@@ -96,8 +90,7 @@ public enum ChoseObjEnum {
             .banner("=====请选择哪天的号=====")
             .inputTips("请输入需要周几的号[可多选，如(6,7)]: ")
             .data(x -> x.getData(DataTypeEnum.WEEKS))
-            .getValue(ConfigStore::getWeekId)
-            .setValue(ConfigStore::setWeekId)
+            .store(ConfigStore::setWeekId)
             .build()),
 
     DAY(ChoseObj.builder()
@@ -106,8 +99,7 @@ public enum ChoseObjEnum {
             .banner("=====请选择时间段=====")
             .inputTips("请输入时间段编号[可多选，如(am,pm)]: ")
             .data(x -> x.getData(DataTypeEnum.DAYS))
-            .getValue(ConfigStore::getDayId)
-            .setValue(ConfigStore::setDayId)
+            .store(ConfigStore::setDayId)
             .build()),
     ;
 
