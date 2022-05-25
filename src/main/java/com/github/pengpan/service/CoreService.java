@@ -17,6 +17,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.JSONPath;
 import com.github.pengpan.client.MainClient;
 import com.github.pengpan.common.cookie.CookieStore;
+import com.github.pengpan.common.store.AccountStore;
 import com.github.pengpan.constant.SystemConstant;
 import com.github.pengpan.enums.DataTypeEnum;
 import com.github.pengpan.vo.RegisterForm;
@@ -114,6 +115,10 @@ public class CoreService {
     public JSONObject dept(String unitId, String deptId) {
         Assert.notBlank(unitId);
         Assert.notBlank(deptId);
+        if (!CookieStore.isLogin()) {
+            log.info("会话失效，重新登录...");
+            login(AccountStore.getUserName(), AccountStore.getPassword());
+        }
         String url = "https://gate.91160.com/guahao/v1/pc/sch/dep";
         String date = DateUtil.today();
         int page = 0;
@@ -201,6 +206,7 @@ public class CoreService {
 
             // 判断登录是否有效
             if (!CookieStore.isLogin()) {
+                log.info("会话失效，重新登录...");
                 login(body.getUserName(), body.getPassword());
             }
 
