@@ -2,8 +2,8 @@
 <Configuration>
     <Properties>
         <Property name="LOG_PATH">logs</Property>
-        <Property name="CONSOLE_LOG_PATTERN">%d{yyyy-MM-dd HH:mm:ss.SSS}{faint} %5p - %msg%n</Property>
-        <Property name="FILE_LOG_PATTERN">%d{yyyy-MM-dd HH:mm:ss.SSS}{faint} %5p - %msg%n</Property>
+        <Property name="CONSOLE_LOG_PATTERN">%d{yyyy-MM-dd HH:mm:ss.SSS}{GMT+8}{faint} %5p - %msg%n</Property>
+        <Property name="FILE_LOG_PATTERN">%d{yyyy-MM-dd HH:mm:ss.SSS}{GMT+8}{faint} %5p - %msg%n</Property>
     </Properties>
     <Appenders>
         <Console name="Console" target="SYSTEM_OUT">
