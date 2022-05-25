@@ -64,13 +64,13 @@ public class CoreService {
         fields.put("token", getToken());
 
         Response<Void> loginResp = mainClient.doLogin("https://user.91160.com/login.html", fields);
-        if (302 != loginResp.code()) {
+        if (!loginResp.raw().isRedirect()) {
             return false;
         }
 
         String redirectUrl = loginResp.headers().get("Location");
         Response<Void> redirectResp = mainClient.loginRedirect(redirectUrl);
-        return 302 == redirectResp.code();
+        return redirectResp.raw().isRedirect();
     }
 
     private String getToken() {
@@ -133,6 +133,7 @@ public class CoreService {
         return result.getJSONObject("data");
     }
 
+    @Deprecated
     public JSONObject brushTicket(String docId) {
         String date = DateUtil.today();
         int days = 6;
@@ -302,7 +303,7 @@ public class CoreService {
                     form.getAddress()
             );
 
-            if (302 != submitResp.code()) {
+            if (!submitResp.raw().isRedirect()) {
                 continue;
             }
 
