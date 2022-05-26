@@ -16,8 +16,8 @@ $ java -jar 91160-cli.jar register -c config.json -u 16666666666 -p 123456 -s 5
 2022-05-26 00:22:12.488  INFO - <-- 200 OK https://user.91160.com/login.html (332ms, unknown-length body)
 2022-05-26 00:22:12.549  INFO - --> POST https://user.91160.com/login.html (467-byte body)
 2022-05-26 00:22:13.243  INFO - <-- 302 Found https://user.91160.com/login.html (692ms, unknown-length body)
-2022-05-26 00:22:13.244  INFO - --> GET https://www.91160.com/client/login.html?user_token=48d0c6b988f921fa030dab9f84e9971bTQqNYxOu20220527002215&client_id=1&client_token=e321cae9&uc_token=fe63a232&target=https%3A%2F%2Fwww.91160.com
-2022-05-26 00:22:15.087  INFO - <-- 302 https://www.91160.com/client/login.html?user_token=48d0c6b988f921fa030dab9f84e9971bTQqNYxOu20220527002215&client_id=1&client_token=e321cae9&uc_token=fe63a232&target=https%3A%2F%2Fwww.91160.com (1842ms, unknown-length body)
+2022-05-26 00:22:13.244  INFO - --> GET https://www.91160.com/client/login.html
+2022-05-26 00:22:15.087  INFO - <-- 302 https://www.91160.com/client/login.html (1842ms, unknown-length body)
 2022-05-26 00:22:15.088  INFO - 挂号开始
 2022-05-26 00:22:15.096  INFO - $.sch.1699.am.4
 2022-05-26 00:22:15.096  INFO - $.sch.1699.am.5
@@ -28,8 +28,8 @@ $ java -jar 91160-cli.jar register -c config.json -u 16666666666 -p 123456 -s 5
 2022-05-26 00:22:15.097  INFO - $.sch.1699.pm.6
 2022-05-26 00:22:15.097  INFO - $.sch.1699.pm.0
 2022-05-26 00:22:15.098  INFO - 努力刷号中...
-2022-05-26 00:22:15.255  INFO - --> GET https://gate.91160.com/guahao/v1/pc/sch/dep?unit_id=21&dep_id=556&date=2022-05-26&p=0&user_key=48d0c6b988f921fa030dab9f84e9971bTQqNYxOu20220527002215
-2022-05-26 00:22:16.006  INFO - <-- 200 https://gate.91160.com/guahao/v1/pc/sch/dep?unit_id=21&dep_id=556&date=2022-05-26&p=0&user_key=48d0c6b988f921fa030dab9f84e9971bTQqNYxOu20220527002215 (750ms, unknown-length body)
+2022-05-26 00:22:15.255  INFO - --> GET https://gate.91160.com/guahao/v1/pc/sch/dep
+2022-05-26 00:22:16.006  INFO - <-- 200 https://gate.91160.com/guahao/v1/pc/sch/dep (750ms, unknown-length body)
 2022-05-26 00:22:16.089  INFO - {"left_num":1,"schedule_id":"628c7442687bcb522d0d4fcd","time_type":"am"}
 2022-05-26 00:22:16.090  INFO - --> GET https://user.91160.com/member.html
 2022-05-26 00:22:16.620  INFO - <-- 200 OK https://user.91160.com/member.html (529ms, unknown-length body)

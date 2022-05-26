@@ -2,6 +2,10 @@ package com.github.pengpan.common.cookie;
 
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.StrUtil;
+import cn.hutool.extra.spring.SpringUtil;
+import com.github.pengpan.common.store.AccountStore;
+import com.github.pengpan.service.CoreService;
+import lombok.extern.slf4j.Slf4j;
 import okhttp3.Cookie;
 
 import java.util.*;
@@ -9,6 +13,7 @@ import java.util.*;
 /**
  * @author pengpan
  */
+@Slf4j
 public class CookieStore {
 
     public static final Map<String, List<Cookie>> cookieStore = new HashMap<>();
@@ -29,28 +34,32 @@ public class CookieStore {
         return cookieStore.get(name);
     }
 
-    public static boolean isLogin() {
-        Cookie loginCookie = getLoginCookie();
-        return loginCookie != null && loginCookie.expiresAt() > System.currentTimeMillis();
-    }
-
     public static String accessHash() {
-        Cookie loginCookie = getLoginCookie();
-        if (loginCookie == null) {
-            throw new RuntimeException("请先登录");
-        }
-        if (loginCookie.expiresAt() < System.currentTimeMillis()) {
-            throw new RuntimeException("会话失效，请重新登录");
-        }
-        return loginCookie.value();
+        return getLoginCookieNotNull().value();
     }
 
     private static Cookie getLoginCookie() {
         List<Cookie> cookies = cookieStore.get("user.91160.com");
         return Optional.ofNullable(cookies).orElseGet(ArrayList::new)
                 .stream()
+                .sorted(Comparator.comparing(Cookie::expiresAt).reversed())
                 .filter(x -> StrUtil.equals("access_hash", x.name())).findFirst()
                 .orElse(null);
     }
 
+    public static Cookie getLoginCookieNotNull() {
+        Cookie loginCookie = getLoginCookie();
+        if (loginCookie == null || System.currentTimeMillis() > (loginCookie.expiresAt() - 60 * 1000)) {
+            log.info("登录失效，正在重新登录...");
+            cookieStore.clear();
+            CoreService coreService = SpringUtil.getBean(CoreService.class);
+            boolean loginSuccess = coreService.login(AccountStore.getUserName(), AccountStore.getPassword());
+            if (!loginSuccess) {
+                throw new RuntimeException("登录失败，请检查用户名密码");
+            }
+            log.info("登录成功");
+            loginCookie = getLoginCookie();
+        }
+        return loginCookie;
+    }
 }
