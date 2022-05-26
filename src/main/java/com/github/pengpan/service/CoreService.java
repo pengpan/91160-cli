@@ -10,7 +10,6 @@ import cn.hutool.core.util.StrUtil;
 import cn.hutool.crypto.SecureUtil;
 import cn.hutool.crypto.asymmetric.KeyType;
 import cn.hutool.crypto.asymmetric.RSA;
-import cn.hutool.json.JSONUtil;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
@@ -33,11 +32,9 @@ import retrofit2.Response;
 
 import javax.annotation.Resource;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
-import java.util.stream.LongStream;
 
 /**
  * @author pengpan
@@ -53,12 +50,12 @@ public class CoreService {
         Assert.notBlank(username, "用户名不能为空");
         Assert.notBlank(password, "密码不能为空");
         RSA rsa = SecureUtil.rsa(null, SystemConstant.PUBLIC_KEY);
-        username = Base64.encode(rsa.encrypt(username, KeyType.PublicKey));
-        password = Base64.encode(rsa.encrypt(password, KeyType.PublicKey));
+        String encryptedUsername = Base64.encode(rsa.encrypt(username, KeyType.PublicKey));
+        String encryptedPassword = Base64.encode(rsa.encrypt(password, KeyType.PublicKey));
 
         JSONObject fields = new JSONObject();
-        fields.put("username", username);
-        fields.put("password", password);
+        fields.put("username", encryptedUsername);
+        fields.put("password", encryptedPassword);
         fields.put("target", "https://www.91160.com");
         fields.put("error_num", "0");
         fields.put("token", getToken());
@@ -70,7 +67,11 @@ public class CoreService {
 
         String redirectUrl = loginResp.headers().get("Location");
         Response<Void> redirectResp = mainClient.loginRedirect(redirectUrl);
-        return redirectResp.raw().isRedirect();
+        boolean loginSuccess = redirectResp.raw().isRedirect();
+        if (loginSuccess) {
+            AccountStore.store(username, password);
+        }
+        return loginSuccess;
     }
 
     private String getToken() {
@@ -115,10 +116,6 @@ public class CoreService {
     public JSONObject dept(String unitId, String deptId) {
         Assert.notBlank(unitId);
         Assert.notBlank(deptId);
-        if (!CookieStore.isLogin()) {
-            log.info("会话失效，重新登录...");
-            login(AccountStore.getUserName(), AccountStore.getPassword());
-        }
         String url = "https://gate.91160.com/guahao/v1/pc/sch/dep";
         String date = DateUtil.today();
         int page = 0;
@@ -131,17 +128,6 @@ public class CoreService {
             return new JSONObject();
         }
         return result.getJSONObject("data");
-    }
-
-    @Deprecated
-    public JSONObject brushTicket(String docId) {
-        String date = DateUtil.today();
-        int days = 6;
-        String ticket = mainClient.brushTicket(docId, date, days);
-        return Optional.ofNullable(ticket)
-                .filter(JSONUtil::isTypeJSONObject)
-                .map(JSON::parseObject)
-                .orElseGet(JSONObject::new);
     }
 
     public List<Map<String, Object>> getMember() {
@@ -177,8 +163,8 @@ public class CoreService {
 
         keyList.forEach(log::info);
 
-        for (; ; ) {
-            log.info("努力刷号中...");
+        for (int i = 1; ; i++) {
+            log.info("[{}]努力刷号中...", i);
 
             //JSONObject ticketData = brushTicket(body.getDoctorId());
             JSONObject ticketData = dept(body.getUnitId(), body.getDeptId());
@@ -206,10 +192,7 @@ public class CoreService {
             }
 
             // 判断登录是否有效
-            if (!CookieStore.isLogin()) {
-                log.info("会话失效，重新登录...");
-                login(body.getUserName(), body.getPassword());
-            }
+            CookieStore.getLoginCookieNotNull();
 
             // 判断会员ID是否正确
             boolean exist = getMember().stream()
@@ -233,31 +216,6 @@ public class CoreService {
         }
 
         log.info("挂号结束");
-    }
-
-    @Deprecated
-    private List<String> getJSONPathKeys(SubmitBody body) {
-        LocalDate now = LocalDate.now();
-        Map<String, String> map = new LinkedHashMap<>();
-        LongStream.range(1, 8).mapToObj(now::plusDays).forEach(x -> {
-            String week = String.valueOf(x.getDayOfWeek().getValue());
-            String date = x.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-            map.put(week, date);
-        });
-        List<String> weeks = body.getWeeks().stream()
-                .map(map::get).collect(Collectors.toList());
-
-        List<String> keyList = new ArrayList<>();
-        for (String day : body.getDays()) {
-            for (String week : weeks) {
-                String key = StrUtil.format("$.sch.{}.{}.{}",
-                        StrUtil.format("{}_{}", body.getDeptId(), body.getDoctorId()),
-                        StrUtil.format("{}_{}_{}", body.getDeptId(), body.getDoctorId(), day),
-                        week);
-                keyList.add(key);
-            }
-        }
-        return keyList;
     }
 
     private List<String> getJSONPathKeysNew(SubmitBody body) {

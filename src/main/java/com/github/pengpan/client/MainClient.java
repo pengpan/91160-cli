@@ -38,12 +38,6 @@ public interface MainClient {
                     @Query("p") int page,
                     @Query("user_key") String userKey);
 
-    @FormUrlEncoded
-    @POST("/doctors/ajaxgetclass.html")
-    String brushTicket(@Field("docid") String docId,
-                       @Field("date") String date,
-                       @Field("days") int days);
-
     @GET("/guahao/ystep1/uid-{unitId}/depid-{deptId}/schid-{schId}.html")
     String orderPage(@Path("unitId") String unitId,
                      @Path("deptId") String deptId,
