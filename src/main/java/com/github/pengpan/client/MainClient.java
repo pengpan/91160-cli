@@ -17,7 +17,7 @@ public interface MainClient {
 
     @FormUrlEncoded
     @POST
-    Response<Void> doLogin(@Url String url, @FieldMap JSONObject fields);
+    Response<Void> doLogin(@Url String url, @FieldMap Map<String, String> fields);
 
     @GET
     Response<Void> loginRedirect(@Url String url);

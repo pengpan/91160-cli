@@ -6,6 +6,7 @@ import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.io.resource.ResourceUtil;
 import cn.hutool.core.lang.Assert;
 import cn.hutool.core.lang.TypeReference;
+import cn.hutool.core.map.MapUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.crypto.SecureUtil;
 import cn.hutool.crypto.asymmetric.KeyType;
@@ -53,7 +54,7 @@ public class CoreService {
         String encryptedUsername = Base64.encode(rsa.encrypt(username, KeyType.PublicKey));
         String encryptedPassword = Base64.encode(rsa.encrypt(password, KeyType.PublicKey));
 
-        JSONObject fields = new JSONObject();
+        Map<String, String> fields = MapUtil.newHashMap();
         fields.put("username", encryptedUsername);
         fields.put("password", encryptedPassword);
         fields.put("target", "https://www.91160.com");
