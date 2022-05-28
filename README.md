@@ -1,19 +1,77 @@
 # 91160-cli
 
+![](https://github.com/pengpan/91160-cli/workflows/Java%20CI%20with%20Maven/badge.svg)
+
 ## 申明
 
 - 本项目仅供学习研究，禁止商用！
 
-## 如何使用
+## 功能
 
-1. [下载jar包](https://github.com/pengpan/91160-cli/releases)
-2. 初始化配置`java -jar 91160-cli.jar init`
-3. 开始挂号`java -jar 91160-cli.jar register -c config.properties`
+- [x] 可指定医生
+- [x] 可指定就诊人
+- [x] 可指定挂号时间
+- [x] 定时挂号
+- [ ] IP代理刷号
 
-## 挂号日志
+## 使用
+
+1. 搭建Java运行环境，最低版本支持1.8
+
+2. 下载`91160-cli.jar`，[下载地址]((https://github.com/pengpan/91160-cli/releases))
+
+3. 初始化配置
+
+```shell
+$ java -jar 91160-cli.jar init
+```
+
+4. 查看配置
+
+```properties
+# 91160账号
+userName=[your userName]
+# 91160密码
+password=[your password]
+# 就诊人编号
+memberId=12345678
+# 城市编号
+cityId=5
+# 医院编号
+unitId=21
+# 大科室编号
+bigDeptId=1
+# 小科室编号
+deptId=556
+# 医生编号
+doctorId=1690
+# 需要周几的号[可多选，如(6,7)]
+weeks=7
+# 时间段编号[可多选，如(am,pm)]
+days=am
+# 刷号休眠时间[单位:秒]
+sleepTime=15
+# 是否开启定时挂号[true/false]
+enableAppoint=false
+# 定时挂号时间[格式: 2022-06-01 15:00:00]
+appointTime=
+# 是否开启多线程挂号(仅在定时挂号开启时生效)[true/false]
+enableMultithreading=false
+# 是否开启代理[true/false]
+enableProxy=false
+# 获取代理URL(可参考https://github.com/jhao104/proxy_pool搭建代理池)[格式: http://127.0.0.1:5010/get]
+getProxyURL=
+```
+
+6. 开始挂号
+
+```shell
+$ java -jar 91160-cli.jar register -c config.properties
+```
+
+5. 查看日志
 
 ```text
-$ java -jar 91160-cli.jar register -c config.properties
 2022-05-26 00:22:12.152  INFO - --> GET https://user.91160.com/login.html
 2022-05-26 00:22:12.488  INFO - <-- 200 OK https://user.91160.com/login.html (332ms, unknown-length body)
 2022-05-26 00:22:12.549  INFO - --> POST https://user.91160.com/login.html (467-byte body)
