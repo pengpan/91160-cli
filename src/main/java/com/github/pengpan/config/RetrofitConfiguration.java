@@ -2,11 +2,11 @@ package com.github.pengpan.config;
 
 import com.alibaba.fastjson.support.retrofit.Retrofit2ConverterFactory;
 import com.github.pengpan.client.MainClient;
+import com.github.pengpan.common.constant.SystemConstant;
 import com.github.pengpan.common.cookie.CookieManager;
 import com.github.pengpan.common.retrofit.BasicTypeConverterFactory;
 import com.github.pengpan.common.retrofit.BodyCallAdapterFactory;
 import com.github.pengpan.common.retrofit.ResponseCallAdapterFactory;
-import com.github.pengpan.constant.SystemConstant;
 import com.github.pengpan.interceptor.LoggingInterceptor;
 import com.github.pengpan.interceptor.MainClientInterceptor;
 import okhttp3.ConnectionPool;

@@ -1,4 +1,4 @@
-package com.github.pengpan.vo;
+package com.github.pengpan.entity;
 
 import com.alibaba.fastjson.annotation.JSONField;
 import lombok.Data;

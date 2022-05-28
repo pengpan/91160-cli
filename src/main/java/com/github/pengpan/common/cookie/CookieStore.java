@@ -3,9 +3,9 @@ package com.github.pengpan.common.cookie;
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.extra.spring.SpringUtil;
-import com.github.pengpan.common.Assert;
 import com.github.pengpan.common.store.AccountStore;
 import com.github.pengpan.service.CoreService;
+import com.github.pengpan.util.Assert;
 import lombok.extern.slf4j.Slf4j;
 import okhttp3.Cookie;
 

@@ -1,4 +1,4 @@
-package com.github.pengpan.vo;
+package com.github.pengpan.entity;
 
 import com.github.pengpan.service.CoreService;
 import lombok.Builder;
@@ -14,7 +14,7 @@ import java.util.function.Function;
  */
 @Data
 @Builder
-public class ChoseObj {
+public class InitData {
 
     private String attrId;
 

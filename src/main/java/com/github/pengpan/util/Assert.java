@@ -1,7 +1,6 @@
-package com.github.pengpan.common;
+package com.github.pengpan.util;
 
 import cn.hutool.core.util.StrUtil;
-import com.github.pengpan.common.util.CommonUtil;
 import lombok.extern.slf4j.Slf4j;
 
 /**

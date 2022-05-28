@@ -16,14 +16,14 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.JSONPath;
 import com.github.pengpan.client.MainClient;
-import com.github.pengpan.common.Assert;
+import com.github.pengpan.common.constant.SystemConstant;
 import com.github.pengpan.common.cookie.CookieStore;
 import com.github.pengpan.common.store.AccountStore;
-import com.github.pengpan.constant.SystemConstant;
+import com.github.pengpan.entity.Config;
+import com.github.pengpan.entity.Register;
+import com.github.pengpan.entity.ScheduleInfo;
 import com.github.pengpan.enums.DataTypeEnum;
-import com.github.pengpan.vo.RegisterForm;
-import com.github.pengpan.vo.ScheduleInfo;
-import com.github.pengpan.vo.SubmitBody;
+import com.github.pengpan.util.Assert;
 import lombok.extern.slf4j.Slf4j;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -151,16 +151,16 @@ public class CoreService {
         return memberList;
     }
 
-    public void brushTicketTask(SubmitBody body, int sleepTime) {
+    public void brushTicketTask(Config config) {
         log.info("挂号开始");
 
-        List<String> keyList = getJSONPathKeysNew(body);
+        List<String> keyList = getJSONPathKeys(config);
         keyList.forEach(log::info);
 
         for (int i = 1; ; i++) {
             log.info("[{}]努力刷号中...", i);
 
-            JSONObject ticketData = dept(body.getUnitId(), body.getDeptId());
+            JSONObject ticketData = dept(config.getUnitId(), config.getDeptId());
 
             // 获取有效的schedule_id
             List<ScheduleInfo> schInfoList = keyList.stream().parallel()
@@ -176,7 +176,7 @@ public class CoreService {
 
             if (CollUtil.isEmpty(schInfoList)) {
                 // 休眠
-                ThreadUtil.sleep(sleepTime, TimeUnit.SECONDS);
+                ThreadUtil.sleep(Integer.parseInt(config.getSleepTime()), TimeUnit.SECONDS);
                 continue;
             }
 
@@ -186,12 +186,12 @@ public class CoreService {
             // 判断会员ID是否正确
             boolean exist = getMember().stream()
                     .map(x -> String.valueOf(x.get("id")))
-                    .anyMatch(x -> StrUtil.equals(x, body.getMemberId()));
+                    .anyMatch(x -> StrUtil.equals(x, config.getMemberId()));
             Assert.isTrue(exist, "就诊人编码不正确，请检查");
 
             // 获取有效的参数列表
-            List<RegisterForm> formList = schInfoList.stream().parallel()
-                    .flatMap(x -> buildForm(x, body).stream())
+            List<Register> formList = schInfoList.stream().parallel()
+                    .flatMap(x -> buildForm(x, config).stream())
                     .collect(Collectors.toList());
 
             // 挂号
@@ -205,7 +205,7 @@ public class CoreService {
         log.info("挂号结束");
     }
 
-    private List<String> getJSONPathKeysNew(SubmitBody body) {
+    private List<String> getJSONPathKeys(Config config) {
         LocalDate now = LocalDate.now();
         Map<String, String> map = new LinkedHashMap<>();
         for (int i = 0; i < 7; i++) {
@@ -214,24 +214,24 @@ public class CoreService {
             String v = String.valueOf(i);
             map.put(k, v);
         }
-        List<String> weeks = body.getWeeks().stream()
+        List<String> weeks = config.getWeeks().stream()
                 .map(map::get).collect(Collectors.toList());
 
         List<String> keyList = new ArrayList<>();
-        for (String day : body.getDays()) {
+        for (String day : config.getDays()) {
             for (String week : weeks) {
-                String key = StrUtil.format("$.sch.{}.{}.{}", body.getDoctorId(), day, week);
+                String key = StrUtil.format("$.sch.{}.{}.{}", config.getDoctorId(), day, week);
                 keyList.add(key);
             }
         }
         return keyList;
     }
 
-    private boolean doRegister(List<RegisterForm> formList) {
+    private boolean doRegister(List<Register> formList) {
         if (CollUtil.isEmpty(formList)) {
             return false;
         }
-        for (RegisterForm form : formList) {
+        for (Register form : formList) {
             Response<Void> submitResp = mainClient.doSubmit(
                     form.getSchData(),
                     form.getUnitId(),
@@ -262,8 +262,8 @@ public class CoreService {
         return false;
     }
 
-    private List<RegisterForm> buildForm(ScheduleInfo schInfo, SubmitBody body) {
-        String html = mainClient.orderPage(body.getUnitId(), body.getDeptId(), schInfo.getSchId());
+    private List<Register> buildForm(ScheduleInfo schInfo, Config config) {
+        String html = mainClient.orderPage(config.getUnitId(), config.getDeptId(), schInfo.getSchId());
         Document document = Jsoup.parse(html);
 
         List<String> detlidList = Optional.of(document)
@@ -302,13 +302,13 @@ public class CoreService {
         }
 
         return detlidList.stream()
-                .map(x -> RegisterForm.builder()
+                .map(x -> Register.builder()
                         .schData(sch_data)
-                        .unitId(body.getUnitId())
-                        .depId(body.getDeptId())
-                        .doctorId(body.getDoctorId())
+                        .unitId(config.getUnitId())
+                        .depId(config.getDeptId())
+                        .doctorId(config.getDoctorId())
                         .schId(schInfo.getSchId())
-                        .memberId(body.getMemberId())
+                        .memberId(config.getMemberId())
                         .accept("1")
                         .timeType(schInfo.getTimeType())
                         .detlid(x)

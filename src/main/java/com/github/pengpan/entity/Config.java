@@ -2,6 +2,8 @@ package com.github.pengpan.entity;
 
 import lombok.Data;
 
+import java.util.List;
+
 /**
  * @author pengpan
  */
@@ -9,82 +11,87 @@ import lombok.Data;
 public class Config {
 
     /**
-     *
+     * 91160账号
      */
     private String userName;
 
     /**
-     *
+     * 91160密码
      */
     private String password;
 
     /**
-     *
+     * 城市编号
      */
     private String cityId;
 
     /**
-     *
+     * 医院编号
      */
     private String unitId;
 
     /**
-     *
+     * 大科室编号
      */
     private String bigDeptId;
 
     /**
-     *
+     * 小科室编号
      */
     private String deptId;
 
     /**
-     *
+     * 医生编号
      */
     private String doctorId;
 
     /**
-     *
+     * 需要周几的号[可多选，如(6,7)]
      */
     private String weekId;
 
+    private List<String> weeks;
+
     /**
-     *
+     * 时间段编号[可多选，如(am,pm)]
      */
     private String dayId;
 
+    private List<String> days;
+
     /**
-     *
+     * 就诊人编号
      */
     private String memberId;
 
     /**
-     *
+     * 刷号休眠时间[单位:秒]
      */
     private String sleepTime;
 
     /**
-     *
+     * 是否开启定时挂号[true/false]
      */
     private String enableAppoint;
 
     /**
-     *
+     * 定时挂号时间[格式: 2022-06-01 15:00:00]
      */
     private String appointTime;
 
     /**
-     *
+     * 是否开启多线程挂号(仅在定时挂号开启时生效)[true/false]
      */
     private String enableMultithreading;
 
     /**
-     *
+     * 是否开启代理[true/false]
      */
     private String enableProxy;
 
     /**
-     *
+     * 获取代理URL(可参考https://github.com/jhao104/proxy_pool搭建代理池)
+     * [格式: http://127.0.0.1:5010/get]
      */
     private String getProxyURL;
 }

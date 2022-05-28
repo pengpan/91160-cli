@@ -9,10 +9,9 @@ import cn.hutool.core.util.NumberUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.extra.spring.SpringUtil;
 import cn.hutool.setting.dialect.Props;
-import com.github.pengpan.common.Assert;
 import com.github.pengpan.entity.Config;
 import com.github.pengpan.service.CoreService;
-import com.github.pengpan.vo.SubmitBody;
+import com.github.pengpan.util.Assert;
 import io.airlift.airline.Command;
 import io.airlift.airline.Option;
 import lombok.extern.slf4j.Slf4j;
@@ -45,25 +44,20 @@ public class Register implements Runnable {
 
         CoreService coreService = SpringUtil.getBean(CoreService.class);
         checkConfig(config, coreService);
-
-        SubmitBody s = new SubmitBody();
-        s.setUserName(config.getUserName());
-        s.setPassword(config.getPassword());
-        s.setCityId(config.getCityId());
-        s.setUnitId(config.getUnitId());
-        s.setDeptId(config.getDeptId());
-        s.setDoctorId(config.getDoctorId());
-        s.setMemberId(config.getMemberId());
-        s.setWeeks(StrUtil.split(config.getWeekId(), ','));
-        s.setDays(StrUtil.split(config.getDayId(), ','));
+        convertConfig(config);
 
         try {
-            coreService.brushTicketTask(s, Integer.parseInt(config.getSleepTime()));
+            coreService.brushTicketTask(config);
             System.exit(0);
         } catch (Exception e) {
             log.error("", e);
             System.exit(-1);
         }
+    }
+
+    private void convertConfig(Config config) {
+        config.setWeeks(StrUtil.split(config.getWeekId(), ','));
+        config.setDays(StrUtil.split(config.getDayId(), ','));
     }
 
     private void checkConfig(Config config, CoreService coreService) {

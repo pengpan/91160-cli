@@ -6,11 +6,11 @@ import cn.hutool.core.util.StrUtil;
 import cn.hutool.extra.spring.SpringUtil;
 import com.github.pengpan.common.store.AccountStore;
 import com.github.pengpan.common.store.ConfigStore;
-import com.github.pengpan.common.util.CommonUtil;
+import com.github.pengpan.entity.InitData;
 import com.github.pengpan.entity.Prop;
-import com.github.pengpan.enums.ChoseObjEnum;
+import com.github.pengpan.enums.InitDataEnum;
 import com.github.pengpan.service.CoreService;
-import com.github.pengpan.vo.ChoseObj;
+import com.github.pengpan.util.CommonUtil;
 import io.airlift.airline.Command;
 import lombok.extern.slf4j.Slf4j;
 
@@ -34,14 +34,14 @@ public class Init implements Runnable {
     @Override
     public void run() {
         login();
-        choseObj(ChoseObjEnum.MEMBER);
-        choseObj(ChoseObjEnum.CITY);
-        choseObj(ChoseObjEnum.UNIT);
-        choseObj(ChoseObjEnum.BIG_DEPT);
-        choseObj(ChoseObjEnum.DEPT);
-        choseObj(ChoseObjEnum.DOCTOR);
-        choseObj(ChoseObjEnum.WEEK);
-        choseObj(ChoseObjEnum.DAY);
+        initData(InitDataEnum.MEMBER);
+        initData(InitDataEnum.CITY);
+        initData(InitDataEnum.UNIT);
+        initData(InitDataEnum.BIG_DEPT);
+        initData(InitDataEnum.DEPT);
+        initData(InitDataEnum.DOCTOR);
+        initData(InitDataEnum.WEEK);
+        initData(InitDataEnum.DAY);
         storeConfig();
         CommonUtil.normalExit("init success.");
     }
@@ -68,33 +68,33 @@ public class Init implements Runnable {
         } while (!loginSuccess);
     }
 
-    private void choseObj(ChoseObjEnum choseObjEnum) {
+    private void initData(InitDataEnum initDataEnum) {
         log.info("");
-        ChoseObj choseObj = choseObjEnum.getChoseObj();
-        log.info(choseObj.getBanner());
+        InitData initData = initDataEnum.getInitData();
+        log.info(initData.getBanner());
         List<Object> ids = new ArrayList<>();
-        List<Map<String, Object>> data = choseObj.getData().apply(coreService);
+        List<Map<String, Object>> data = initData.getData().apply(coreService);
         for (int i = 0; i < data.size(); i++) {
             Map<String, Object> datum = data.get(i);
-            String id = String.valueOf("index".equals(choseObj.getAttrId()) ? (i + 1) : datum.get(choseObj.getAttrId()));
+            String id = String.valueOf("index".equals(initData.getAttrId()) ? (i + 1) : datum.get(initData.getAttrId()));
             ids.add(id);
-            String name = StrUtil.format("[{}]. {}", id, datum.get(choseObj.getAttrName()));
+            String name = StrUtil.format("[{}]. {}", id, datum.get(initData.getAttrName()));
             log.info(name);
         }
-        boolean choseSuccess;
+        boolean success;
         do {
             String id = null;
             while (StrUtil.isBlank(id)) {
-                System.out.print(choseObj.getInputTips());
+                System.out.print(initData.getInputTips());
                 id = in.nextLine();
             }
-            choseSuccess = checkInput(ids, id);
-            if (choseSuccess) {
-                choseObj.getStore().accept(id);
+            success = checkInput(ids, id);
+            if (success) {
+                initData.getStore().accept(id);
             } else {
                 log.info("输入有误，请重新输入！");
             }
-        } while (!choseSuccess);
+        } while (!success);
     }
 
     private boolean checkInput(List<Object> ids, String id) {
