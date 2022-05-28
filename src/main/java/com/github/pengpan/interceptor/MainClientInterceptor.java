@@ -1,6 +1,6 @@
 package com.github.pengpan.interceptor;
 
-import com.github.pengpan.constant.SystemConstant;
+import com.github.pengpan.common.constant.SystemConstant;
 import okhttp3.Interceptor;
 import okhttp3.Request;
 import okhttp3.Response;

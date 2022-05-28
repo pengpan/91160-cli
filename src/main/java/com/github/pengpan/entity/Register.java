@@ -1,4 +1,4 @@
-package com.github.pengpan.vo;
+package com.github.pengpan.entity;
 
 import lombok.Builder;
 import lombok.Data;
@@ -8,7 +8,7 @@ import lombok.Data;
  */
 @Data
 @Builder
-public class RegisterForm {
+public class Register {
 
     private String schData;
     private String unitId;
@@ -23,5 +23,4 @@ public class RegisterForm {
     private String levelCode;
     private String addressId;
     private String address;
-
 }

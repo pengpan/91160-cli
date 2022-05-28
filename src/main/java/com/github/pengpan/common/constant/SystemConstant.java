@@ -1,4 +1,4 @@
-package com.github.pengpan.constant;
+package com.github.pengpan.common.constant;
 
 /**
  * @author pengpan

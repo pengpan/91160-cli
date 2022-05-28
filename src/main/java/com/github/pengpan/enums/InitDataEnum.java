@@ -3,8 +3,8 @@ package com.github.pengpan.enums;
 import cn.hutool.core.lang.TypeReference;
 import com.alibaba.fastjson.JSON;
 import com.github.pengpan.common.store.ConfigStore;
+import com.github.pengpan.entity.InitData;
 import com.github.pengpan.service.CoreService;
-import com.github.pengpan.vo.ChoseObj;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -19,9 +19,9 @@ import java.util.stream.Collectors;
  */
 @Getter
 @AllArgsConstructor
-public enum ChoseObjEnum {
+public enum InitDataEnum {
 
-    MEMBER(ChoseObj.builder()
+    MEMBER(InitData.builder()
             .attrId("id")
             .attrName("name")
             .banner("=====请选择就诊人=====")
@@ -30,7 +30,7 @@ public enum ChoseObjEnum {
             .store(ConfigStore::setMemberId)
             .build()),
 
-    CITY(ChoseObj.builder()
+    CITY(InitData.builder()
             .attrId("cityId")
             .attrName("name")
             .banner("=====请选择城市=====")
@@ -39,7 +39,7 @@ public enum ChoseObjEnum {
             .store(ConfigStore::setCityId)
             .build()),
 
-    UNIT(ChoseObj.builder()
+    UNIT(InitData.builder()
             .attrId("unit_id")
             .attrName("unit_name")
             .banner("=====请选择医院=====")
@@ -48,7 +48,7 @@ public enum ChoseObjEnum {
             .store(ConfigStore::setUnitId)
             .build()),
 
-    BIG_DEPT(ChoseObj.builder()
+    BIG_DEPT(InitData.builder()
             .attrId("index")
             .attrName("pubcat")
             .banner("=====请选择大科室=====")
@@ -57,7 +57,7 @@ public enum ChoseObjEnum {
             .store(ConfigStore::setBigDeptId)
             .build()),
 
-    DEPT(ChoseObj.builder()
+    DEPT(InitData.builder()
             .attrId("dep_id")
             .attrName("dep_name")
             .banner("=====请选择小科室=====")
@@ -75,7 +75,7 @@ public enum ChoseObjEnum {
             .store(ConfigStore::setDeptId)
             .build()),
 
-    DOCTOR(ChoseObj.builder()
+    DOCTOR(InitData.builder()
             .attrId("doctor_id")
             .attrName("doctor_name")
             .banner("=====请选择医生=====")
@@ -84,7 +84,7 @@ public enum ChoseObjEnum {
             .store(ConfigStore::setDoctorId)
             .build()),
 
-    WEEK(ChoseObj.builder()
+    WEEK(InitData.builder()
             .attrId("value")
             .attrName("name")
             .banner("=====请选择哪天的号=====")
@@ -93,7 +93,7 @@ public enum ChoseObjEnum {
             .store(ConfigStore::setWeekId)
             .build()),
 
-    DAY(ChoseObj.builder()
+    DAY(InitData.builder()
             .attrId("value")
             .attrName("name")
             .banner("=====请选择时间段=====")
@@ -103,5 +103,5 @@ public enum ChoseObjEnum {
             .build()),
     ;
 
-    private ChoseObj choseObj;
+    private InitData initData;
 }

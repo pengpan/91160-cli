@@ -40,7 +40,7 @@ public class Version implements Runnable {
     @Override
     public void run() {
         String version = readVersionFromResources();
-        log.info(version);
+        System.out.println(version);
     }
 
 }

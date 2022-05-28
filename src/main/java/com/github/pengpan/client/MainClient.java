@@ -17,7 +17,7 @@ public interface MainClient {
 
     @FormUrlEncoded
     @POST
-    Response<Void> doLogin(@Url String url, @FieldMap JSONObject fields);
+    Response<Void> doLogin(@Url String url, @FieldMap Map<String, String> fields);
 
     @GET
     Response<Void> loginRedirect(@Url String url);
@@ -58,4 +58,7 @@ public interface MainClient {
                             @Field("level_code") String level_code,
                             @Field("addressId") String addressId,
                             @Field("address") String address);
+
+    @GET("/favicon.ico")
+    Response<Void> serverTime();
 }
