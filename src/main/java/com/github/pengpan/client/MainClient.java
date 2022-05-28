@@ -58,4 +58,7 @@ public interface MainClient {
                             @Field("level_code") String level_code,
                             @Field("addressId") String addressId,
                             @Field("address") String address);
+
+    @GET("/favicon.ico")
+    Response<Void> serverTime();
 }

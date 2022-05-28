@@ -2,6 +2,7 @@ package com.github.pengpan.service;
 
 import cn.hutool.core.codec.Base64;
 import cn.hutool.core.collection.CollUtil;
+import cn.hutool.core.date.DatePattern;
 import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.io.resource.ResourceUtil;
 import cn.hutool.core.lang.TypeReference;
@@ -320,4 +321,12 @@ public class CoreService {
                 .collect(Collectors.toList());
     }
 
+    public Date serverDate() {
+        Response<Void> response = mainClient.serverTime();
+        String date = response.raw().header("date");
+        if (StrUtil.isEmpty(date)) {
+            return new Date();
+        }
+        return DateUtil.parse(date, DatePattern.HTTP_DATETIME_PATTERN, Locale.US).toJdkDate();
+    }
 }
