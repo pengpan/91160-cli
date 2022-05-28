@@ -18,7 +18,7 @@
 
 1. 搭建Java运行环境，最低版本支持1.8
 
-2. 下载`91160-cli.jar`，[下载地址]((https://github.com/pengpan/91160-cli/releases))
+2. 下载`91160-cli.jar`，[下载地址](https://github.com/pengpan/91160-cli/releases)
 
 3. 初始化配置
 
