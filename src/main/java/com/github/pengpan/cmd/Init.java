@@ -24,7 +24,7 @@ import java.util.Scanner;
  * @author pengpan
  */
 @Slf4j
-@Command(name = "init", description = "初始化数据")
+@Command(name = "init", description = "Initialization data")
 public class Init implements Runnable {
 
     private final Scanner in = new Scanner(System.in);
