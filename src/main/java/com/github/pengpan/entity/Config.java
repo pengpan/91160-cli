@@ -48,15 +48,11 @@ public class Config {
     /**
      * 需要周几的号[可多选，如(6,7)]
      */
-    private String weekId;
-
     private List<String> weeks;
 
     /**
      * 时间段编号[可多选，如(am,pm)]
      */
-    private String dayId;
-
     private List<String> days;
 
     /**
@@ -67,12 +63,12 @@ public class Config {
     /**
      * 刷号休眠时间[单位:秒]
      */
-    private String sleepTime;
+    private int sleepTime;
 
     /**
      * 是否开启定时挂号[true/false]
      */
-    private String enableAppoint;
+    private boolean enableAppoint;
 
     /**
      * 定时挂号时间[格式: 2022-06-01 15:00:00]
@@ -82,12 +78,12 @@ public class Config {
     /**
      * 是否开启多线程挂号(仅在定时挂号开启时生效)[true/false]
      */
-    private String enableMultithreading;
+    private boolean enableMultithreading;
 
     /**
      * 是否开启代理[true/false]
      */
-    private String enableProxy;
+    private boolean enableProxy;
 
     /**
      * 获取代理URL(可参考https://github.com/jhao104/proxy_pool搭建代理池)

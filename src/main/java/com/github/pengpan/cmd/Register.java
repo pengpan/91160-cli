@@ -1,11 +1,11 @@
 package com.github.pengpan.cmd;
 
+import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.date.DatePattern;
 import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.lang.Validator;
 import cn.hutool.core.util.CharsetUtil;
-import cn.hutool.core.util.NumberUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.extra.spring.SpringUtil;
 import cn.hutool.setting.dialect.Props;
@@ -15,8 +15,6 @@ import com.github.pengpan.util.Assert;
 import io.airlift.airline.Command;
 import io.airlift.airline.Option;
 import lombok.extern.slf4j.Slf4j;
-
-import java.util.Arrays;
 
 /**
  * @author pengpan
@@ -44,7 +42,6 @@ public class Register implements Runnable {
 
         CoreService coreService = SpringUtil.getBean(CoreService.class);
         checkConfig(config, coreService);
-        convertConfig(config);
 
         try {
             coreService.brushTicketTask(config);
@@ -53,11 +50,6 @@ public class Register implements Runnable {
             log.error("", e);
             System.exit(-1);
         }
-    }
-
-    private void convertConfig(Config config) {
-        config.setWeeks(StrUtil.split(config.getWeekId(), ','));
-        config.setDays(StrUtil.split(config.getDayId(), ','));
     }
 
     private void checkConfig(Config config, CoreService coreService) {
@@ -70,15 +62,11 @@ public class Register implements Runnable {
         Assert.notBlank(config.getUnitId(), "[unitId]不能为空，请检查配置文件");
         Assert.notBlank(config.getDeptId(), "[deptId]不能为空，请检查配置文件");
         Assert.notBlank(config.getDoctorId(), "[doctorId]不能为空，请检查配置文件");
-        Assert.notBlank(config.getWeekId(), "[weekId]不能为空，请检查配置文件");
-        Assert.notBlank(config.getDayId(), "[dayId]不能为空，请检查配置文件");
-        Assert.notBlank(config.getSleepTime(), "[sleepTime]不能为空，请检查配置文件");
-        Assert.isTrue(NumberUtil.isInteger(config.getSleepTime()) && Integer.parseInt(config.getSleepTime()) >= 0,
-                "[sleepTime]格式不正确，请检查配置文件");
+        Assert.isTrue(CollUtil.isNotEmpty(config.getWeeks()), "[weeks]不能为空，请检查配置文件");
+        Assert.isTrue(CollUtil.isNotEmpty(config.getDays()), "[days]不能为空，请检查配置文件");
+        Assert.isTrue(config.getSleepTime() >= 0, "[sleepTime]格式不正确，请检查配置文件");
 
         // Not required
-        Assert.isTrue(Arrays.asList("true", "false", "").contains(config.getEnableAppoint()),
-                "[enableAppoint]格式不正确，请检查配置文件");
         if (StrUtil.isNotBlank(config.getAppointTime())) {
             boolean r = true;
             try {
@@ -88,10 +76,6 @@ public class Register implements Runnable {
             }
             Assert.isTrue(r, "[appointTime]格式不正确，请检查配置文件");
         }
-        Assert.isTrue(Arrays.asList("true", "false", "").contains(config.getEnableMultithreading()),
-                "[enableMultithreading]格式不正确，请检查配置文件");
-        Assert.isTrue(Arrays.asList("true", "false", "").contains(config.getEnableProxy()),
-                "[enableProxy]格式不正确，请检查配置文件");
         if (StrUtil.isNotBlank(config.getGetProxyURL())) {
             Assert.isTrue(Validator.isUrl(config.getGetProxyURL()), "[getProxyURL]格式不正确，请检查配置文件");
         }

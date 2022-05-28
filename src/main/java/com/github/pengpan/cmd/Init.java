@@ -123,8 +123,8 @@ public class Init implements Runnable {
         props.add(new Prop("大科室编号", "bigDeptId", ConfigStore.getBigDeptId()));
         props.add(new Prop("小科室编号", "deptId", ConfigStore.getDeptId()));
         props.add(new Prop("医生编号", "doctorId", ConfigStore.getDoctorId()));
-        props.add(new Prop("需要周几的号[可多选，如(6,7)]", "weekId", ConfigStore.getWeekId()));
-        props.add(new Prop("时间段编号[可多选，如(am,pm)]", "dayId", ConfigStore.getDayId()));
+        props.add(new Prop("需要周几的号[可多选，如(6,7)]", "weeks", ConfigStore.getWeekId()));
+        props.add(new Prop("时间段编号[可多选，如(am,pm)]", "days", ConfigStore.getDayId()));
         props.add(new Prop("刷号休眠时间[单位:秒]", "sleepTime", "15"));
         // custom config
         props.add(new Prop("是否开启定时挂号[true/false]", "enableAppoint", "false"));
