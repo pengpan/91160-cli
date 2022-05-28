@@ -4,9 +4,9 @@ import cn.hutool.core.codec.Base64;
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.io.resource.ResourceUtil;
-import cn.hutool.core.lang.Assert;
 import cn.hutool.core.lang.TypeReference;
 import cn.hutool.core.map.MapUtil;
+import cn.hutool.core.thread.ThreadUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.crypto.SecureUtil;
 import cn.hutool.crypto.asymmetric.KeyType;
@@ -16,6 +16,7 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.JSONPath;
 import com.github.pengpan.client.MainClient;
+import com.github.pengpan.common.Assert;
 import com.github.pengpan.common.cookie.CookieStore;
 import com.github.pengpan.common.store.AccountStore;
 import com.github.pengpan.constant.SystemConstant;
@@ -79,14 +80,11 @@ public class CoreService {
         String html = mainClient.htmlPage("https://user.91160.com/login.html");
         Document document = Jsoup.parse(html);
         Element tokens = document.getElementById("tokens");
-        if (tokens == null) {
-            throw new RuntimeException("token获取失败");
-        }
-        return tokens.val();
+        return Assert.notNull(tokens, "token获取失败").val();
     }
 
     public List<Map<String, Object>> getData(DataTypeEnum dataType) {
-        Assert.notNull(dataType);
+        Assert.notNull(dataType, "[dataType]不能为空");
         String cities = ResourceUtil.readUtf8Str(dataType.getPath());
         return JSON.parseArray(cities).stream()
                 .map(JSON::toJSONString)
@@ -96,12 +94,12 @@ public class CoreService {
     }
 
     public List<Map<String, Object>> getUnit(String cityId) {
-        Assert.notBlank(cityId);
+        Assert.notBlank(cityId, "[cityId]不能为空");
         return mainClient.getUnit(cityId);
     }
 
     public List<Map<String, Object>> getDept(String unitId) {
-        Assert.notBlank(unitId);
+        Assert.notBlank(unitId, "[unitId]不能为空");
         return mainClient.getDept(unitId);
     }
 
@@ -115,8 +113,8 @@ public class CoreService {
     }
 
     public JSONObject dept(String unitId, String deptId) {
-        Assert.notBlank(unitId);
-        Assert.notBlank(deptId);
+        Assert.notBlank(unitId, "[unitId]不能为空");
+        Assert.notBlank(deptId, "[deptId]不能为空");
         String url = "https://gate.91160.com/guahao/v1/pc/sch/dep";
         String date = DateUtil.today();
         int page = 0;
@@ -136,11 +134,8 @@ public class CoreService {
         String html = mainClient.htmlPage(url);
         Document document = Jsoup.parse(html);
         Element tbody = document.getElementById("mem_list");
-        if (tbody == null) {
-            throw new RuntimeException("就诊人为空");
-        }
+        Elements trs = Assert.notNull(tbody, "就诊人为空").getElementsByTag("tr");
         List<Map<String, Object>> memberList = new ArrayList<>();
-        Elements trs = tbody.getElementsByTag("tr");
         for (Element tr : trs) {
             String id = StrUtil.removePrefix(tr.id(), "mem");
             Elements tds = tr.getElementsByTag("td");
@@ -159,15 +154,12 @@ public class CoreService {
     public void brushTicketTask(SubmitBody body, int sleepTime) {
         log.info("挂号开始");
 
-        //List<String> keyList = getJSONPathKeys(body);
         List<String> keyList = getJSONPathKeysNew(body);
-
         keyList.forEach(log::info);
 
         for (int i = 1; ; i++) {
             log.info("[{}]努力刷号中...", i);
 
-            //JSONObject ticketData = brushTicket(body.getDoctorId());
             JSONObject ticketData = dept(body.getUnitId(), body.getDeptId());
 
             // 获取有效的schedule_id
@@ -184,11 +176,7 @@ public class CoreService {
 
             if (CollUtil.isEmpty(schInfoList)) {
                 // 休眠
-                try {
-                    TimeUnit.SECONDS.sleep(sleepTime);
-                } catch (InterruptedException e) {
-                    log.error("", e);
-                }
+                ThreadUtil.sleep(sleepTime, TimeUnit.SECONDS);
                 continue;
             }
 
@@ -199,9 +187,7 @@ public class CoreService {
             boolean exist = getMember().stream()
                     .map(x -> String.valueOf(x.get("id")))
                     .anyMatch(x -> StrUtil.equals(x, body.getMemberId()));
-            if (!exist) {
-                throw new RuntimeException("就诊人编码不正确，请检查");
-            }
+            Assert.isTrue(exist, "就诊人编码不正确，请检查");
 
             // 获取有效的参数列表
             List<RegisterForm> formList = schInfoList.stream().parallel()

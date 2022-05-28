@@ -1,17 +1,19 @@
 # 91160-cli
 
 ## 申明
+
 - 本项目仅供学习研究，禁止商用！
 
 ## 如何使用
 
 1. [下载jar包](https://github.com/pengpan/91160-cli/releases)
 2. 初始化配置`java -jar 91160-cli.jar init`
-3. 开始挂号`java -jar 91160-cli.jar register -u [91160账号] -p [91160密码] -c config.json -s 15`
+3. 开始挂号`java -jar 91160-cli.jar register -c config.properties`
 
 ## 挂号日志
+
 ```text
-$ java -jar 91160-cli.jar register -c config.json -u 16666666666 -p 123456 -s 5
+$ java -jar 91160-cli.jar register -c config.properties
 2022-05-26 00:22:12.152  INFO - --> GET https://user.91160.com/login.html
 2022-05-26 00:22:12.488  INFO - <-- 200 OK https://user.91160.com/login.html (332ms, unknown-length body)
 2022-05-26 00:22:12.549  INFO - --> POST https://user.91160.com/login.html (467-byte body)
@@ -42,4 +44,3 @@ $ java -jar 91160-cli.jar register -c config.json -u 16666666666 -p 123456 -s 5
 2022-05-26 00:22:20.620  INFO - 挂号成功
 2022-05-26 00:22:20.620  INFO - 挂号结束
 ```
-![挂号成功](images/success.jpeg)

@@ -3,6 +3,7 @@ package com.github.pengpan.common.cookie;
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.extra.spring.SpringUtil;
+import com.github.pengpan.common.Assert;
 import com.github.pengpan.common.store.AccountStore;
 import com.github.pengpan.service.CoreService;
 import lombok.extern.slf4j.Slf4j;
@@ -54,10 +55,7 @@ public class CookieStore {
             cookieStore.clear();
             CoreService coreService = SpringUtil.getBean(CoreService.class);
             boolean loginSuccess = coreService.login(AccountStore.getUserName(), AccountStore.getPassword());
-            if (!loginSuccess) {
-                throw new RuntimeException("登录失败，请检查用户名密码");
-            }
-            log.info("登录成功");
+            Assert.isTrue(loginSuccess, "登录失败，请检查用户名密码");
             loginCookie = getLoginCookie();
         }
         return loginCookie;

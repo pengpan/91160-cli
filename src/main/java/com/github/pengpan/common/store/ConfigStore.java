@@ -1,12 +1,5 @@
 package com.github.pengpan.common.store;
 
-import cn.hutool.core.util.StrUtil;
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.serializer.SerializerFeature;
-
-import java.util.LinkedHashMap;
-import java.util.Map;
-
 /**
  * @author pengpan
  */
@@ -90,18 +83,5 @@ public class ConfigStore {
 
     public static void setMemberId(String memberId) {
         ConfigStore.memberId = memberId;
-    }
-
-    public static String toJson() {
-        Map<String, Object> map = new LinkedHashMap<>();
-        map.put("memberId", memberId);
-        map.put("cityId", cityId);
-        map.put("unitId", unitId);
-        map.put("bigDeptId", bigDeptId);
-        map.put("deptId", deptId);
-        map.put("doctorId", doctorId);
-        map.put("weekId", StrUtil.split(weekId, ','));
-        map.put("dayId", StrUtil.split(dayId, ','));
-        return JSON.toJSONString(map, SerializerFeature.PrettyFormat);
     }
 }
