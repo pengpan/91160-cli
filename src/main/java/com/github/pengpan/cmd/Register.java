@@ -4,11 +4,13 @@ import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.date.DatePattern;
 import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.io.FileUtil;
-import cn.hutool.core.lang.Validator;
 import cn.hutool.core.thread.ThreadUtil;
 import cn.hutool.core.util.CharsetUtil;
+import cn.hutool.core.util.StrUtil;
 import cn.hutool.extra.spring.SpringUtil;
 import cn.hutool.setting.dialect.Props;
+import com.github.pengpan.common.constant.SystemConstant;
+import com.github.pengpan.common.store.ProxyStore;
 import com.github.pengpan.entity.Config;
 import com.github.pengpan.service.CoreService;
 import com.github.pengpan.util.Assert;
@@ -18,7 +20,9 @@ import lombok.extern.slf4j.Slf4j;
 
 import java.io.File;
 import java.util.Date;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
+import java.util.regex.Matcher;
 
 /**
  * @author pengpan
@@ -39,8 +43,9 @@ public class Register implements Runnable {
         Config config = getConfig(configFile);
 
         CoreService coreService = SpringUtil.getBean(CoreService.class);
-        checkConfig(config, coreService);
+        checkBasicConfig(config, coreService);
         checkEnableAppoint(config, coreService);
+        checkEnableProxy(config);
 
         try {
             coreService.brushTicketTask(config);
@@ -51,22 +56,58 @@ public class Register implements Runnable {
         }
     }
 
-    private void checkEnableAppoint(Config config, CoreService coreService) {
-        if (config.isEnableAppoint()) {
-            Date serverDate = coreService.serverDate();
-            log.info("当前服务器时间: {}", DateUtil.formatDateTime(serverDate));
-
-            Date appointTime = DateUtil.parse(config.getAppointTime()).toJdkDate();
-            log.info("指定的挂号时间: {}", DateUtil.formatDateTime(appointTime));
-
-            long waitTime = appointTime.getTime() - serverDate.getTime();
-            waitTime = waitTime < 0 ? 0 : waitTime;
-            log.info("需等待: {}秒", TimeUnit.MILLISECONDS.toSeconds(waitTime));
-
-            log.info("等待中...");
-            ThreadUtil.sleep(waitTime);
-            log.info("时间到！！！");
+    private void checkEnableProxy(Config config) {
+        if (!config.isEnableProxy()) {
+            return;
         }
+
+        String proxyFilePath = config.getProxyFilePath();
+
+        Assert.notBlank(proxyFilePath, "[proxyFilePath]不能为空");
+        Assert.isTrue(StrUtil.endWithIgnoreCase(proxyFilePath, "txt"), "[proxyFilePath]格式不正确，请检查配置文件");
+        Assert.isTrue(FileUtil.exist(proxyFilePath), "[proxyFilePath]文件不存在，请检查配置文件");
+
+        List<String> proxyList = CollUtil.newArrayList();
+
+        List<String> lines = FileUtil.readUtf8Lines(proxyFilePath);
+        for (String line : lines) {
+            if (StrUtil.isEmpty(line)) {
+                continue;
+            }
+            Matcher matcher = SystemConstant.PROXY_PATTERN.matcher(line);
+            if (!matcher.matches()) {
+                continue;
+            }
+            proxyList.add(line);
+        }
+
+        Assert.isTrue(CollUtil.isNotEmpty(proxyList), "[proxyFilePath]至少要有一个正确格式的代理项");
+
+        ProxyStore.setProxyList(proxyList);
+        ProxyStore.setEnabled(true);
+    }
+
+    private void checkEnableAppoint(Config config, CoreService coreService) {
+        if (!config.isEnableAppoint()) {
+            return;
+        }
+
+        Assert.notBlank(config.getAppointTime(), "[appointTime]不能为空");
+        Assert.isTrue(isDateTime(config.getAppointTime()), "[appointTime]格式不正确，请检查配置文件");
+
+        Date serverDate = coreService.serverDate();
+        log.info("当前服务器时间: {}", DateUtil.formatDateTime(serverDate));
+
+        Date appointTime = DateUtil.parse(config.getAppointTime()).toJdkDate();
+        log.info("指定的挂号时间: {}", DateUtil.formatDateTime(appointTime));
+
+        long waitTime = appointTime.getTime() - serverDate.getTime();
+        waitTime = waitTime < 0 ? 0 : waitTime;
+        log.info("需等待: {}秒", TimeUnit.MILLISECONDS.toSeconds(waitTime));
+
+        log.info("等待中...");
+        ThreadUtil.sleep(waitTime);
+        log.info("时间到！！！");
     }
 
     private Config getConfig(String configFile) {
@@ -80,8 +121,7 @@ public class Register implements Runnable {
         return config;
     }
 
-    private void checkConfig(Config config, CoreService coreService) {
-        // Required
+    private void checkBasicConfig(Config config, CoreService coreService) {
         Assert.notBlank(config.getUserName(), "[userName]不能为空，请检查配置文件");
         Assert.notBlank(config.getPassword(), "[password]不能为空，请检查配置文件");
         Assert.isTrue(coreService.login(config.getUserName(), config.getPassword()), "登录失败，请检查账号和密码");
@@ -93,16 +133,6 @@ public class Register implements Runnable {
         Assert.isTrue(CollUtil.isNotEmpty(config.getWeeks()), "[weeks]不能为空，请检查配置文件");
         Assert.isTrue(CollUtil.isNotEmpty(config.getDays()), "[days]不能为空，请检查配置文件");
         Assert.isTrue(config.getSleepTime() >= 0, "[sleepTime]格式不正确，请检查配置文件");
-
-        // Not required
-        if (config.isEnableAppoint()) {
-            Assert.notBlank(config.getAppointTime(), "[appointTime]不能为空");
-            Assert.isTrue(isDateTime(config.getAppointTime()), "[appointTime]格式不正确，请检查配置文件");
-        }
-        if (config.isEnableProxy()) {
-            Assert.notBlank(config.getGetProxyURL(), "[getProxyURL]不能为空");
-            Assert.isTrue(Validator.isUrl(config.getGetProxyURL()), "[getProxyURL]格式不正确，请检查配置文件");
-        }
     }
 
     private boolean isDateTime(String dateTime) {

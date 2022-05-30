@@ -125,13 +125,12 @@ public class Init implements Runnable {
         props.add(new Prop("医生编号", "doctorId", ConfigStore.getDoctorId()));
         props.add(new Prop("需要周几的号[可多选，如(6,7)]", "weeks", ConfigStore.getWeekId()));
         props.add(new Prop("时间段编号[可多选，如(am,pm)]", "days", ConfigStore.getDayId()));
-        props.add(new Prop("刷号休眠时间[单位:秒]", "sleepTime", "15"));
+        props.add(new Prop("刷号休眠时间[单位:秒]", "sleepTime", "5"));
         // custom config
         props.add(new Prop("是否开启定时挂号[true/false]", "enableAppoint", "false"));
         props.add(new Prop("定时挂号时间[格式: 2022-06-01 15:00:00]", "appointTime", ""));
-        props.add(new Prop("是否开启多线程挂号(仅在定时挂号开启时生效)[true/false]", "enableMultithreading", "false"));
         props.add(new Prop("是否开启代理[true/false]", "enableProxy", "false"));
-        props.add(new Prop("获取代理URL(可参考https://github.com/jhao104/proxy_pool搭建代理池)[格式: http://127.0.0.1:5010/get]", "getProxyURL", ""));
+        props.add(new Prop("代理文件路径[格式: /dir/proxy.txt]", "proxyFilePath", "proxy.txt"));
 
         StringBuilder sb = new StringBuilder();
         for (Prop prop : props) {

@@ -196,7 +196,7 @@ public class CoreService {
                     .collect(Collectors.toList());
 
             // 挂号
-            boolean success = doRegister(formList);
+            boolean success = doRegister(formList, false);
             if (success) {
                 log.info("挂号成功");
                 break;
@@ -228,7 +228,11 @@ public class CoreService {
         return keyList;
     }
 
-    private boolean doRegister(List<Register> formList) {
+    private boolean doRegister(List<Register> formList, boolean isMock) {
+        if (isMock) {
+            log.info("模拟挂号成功");
+            return true;
+        }
         if (CollUtil.isEmpty(formList)) {
             return false;
         }

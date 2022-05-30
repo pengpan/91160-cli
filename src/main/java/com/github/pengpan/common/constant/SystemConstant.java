@@ -1,5 +1,7 @@
 package com.github.pengpan.common.constant;
 
+import java.util.regex.Pattern;
+
 /**
  * @author pengpan
  */
@@ -10,4 +12,6 @@ public class SystemConstant {
     public final static String DEFECT_USER_AGENT = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/100.0.4896.75 Safari/537.36";
 
     public final static String DOMAIN = "https://www.91160.com";
+
+    public final static Pattern PROXY_PATTERN = Pattern.compile("(socks|http)@(.*):(.*)");
 }

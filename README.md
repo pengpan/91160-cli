@@ -12,7 +12,7 @@
 - [x] 可指定就诊人
 - [x] 可指定挂号时间
 - [x] 定时挂号
-- [ ] IP代理刷号
+- [x] 代理刷号
 
 ## 使用
 
@@ -46,21 +46,19 @@ deptId=556
 # 医生编号
 doctorId=1690
 # 需要周几的号[可多选，如(6,7)]
-weeks=7
+weeks=6,7
 # 时间段编号[可多选，如(am,pm)]
-days=am
+days=am,pm
 # 刷号休眠时间[单位:秒]
-sleepTime=15
+sleepTime=5
 # 是否开启定时挂号[true/false]
 enableAppoint=false
 # 定时挂号时间[格式: 2022-06-01 15:00:00]
 appointTime=
-# 是否开启多线程挂号(仅在定时挂号开启时生效)[true/false]
-enableMultithreading=false
 # 是否开启代理[true/false]
 enableProxy=false
-# 获取代理URL(可参考https://github.com/jhao104/proxy_pool搭建代理池)[格式: http://127.0.0.1:5010/get]
-getProxyURL=
+# 代理文件路径[格式: /dir/proxy.txt]
+proxyFilePath=proxy.txt
 ```
 
 6. 开始挂号
@@ -102,3 +100,24 @@ $ java -jar 91160-cli.jar register -c config.properties
 2022-05-26 00:22:20.620  INFO - 挂号成功
 2022-05-26 00:22:20.620  INFO - 挂号结束
 ```
+
+## 使用代理
+
+1. 新建`proxy.txt`文件
+2. 写入代理信息，格式: `(http|socks)@ip:port`，每行一条
+
+```text
+http@127.0.0.1:1087
+socks@127.0.0.1:1086
+```
+
+3. 编辑配置文件`config.properties`，开启并配置代理文件路径
+
+```properties
+# 是否开启代理[true/false]
+enableProxy=true
+# 代理文件路径[格式: /dir/proxy.txt]
+proxyFilePath=[代理文件路径]
+```
+
+4. 当开启代理后，在循环刷号时会从代理文件中随机选取一条代理，并通过该代理发起请求
