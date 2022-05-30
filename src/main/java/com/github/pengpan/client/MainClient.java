@@ -1,6 +1,7 @@
 package com.github.pengpan.client;
 
 import com.alibaba.fastjson.JSONObject;
+import com.github.pengpan.common.proxy.EnableProxy;
 import retrofit2.Response;
 import retrofit2.http.*;
 
@@ -30,6 +31,7 @@ public interface MainClient {
     @POST("/ajax/getdepbyunit.html")
     List<Map<String, Object>> getDept(@Field("keyValue") String unitId);
 
+    @EnableProxy
     @GET
     JSONObject dept(@Url String url,
                     @Query("unit_id") String unitId,

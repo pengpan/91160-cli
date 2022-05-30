@@ -76,18 +76,12 @@ public class Config {
     private String appointTime;
 
     /**
-     * 是否开启多线程挂号(仅在定时挂号开启时生效)[true/false]
-     */
-    private boolean enableMultithreading;
-
-    /**
      * 是否开启代理[true/false]
      */
     private boolean enableProxy;
 
     /**
-     * 获取代理URL(可参考https://github.com/jhao104/proxy_pool搭建代理池)
-     * [格式: http://127.0.0.1:5010/get]
+     * 代理文件路径[格式: /dir/proxy.txt]
      */
-    private String getProxyURL;
+    private String proxyFilePath;
 }

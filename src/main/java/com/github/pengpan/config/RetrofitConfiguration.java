@@ -4,11 +4,13 @@ import com.alibaba.fastjson.support.retrofit.Retrofit2ConverterFactory;
 import com.github.pengpan.client.MainClient;
 import com.github.pengpan.common.constant.SystemConstant;
 import com.github.pengpan.common.cookie.CookieManager;
+import com.github.pengpan.common.proxy.SwitchProxySelector;
 import com.github.pengpan.common.retrofit.BasicTypeConverterFactory;
 import com.github.pengpan.common.retrofit.BodyCallAdapterFactory;
 import com.github.pengpan.common.retrofit.ResponseCallAdapterFactory;
 import com.github.pengpan.interceptor.LoggingInterceptor;
 import com.github.pengpan.interceptor.MainClientInterceptor;
+import com.github.pengpan.interceptor.ProxyInterceptor;
 import okhttp3.ConnectionPool;
 import okhttp3.OkHttpClient;
 import org.springframework.context.annotation.Bean;
@@ -26,8 +28,10 @@ public class RetrofitConfiguration {
     @Bean
     public OkHttpClient okHttpClient() {
         return new OkHttpClient.Builder()
+                .addInterceptor(new ProxyInterceptor())
                 .addInterceptor(new MainClientInterceptor())
                 .addInterceptor(new LoggingInterceptor())
+                .proxySelector(new SwitchProxySelector())
                 .followRedirects(false)
                 .cookieJar(new CookieManager())
                 .connectionPool(new ConnectionPool(200, 2, TimeUnit.MINUTES))
