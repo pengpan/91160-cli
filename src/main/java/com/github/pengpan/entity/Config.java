@@ -66,6 +66,11 @@ public class Config {
     private int sleepTime;
 
     /**
+     * 刷号起始日期(表示刷该日期后一周的号,为空取当前日期)[格式: 2022-06-01]
+     */
+    private String brushStartDate;
+
+    /**
      * 是否开启定时挂号[true/false]
      */
     private boolean enableAppoint;

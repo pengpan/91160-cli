@@ -14,6 +14,7 @@ import com.github.pengpan.common.store.ProxyStore;
 import com.github.pengpan.entity.Config;
 import com.github.pengpan.service.CoreService;
 import com.github.pengpan.util.Assert;
+import com.github.pengpan.util.CommonUtil;
 import io.airlift.airline.Command;
 import io.airlift.airline.Option;
 import lombok.extern.slf4j.Slf4j;
@@ -81,7 +82,7 @@ public class Register implements Runnable {
             proxyList.add(line);
         }
 
-        Assert.isTrue(CollUtil.isNotEmpty(proxyList), "[proxyFilePath]至少要有一个正确格式的代理项");
+        Assert.notEmpty(proxyList, "[proxyFilePath]至少要有一个正确格式的代理项");
 
         ProxyStore.setProxyList(proxyList);
         ProxyStore.setEnabled(true);
@@ -93,12 +94,11 @@ public class Register implements Runnable {
         }
 
         Assert.notBlank(config.getAppointTime(), "[appointTime]不能为空");
-        Assert.isTrue(isDateTime(config.getAppointTime()), "[appointTime]格式不正确，请检查配置文件");
+        Date appointTime = CommonUtil.parseDate(config.getAppointTime(), DatePattern.NORM_DATETIME_PATTERN);
+        Assert.notNull(appointTime, "[appointTime]格式不正确，请检查配置文件");
 
         Date serverDate = coreService.serverDate();
         log.info("当前服务器时间: {}", DateUtil.formatDateTime(serverDate));
-
-        Date appointTime = DateUtil.parse(config.getAppointTime()).toJdkDate();
         log.info("指定的挂号时间: {}", DateUtil.formatDateTime(appointTime));
 
         long waitTime = appointTime.getTime() - serverDate.getTime();
@@ -130,17 +130,14 @@ public class Register implements Runnable {
         Assert.notBlank(config.getUnitId(), "[unitId]不能为空，请检查配置文件");
         Assert.notBlank(config.getDeptId(), "[deptId]不能为空，请检查配置文件");
         Assert.notBlank(config.getDoctorId(), "[doctorId]不能为空，请检查配置文件");
-        Assert.isTrue(CollUtil.isNotEmpty(config.getWeeks()), "[weeks]不能为空，请检查配置文件");
-        Assert.isTrue(CollUtil.isNotEmpty(config.getDays()), "[days]不能为空，请检查配置文件");
+        Assert.notEmpty(config.getWeeks(), "[weeks]不能为空，请检查配置文件");
+        Assert.notEmpty(config.getDays(), "[days]不能为空，请检查配置文件");
         Assert.isTrue(config.getSleepTime() >= 0, "[sleepTime]格式不正确，请检查配置文件");
-    }
-
-    private boolean isDateTime(String dateTime) {
-        try {
-            DateUtil.parse(dateTime, DatePattern.NORM_DATETIME_PATTERN);
-            return true;
-        } catch (Exception ignored) {
-            return false;
+        if (StrUtil.isNotBlank(config.getBrushStartDate())) {
+            Date brushStartDate = CommonUtil.parseDate(config.getBrushStartDate(), DatePattern.NORM_DATE_PATTERN);
+            Assert.notNull(brushStartDate, "[brushStartDate]格式不正确，请检查配置文件");
+            Date today = DateUtil.beginOfDay(new Date());
+            Assert.isTrue(brushStartDate.getTime() >= today.getTime(), "[brushStartDate]刷号起始日期不能小于当前日期");
         }
     }
 }

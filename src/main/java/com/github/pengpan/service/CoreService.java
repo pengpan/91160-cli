@@ -4,6 +4,7 @@ import cn.hutool.core.codec.Base64;
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.date.DatePattern;
 import cn.hutool.core.date.DateUtil;
+import cn.hutool.core.date.LocalDateTimeUtil;
 import cn.hutool.core.io.resource.ResourceUtil;
 import cn.hutool.core.lang.TypeReference;
 import cn.hutool.core.map.MapUtil;
@@ -25,6 +26,7 @@ import com.github.pengpan.entity.Register;
 import com.github.pengpan.entity.ScheduleInfo;
 import com.github.pengpan.enums.DataTypeEnum;
 import com.github.pengpan.util.Assert;
+import com.google.gson.Gson;
 import lombok.extern.slf4j.Slf4j;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -81,7 +83,8 @@ public class CoreService {
         String html = mainClient.htmlPage("https://user.91160.com/login.html");
         Document document = Jsoup.parse(html);
         Element tokens = document.getElementById("tokens");
-        return Assert.notNull(tokens, "token获取失败").val();
+        Assert.notNull(tokens, "token获取失败");
+        return tokens.val();
     }
 
     public List<Map<String, Object>> getData(DataTypeEnum dataType) {
@@ -105,7 +108,7 @@ public class CoreService {
     }
 
     public List<Map<String, Object>> getDoctor(String unitId, String deptId) {
-        JSONObject data = dept(unitId, deptId);
+        JSONObject data = dept(unitId, deptId, null);
         return Optional.ofNullable(data).map(x -> x.getJSONArray("doc")).orElseGet(JSONArray::new).stream()
                 .map(JSON::toJSONString)
                 .map(x -> JSON.<Map<String, Object>>parseObject(x, new TypeReference<LinkedHashMap<String, Object>>() {
@@ -113,11 +116,11 @@ public class CoreService {
                 .collect(Collectors.toList());
     }
 
-    public JSONObject dept(String unitId, String deptId) {
+    public JSONObject dept(String unitId, String deptId, String brushStartDate) {
         Assert.notBlank(unitId, "[unitId]不能为空");
         Assert.notBlank(deptId, "[deptId]不能为空");
         String url = "https://gate.91160.com/guahao/v1/pc/sch/dep";
-        String date = DateUtil.today();
+        String date = StrUtil.isBlank(brushStartDate) ? DateUtil.today() : brushStartDate;
         int page = 0;
         String userKey = CookieStore.accessHash();
         JSONObject result = mainClient.dept(url, unitId, deptId, date, page, userKey);
@@ -135,7 +138,8 @@ public class CoreService {
         String html = mainClient.htmlPage(url);
         Document document = Jsoup.parse(html);
         Element tbody = document.getElementById("mem_list");
-        Elements trs = Assert.notNull(tbody, "就诊人为空").getElementsByTag("tr");
+        Assert.notNull(tbody, "就诊人为空");
+        Elements trs = tbody.getElementsByTag("tr");
         List<Map<String, Object>> memberList = new ArrayList<>();
         for (Element tr : trs) {
             String id = StrUtil.removePrefix(tr.id(), "mem");
@@ -161,7 +165,7 @@ public class CoreService {
         for (int i = 1; ; i++) {
             log.info("[{}]努力刷号中...", i);
 
-            JSONObject ticketData = dept(config.getUnitId(), config.getDeptId());
+            JSONObject ticketData = dept(config.getUnitId(), config.getDeptId(), config.getBrushStartDate());
 
             // 获取有效的schedule_id
             List<ScheduleInfo> schInfoList = keyList.stream().parallel()
@@ -173,7 +177,7 @@ public class CoreService {
                     .sorted(Comparator.comparing(ScheduleInfo::getNumber).reversed())
                     .collect(Collectors.toList());
 
-            schInfoList.forEach(x -> log.info(JSON.toJSONString(x)));
+            schInfoList.forEach(x -> log.info(new Gson().toJson(x)));
 
             if (CollUtil.isEmpty(schInfoList)) {
                 // 休眠
@@ -207,10 +211,12 @@ public class CoreService {
     }
 
     private List<String> getJSONPathKeys(Config config) {
-        LocalDate now = LocalDate.now();
+        LocalDate brushStartDate = StrUtil.isBlank(config.getBrushStartDate())
+                ? LocalDate.now()
+                : LocalDateTimeUtil.parseDate(config.getBrushStartDate(), DatePattern.NORM_DATE_PATTERN);
         Map<String, String> map = new LinkedHashMap<>();
         for (int i = 0; i < 7; i++) {
-            LocalDate localDate = now.plusDays(i);
+            LocalDate localDate = brushStartDate.plusDays(i);
             String k = String.valueOf(localDate.getDayOfWeek().getValue());
             String v = String.valueOf(i);
             map.put(k, v);
