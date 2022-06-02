@@ -18,5 +18,5 @@ public enum ProxyModeEnum {
     /**
      * 随机
      */
-    RANDOM;
+    RANDOM
 }
