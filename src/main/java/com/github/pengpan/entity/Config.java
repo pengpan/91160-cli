@@ -1,10 +1,9 @@
 package com.github.pengpan.entity;
 
+import com.github.pengpan.enums.ProxyModeEnum;
 import lombok.Data;
 
 import java.util.List;
-
-import com.github.pengpan.enums.ProxyModeEnum;
 
 /**
  * @author pengpan
