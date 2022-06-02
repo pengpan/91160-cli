@@ -4,6 +4,8 @@ import lombok.Data;
 
 import java.util.List;
 
+import com.github.pengpan.enums.ProxyModeEnum;
+
 /**
  * @author pengpan
  */
@@ -89,4 +91,9 @@ public class Config {
      * 代理文件路径[格式: /dir/proxy.txt]
      */
     private String proxyFilePath;
+
+    /**
+     * 获取代理方式[ROUND_ROBIN(轮询)/RANDOM(随机)]
+     */
+    private ProxyModeEnum proxyMode;
 }

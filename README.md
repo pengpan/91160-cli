@@ -63,6 +63,8 @@ appointTime=
 enableProxy=false
 # 代理文件路径[格式: /dir/proxy.txt]
 proxyFilePath=proxy.txt
+# 获取代理方式[ROUND_ROBIN(轮询)/RANDOM(随机)]
+proxyMode=ROUND_ROBIN
 ```
 
 6. 开始挂号
@@ -122,6 +124,8 @@ socks@127.0.0.1:1086
 enableProxy=true
 # 代理文件路径[格式: /dir/proxy.txt]
 proxyFilePath=[代理文件路径]
+# 获取代理方式[ROUND_ROBIN(轮询)/RANDOM(随机)]
+proxyMode=ROUND_ROBIN
 ```
 
 4. 当开启代理后，在循环刷号时会从代理文件中随机选取一条代理，并通过该代理发起请求
