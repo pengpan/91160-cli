@@ -132,6 +132,7 @@ public class Init implements Runnable {
         props.add(new Prop("定时挂号时间[格式: 2022-06-01 15:00:00]", "appointTime", ""));
         props.add(new Prop("是否开启代理[true/false]", "enableProxy", "false"));
         props.add(new Prop("代理文件路径[格式: /dir/proxy.txt]", "proxyFilePath", "proxy.txt"));
+        props.add(new Prop("获取代理方式[ROUND_ROBIN(轮询)/RANDOM(随机)]", "proxyMode", "ROUND_ROBIN"));
 
         StringBuilder sb = new StringBuilder();
         for (Prop prop : props) {
