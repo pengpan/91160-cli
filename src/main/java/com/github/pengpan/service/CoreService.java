@@ -188,12 +188,6 @@ public class CoreService {
             // 判断登录是否有效
             CookieStore.getLoginCookieNotNull();
 
-            // 判断会员ID是否正确
-            boolean exist = getMember().stream()
-                    .map(x -> String.valueOf(x.get("id")))
-                    .anyMatch(x -> StrUtil.equals(x, config.getMemberId()));
-            Assert.isTrue(exist, "就诊人编码不正确，请检查");
-
             // 获取有效的参数列表
             List<Register> formList = schInfoList.stream().parallel()
                     .flatMap(x -> buildForm(x, config).stream())

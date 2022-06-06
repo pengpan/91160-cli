@@ -13,5 +13,10 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 @Documented
 @Target(METHOD)
 @Retention(RUNTIME)
-public @interface EnableProxy {
+public @interface Proxy {
+
+    /**
+     * 是否启用代理
+     */
+    boolean enable() default true;
 }
