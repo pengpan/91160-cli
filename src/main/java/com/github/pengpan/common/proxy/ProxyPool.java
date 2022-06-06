@@ -1,12 +1,9 @@
 package com.github.pengpan.common.proxy;
 
 import cn.hutool.core.util.RandomUtil;
-import cn.hutool.core.util.StrUtil;
-
 import com.github.pengpan.common.constant.SystemConstant;
 import com.github.pengpan.common.store.ProxyStore;
 import com.github.pengpan.enums.ProxyModeEnum;
-
 import lombok.extern.slf4j.Slf4j;
 
 import java.net.InetSocketAddress;
@@ -20,7 +17,7 @@ import java.util.regex.Matcher;
 @Slf4j
 public class ProxyPool {
 
-    private static ThreadLocal<Integer> currIndex = ThreadLocal.withInitial(() -> 0);
+    private static final ThreadLocal<Integer> currIndex = ThreadLocal.withInitial(() -> 0);
 
     public static Proxy get() {
         List<String> proxyList = ProxyStore.getProxyList();
@@ -32,7 +29,7 @@ public class ProxyPool {
         } else if (proxyMode == ProxyModeEnum.RANDOM) {
             proxyStr = RandomUtil.randomEle(proxyList);
         } else {
-            proxyStr = StrUtil.EMPTY; 
+            return Proxy.NO_PROXY;
         }
 
         Matcher matcher = SystemConstant.PROXY_PATTERN.matcher(proxyStr);

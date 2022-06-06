@@ -11,6 +11,7 @@ import com.github.pengpan.common.retrofit.ResponseCallAdapterFactory;
 import com.github.pengpan.interceptor.LoggingInterceptor;
 import com.github.pengpan.interceptor.MainClientInterceptor;
 import com.github.pengpan.interceptor.ProxyInterceptor;
+import com.github.pengpan.interceptor.RetryInterceptor;
 import okhttp3.ConnectionPool;
 import okhttp3.OkHttpClient;
 import org.springframework.context.annotation.Bean;
@@ -31,6 +32,7 @@ public class RetrofitConfiguration {
                 .addInterceptor(new ProxyInterceptor())
                 .addInterceptor(new MainClientInterceptor())
                 .addInterceptor(new LoggingInterceptor())
+                .addInterceptor(new RetryInterceptor())
                 .proxySelector(new SwitchProxySelector())
                 .followRedirects(false)
                 .cookieJar(new CookieManager())

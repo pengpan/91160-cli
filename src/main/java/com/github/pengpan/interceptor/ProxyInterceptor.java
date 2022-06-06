@@ -1,6 +1,6 @@
 package com.github.pengpan.interceptor;
 
-import com.github.pengpan.common.proxy.EnableProxy;
+import com.github.pengpan.common.proxy.Proxy;
 import com.github.pengpan.common.proxy.ProxyPool;
 import com.github.pengpan.common.proxy.SwitchProxySelector;
 import com.github.pengpan.common.store.ProxyStore;
@@ -12,7 +12,6 @@ import retrofit2.Invocation;
 
 import java.io.IOException;
 import java.lang.reflect.Method;
-import java.net.Proxy;
 
 /**
  * @author pengpan
@@ -23,13 +22,15 @@ public class ProxyInterceptor implements Interceptor {
     @Override
     public Response intercept(Chain chain) throws IOException {
         Request request = chain.request();
+        if (!ProxyStore.isEnabled()) {
+            return chain.proceed(request);
+        }
         Invocation invocation = request.tag(Invocation.class);
         assert invocation != null;
         Method method = invocation.method();
-        EnableProxy enableProxy = method.getAnnotation(EnableProxy.class);
-        if (enableProxy != null && ProxyStore.isEnabled()) {
-            Proxy proxy = ProxyPool.get();
-            SwitchProxySelector.proxyThreadLocal.set(proxy);
+        Proxy proxy = method.getAnnotation(Proxy.class);
+        if (proxy != null && proxy.enable()) {
+            SwitchProxySelector.proxyThreadLocal.set(ProxyPool.get());
         }
         return chain.proceed(request);
     }

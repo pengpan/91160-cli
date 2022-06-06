@@ -14,9 +14,9 @@ public enum ProxyModeEnum {
      * 轮询
      */
     ROUND_ROBIN,
-    
+
     /**
      * 随机
      */
-    RANDOM;
+    RANDOM
 }

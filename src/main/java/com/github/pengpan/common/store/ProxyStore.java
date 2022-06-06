@@ -1,8 +1,8 @@
 package com.github.pengpan.common.store;
 
-import java.util.List;
-
 import com.github.pengpan.enums.ProxyModeEnum;
+
+import java.util.List;
 
 /**
  * @author pengpan
