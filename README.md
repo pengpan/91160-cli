@@ -130,6 +130,8 @@ proxyMode=ROUND_ROBIN
 
 4. 当开启代理后，在循环刷号时会从代理文件中随机选取一条代理，并通过该代理发起请求
 
-## 请作者喝咖啡
+## 支持作者
 
-![WeChat Pay](imgs/wechat_pay.png)
+如果您觉得`91160-cli`对你有帮助，可以请作者喝杯咖啡哦～
+
+![微信支付](imgs/wechat_pay.png)
