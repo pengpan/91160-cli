@@ -17,6 +17,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.JSONPath;
+import com.ejlchina.json.JSONKit;
 import com.github.pengpan.client.MainClient;
 import com.github.pengpan.common.constant.SystemConstant;
 import com.github.pengpan.common.cookie.CookieStore;
@@ -26,7 +27,6 @@ import com.github.pengpan.entity.Register;
 import com.github.pengpan.entity.ScheduleInfo;
 import com.github.pengpan.enums.DataTypeEnum;
 import com.github.pengpan.util.Assert;
-import com.google.gson.Gson;
 import lombok.extern.slf4j.Slf4j;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -91,7 +91,7 @@ public class CoreService {
         Assert.notNull(dataType, "[dataType]不能为空");
         String cities = ResourceUtil.readUtf8Str(dataType.getPath());
         return JSON.parseArray(cities).stream()
-                .map(JSON::toJSONString)
+                .map(JSONKit::toJson)
                 .map(x -> JSON.<Map<String, Object>>parseObject(x, new TypeReference<LinkedHashMap<String, Object>>() {
                 }.getType()))
                 .collect(Collectors.toList());
@@ -110,7 +110,7 @@ public class CoreService {
     public List<Map<String, Object>> getDoctor(String unitId, String deptId) {
         JSONObject data = dept(unitId, deptId, null);
         return Optional.ofNullable(data).map(x -> x.getJSONArray("doc")).orElseGet(JSONArray::new).stream()
-                .map(JSON::toJSONString)
+                .map(JSONKit::toJson)
                 .map(x -> JSON.<Map<String, Object>>parseObject(x, new TypeReference<LinkedHashMap<String, Object>>() {
                 }.getType()))
                 .collect(Collectors.toList());
@@ -171,13 +171,13 @@ public class CoreService {
             List<ScheduleInfo> schInfoList = keyList.stream().parallel()
                     .map(x -> JSONPath.eval(ticketData, x))
                     .filter(Objects::nonNull)
-                    .map(JSON::toJSONString)
-                    .map(x -> JSON.parseObject(x, ScheduleInfo.class))
+                    .map(JSONKit::toJson)
+                    .map(x -> JSONKit.<ScheduleInfo>toBean(ScheduleInfo.class, x))
                     .filter(x -> x.getNumber() != null && x.getNumber() > 0 && !"0".equals(x.getSchId()))
                     .sorted(Comparator.comparing(ScheduleInfo::getNumber).reversed())
                     .collect(Collectors.toList());
 
-            schInfoList.forEach(x -> log.info(new Gson().toJson(x)));
+            schInfoList.forEach(x -> log.info(JSONKit.toJson(x)));
 
             if (CollUtil.isEmpty(schInfoList)) {
                 // 休眠
