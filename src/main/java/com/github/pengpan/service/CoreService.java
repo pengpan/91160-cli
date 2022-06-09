@@ -6,17 +6,16 @@ import cn.hutool.core.date.DatePattern;
 import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.date.LocalDateTimeUtil;
 import cn.hutool.core.io.resource.ResourceUtil;
-import cn.hutool.core.lang.TypeReference;
 import cn.hutool.core.map.MapUtil;
 import cn.hutool.core.thread.ThreadUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.crypto.SecureUtil;
 import cn.hutool.crypto.asymmetric.KeyType;
 import cn.hutool.crypto.asymmetric.RSA;
-import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.JSONPath;
+import com.ejlchina.data.TypeRef;
 import com.ejlchina.json.JSONKit;
 import com.github.pengpan.client.MainClient;
 import com.github.pengpan.common.constant.SystemConstant;
@@ -61,11 +60,11 @@ public class CoreService {
         Map<String, String> fields = MapUtil.newHashMap();
         fields.put("username", encryptedUsername);
         fields.put("password", encryptedPassword);
-        fields.put("target", "https://www.91160.com");
+        fields.put("target", SystemConstant.DOMAIN);
         fields.put("error_num", "0");
         fields.put("token", getToken());
 
-        Response<Void> loginResp = mainClient.doLogin("https://user.91160.com/login.html", fields);
+        Response<Void> loginResp = mainClient.doLogin(SystemConstant.LOGIN_URL, fields);
         if (!loginResp.raw().isRedirect()) {
             return false;
         }
@@ -80,7 +79,7 @@ public class CoreService {
     }
 
     private String getToken() {
-        String html = mainClient.htmlPage("https://user.91160.com/login.html");
+        String html = mainClient.htmlPage(SystemConstant.LOGIN_URL);
         Document document = Jsoup.parse(html);
         Element tokens = document.getElementById("tokens");
         Assert.notNull(tokens, "token获取失败");
@@ -90,11 +89,8 @@ public class CoreService {
     public List<Map<String, Object>> getData(DataTypeEnum dataType) {
         Assert.notNull(dataType, "[dataType]不能为空");
         String cities = ResourceUtil.readUtf8Str(dataType.getPath());
-        return JSON.parseArray(cities).stream()
-                .map(JSONKit::toJson)
-                .map(x -> JSON.<Map<String, Object>>parseObject(x, new TypeReference<LinkedHashMap<String, Object>>() {
-                }.getType()))
-                .collect(Collectors.toList());
+        return JSONKit.toBean(new TypeRef<List<LinkedHashMap<String, Object>>>() {
+        }.getType(), cities);
     }
 
     public List<Map<String, Object>> getUnit(String cityId) {
@@ -111,8 +107,8 @@ public class CoreService {
         JSONObject data = dept(unitId, deptId, null);
         return Optional.ofNullable(data).map(x -> x.getJSONArray("doc")).orElseGet(JSONArray::new).stream()
                 .map(JSONKit::toJson)
-                .map(x -> JSON.<Map<String, Object>>parseObject(x, new TypeReference<LinkedHashMap<String, Object>>() {
-                }.getType()))
+                .map(x -> JSONKit.<Map<String, Object>>toBean(new TypeRef<LinkedHashMap<String, Object>>() {
+                }.getType(), x))
                 .collect(Collectors.toList());
     }
 

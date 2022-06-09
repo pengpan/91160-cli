@@ -1,7 +1,6 @@
 package com.github.pengpan.enums;
 
-import cn.hutool.core.lang.TypeReference;
-import com.alibaba.fastjson.JSON;
+import com.ejlchina.data.TypeRef;
 import com.ejlchina.json.JSONKit;
 import com.github.pengpan.common.store.ConfigStore;
 import com.github.pengpan.entity.InitData;
@@ -13,7 +12,6 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 /**
  * @author pengpan
@@ -67,11 +65,8 @@ public enum InitDataEnum {
                 List<Map<String, Object>> dept = x.getDept(ConfigStore.getUnitId());
                 Map<String, Object> bigDept = dept.get(Integer.parseInt(ConfigStore.getBigDeptId()) - 1);
                 String child = Optional.ofNullable(bigDept.get("childs")).map(JSONKit::toJson).orElseGet(String::new);
-                return JSON.parseArray(child).stream()
-                        .map(JSONKit::toJson)
-                        .map(y -> JSON.<Map<String, Object>>parseObject(y, new TypeReference<LinkedHashMap<String, Object>>() {
-                        }.getType()))
-                        .collect(Collectors.toList());
+                return JSONKit.toBean(new TypeRef<List<LinkedHashMap<String, Object>>>() {
+                }.getType(), child);
             })
             .store(ConfigStore::setDeptId)
             .build()),
