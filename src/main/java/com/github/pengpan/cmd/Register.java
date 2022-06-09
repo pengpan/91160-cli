@@ -36,7 +36,7 @@ public class Register implements Runnable {
             name = {"-c", "--config"},
             title = "configuration file",
             required = true,
-            description = "Path to json configuration file.")
+            description = "Path to properties configuration file.")
     private String configFile;
 
     @Override
