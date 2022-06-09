@@ -14,6 +14,7 @@ import com.github.pengpan.util.CommonUtil;
 import io.airlift.airline.Command;
 import lombok.extern.slf4j.Slf4j;
 
+import java.io.Console;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
@@ -28,6 +29,8 @@ import java.util.Scanner;
 public class Init implements Runnable {
 
     private final Scanner in = new Scanner(System.in);
+
+    private final Console console = System.console();
 
     private final CoreService coreService = SpringUtil.getBean(CoreService.class);
 
@@ -57,8 +60,12 @@ public class Init implements Runnable {
 
             String password = AccountStore.getPassword();
             while (StrUtil.isBlank(password)) {
-                System.out.print("请输入密码: ");
-                password = in.nextLine();
+                if (console != null) {
+                    password = new String(console.readPassword("请输入密码: "));
+                } else {
+                    System.out.print("请输入密码: ");
+                    password = in.nextLine();
+                }
             }
 
             log.info("登录中，请稍等...");
