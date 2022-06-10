@@ -1,6 +1,5 @@
 package com.github.pengpan.entity;
 
-import com.alibaba.fastjson.annotation.JSONField;
 import lombok.Data;
 
 /**
@@ -9,13 +8,10 @@ import lombok.Data;
 @Data
 public class ScheduleInfo {
 
-    @JSONField(name = "left_num")
-    private Integer number;
+    private int left_num;
 
-    @JSONField(name = "schedule_id")
-    private String schId;
+    private String schedule_id;
 
-    @JSONField(name = "time_type")
-    private String timeType;
+    private String time_type;
 
 }

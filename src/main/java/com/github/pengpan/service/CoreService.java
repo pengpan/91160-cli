@@ -12,20 +12,16 @@ import cn.hutool.core.util.StrUtil;
 import cn.hutool.crypto.SecureUtil;
 import cn.hutool.crypto.asymmetric.KeyType;
 import cn.hutool.crypto.asymmetric.RSA;
-import com.alibaba.fastjson.JSONArray;
-import com.alibaba.fastjson.JSONObject;
-import com.alibaba.fastjson.JSONPath;
 import com.ejlchina.data.TypeRef;
 import com.ejlchina.json.JSONKit;
 import com.github.pengpan.client.MainClient;
 import com.github.pengpan.common.constant.SystemConstant;
 import com.github.pengpan.common.cookie.CookieStore;
 import com.github.pengpan.common.store.AccountStore;
-import com.github.pengpan.entity.Config;
-import com.github.pengpan.entity.Register;
-import com.github.pengpan.entity.ScheduleInfo;
+import com.github.pengpan.entity.*;
 import com.github.pengpan.enums.DataTypeEnum;
 import com.github.pengpan.util.Assert;
+import com.jayway.jsonpath.JsonPath;
 import lombok.extern.slf4j.Slf4j;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -104,29 +100,29 @@ public class CoreService {
     }
 
     public List<Map<String, Object>> getDoctor(String unitId, String deptId) {
-        JSONObject data = dept(unitId, deptId, null);
-        return Optional.ofNullable(data).map(x -> x.getJSONArray("doc")).orElseGet(JSONArray::new).stream()
+        BrushSchData data = dept(unitId, deptId, null);
+        return Optional.ofNullable(data).map(BrushSchData::getDoc).orElseGet(ArrayList::new).stream()
                 .map(JSONKit::toJson)
                 .map(x -> JSONKit.<Map<String, Object>>toBean(new TypeRef<LinkedHashMap<String, Object>>() {
                 }.getType(), x))
                 .collect(Collectors.toList());
     }
 
-    public JSONObject dept(String unitId, String deptId, String brushStartDate) {
+    public BrushSchData dept(String unitId, String deptId, String brushStartDate) {
         Assert.notBlank(unitId, "[unitId]不能为空");
         Assert.notBlank(deptId, "[deptId]不能为空");
         String url = "https://gate.91160.com/guahao/v1/pc/sch/dep";
         String date = StrUtil.isBlank(brushStartDate) ? DateUtil.today() : brushStartDate;
         int page = 0;
         String userKey = CookieStore.accessHash();
-        JSONObject result = mainClient.dept(url, unitId, deptId, date, page, userKey);
-        String resultCode = result.getString("result_code");
-        String errorCode = result.getString("error_code");
-        if (!"1".equals(resultCode) || !"200".equals(errorCode)) {
-            log.info("获取数据失败: {}", result.toJSONString());
-            return new JSONObject();
+        BrushSch result = mainClient.dept(url, unitId, deptId, date, page, userKey);
+        Integer resultCode = result.getResult_code();
+        String errorCode = result.getError_code();
+        if (!Objects.equals(1, resultCode) || !"200".equals(errorCode)) {
+            log.info("获取数据失败: {}", JSONKit.toJson(result));
+            return null;
         }
-        return result.getJSONObject("data");
+        return result.getData();
     }
 
     public List<Map<String, Object>> getMember() {
@@ -161,19 +157,7 @@ public class CoreService {
         for (int i = 1; ; i++) {
             log.info("[{}]努力刷号中...", i);
 
-            JSONObject ticketData = dept(config.getUnitId(), config.getDeptId(), config.getBrushStartDate());
-
-            // 获取有效的schedule_id
-            List<ScheduleInfo> schInfoList = keyList.stream().parallel()
-                    .map(x -> JSONPath.eval(ticketData, x))
-                    .filter(Objects::nonNull)
-                    .map(JSONKit::toJson)
-                    .map(x -> JSONKit.<ScheduleInfo>toBean(ScheduleInfo.class, x))
-                    .filter(x -> x.getNumber() != null && x.getNumber() > 0 && !"0".equals(x.getSchId()))
-                    .sorted(Comparator.comparing(ScheduleInfo::getNumber).reversed())
-                    .collect(Collectors.toList());
-
-            schInfoList.forEach(x -> log.info(JSONKit.toJson(x)));
+            List<ScheduleInfo> schInfoList = getValidScheduleInfos(config, keyList);
 
             if (CollUtil.isEmpty(schInfoList)) {
                 // 休眠
@@ -200,6 +184,32 @@ public class CoreService {
         log.info("挂号结束");
     }
 
+    private List<ScheduleInfo> getValidScheduleInfos(Config config, List<String> keyList) {
+        BrushSchData ticketData = dept(config.getUnitId(), config.getDeptId(), config.getBrushStartDate());
+        String sch = Optional.ofNullable(ticketData).map(BrushSchData::getSch).map(JSONKit::toJson).orElseGet(String::new);
+
+        // 获取有效的schedule_id
+        List<ScheduleInfo> schInfoList = keyList.stream().parallel()
+                .map(x -> jsonPathEval(sch, x))
+                .filter(Objects::nonNull)
+                .map(JSONKit::toJson)
+                .map(x -> JSONKit.<ScheduleInfo>toBean(ScheduleInfo.class, x))
+                .filter(x -> x.getLeft_num() > 0 && !"0".equals(x.getSchedule_id()))
+                .sorted(Comparator.comparing(ScheduleInfo::getLeft_num).reversed())
+                .collect(Collectors.toList());
+
+        schInfoList.forEach(x -> log.info(JSONKit.toJson(x)));
+        return schInfoList;
+    }
+
+    private Object jsonPathEval(String sch, String jsonPath) {
+        try {
+            return JsonPath.read(sch, jsonPath);
+        } catch (Exception ignored) {
+            return null;
+        }
+    }
+
     private List<String> getJSONPathKeys(Config config) {
         LocalDate brushStartDate = StrUtil.isBlank(config.getBrushStartDate())
                 ? LocalDate.now()
@@ -217,7 +227,7 @@ public class CoreService {
         List<String> keyList = new ArrayList<>();
         for (String day : config.getDays()) {
             for (String week : weeks) {
-                String key = StrUtil.format("$.sch.{}.{}.{}", config.getDoctorId(), day, week);
+                String key = StrUtil.format("$.{}.{}.{}", config.getDoctorId(), day, week);
                 keyList.add(key);
             }
         }
@@ -264,7 +274,7 @@ public class CoreService {
     }
 
     private List<Register> buildForm(ScheduleInfo schInfo, Config config) {
-        String html = mainClient.orderPage(config.getUnitId(), config.getDeptId(), schInfo.getSchId());
+        String html = mainClient.orderPage(config.getUnitId(), config.getDeptId(), schInfo.getSchedule_id());
         Document document = Jsoup.parse(html);
 
         List<String> detlidList = Optional.of(document)
@@ -308,10 +318,10 @@ public class CoreService {
                         .unitId(config.getUnitId())
                         .depId(config.getDeptId())
                         .doctorId(config.getDoctorId())
-                        .schId(schInfo.getSchId())
+                        .schId(schInfo.getSchedule_id())
                         .memberId(config.getMemberId())
                         .accept("1")
-                        .timeType(schInfo.getTimeType())
+                        .timeType(schInfo.getTime_type())
                         .detlid(x)
                         .detlidRealtime(detlid_realtime)
                         .levelCode(level_code)
