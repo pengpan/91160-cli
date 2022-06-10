@@ -1,7 +1,6 @@
 package com.github.pengpan.common.retrofit;
 
 import cn.hutool.core.lang.Assert;
-import okhttp3.Request;
 import retrofit2.Call;
 import retrofit2.CallAdapter;
 import retrofit2.Response;
@@ -44,7 +43,6 @@ public final class ResponseCallAdapterFactory extends CallAdapter.Factory {
 
         @Override
         public Response<R> adapt(Call<R> call) {
-            Request request = call.request();
             try {
                 return call.execute();
             } catch (IOException e) {

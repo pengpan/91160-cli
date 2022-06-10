@@ -1,6 +1,5 @@
 package com.github.pengpan.common.retrofit;
 
-import okhttp3.Request;
 import okhttp3.ResponseBody;
 import retrofit2.*;
 
@@ -51,7 +50,6 @@ public final class BodyCallAdapterFactory extends CallAdapter.Factory {
         @Override
         public R adapt(Call<R> call) {
             Response<R> response;
-            Request request = call.request();
             try {
                 response = call.execute();
             } catch (IOException e) {
