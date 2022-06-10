@@ -49,7 +49,6 @@ public class RetrofitConfiguration {
 
     @Bean
     public Retrofit retrofit(OkHttpClient okHttpClient, ObjectMapper objectMapper) {
-        JSONKit.init(new JacksonDataConvertor(objectMapper));
         return new Retrofit.Builder()
                 .baseUrl(SystemConstant.DOMAIN)
                 .client(okHttpClient)
@@ -58,6 +57,12 @@ public class RetrofitConfiguration {
                 .addConverterFactory(new BasicTypeConverterFactory())
                 .addConverterFactory(JacksonConverterFactory.create(objectMapper))
                 .build();
+    }
+
+    @Bean
+    public Void initJSONKit(ObjectMapper objectMapper) {
+        JSONKit.init(new JacksonDataConvertor(objectMapper));
+        return null;
     }
 
     @Bean

@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Configuration>
+<Configuration status="WARN">
     <Properties>
         <Property name="LOG_PATH">logs</Property>
-        <Property name="CONSOLE_LOG_PATTERN">%d{yyyy-MM-dd HH:mm:ss.SSS}{GMT+8}{faint} %5p - %msg%n</Property>
-        <Property name="FILE_LOG_PATTERN">%d{yyyy-MM-dd HH:mm:ss.SSS}{GMT+8}{faint} %5p - %msg%n</Property>
+        <Property name="CONSOLE_LOG_PATTERN">%d{yyyy-MM-dd HH:mm:ss.SSS}{GMT+8}{faint} %highlight{%5p} : %highlight{%msg%n}{STYLE=Logback}</Property>
+        <Property name="FILE_LOG_PATTERN">%d{yyyy-MM-dd HH:mm:ss.SSS}{GMT+8}{faint} %5p : %msg%n</Property>
         <Property name="LOG_CHARSET">utf-8</Property>
     </Properties>
     <Appenders>
-        <Console name="Console" target="SYSTEM_OUT">
-            <PatternLayout charset="${LOG_CHARSET}" pattern="${CONSOLE_LOG_PATTERN}"/>
+        <Console name="Console" target="SYSTEM_OUT" follow="true">
+            <PatternLayout charset="${LOG_CHARSET}" pattern="${CONSOLE_LOG_PATTERN}" disableAnsi="false"/>
         </Console>
         <RollingFile name="File" fileName="${LOG_PATH}/log.log"
                      filePattern="${LOG_PATH}/$${date:yyyy-MM}/log-%d{yyyy-MM-dd-HH}-%i.log.gz">
