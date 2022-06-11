@@ -52,7 +52,7 @@ public class CookieStore {
         Cookie loginCookie = getLoginCookie();
         if (loginCookie == null || System.currentTimeMillis() > (loginCookie.expiresAt() - 60 * 1000)) {
             log.info("登录失效，正在重新登录...");
-            cookieStore.clear();
+            clear();
             CoreService coreService = SpringUtil.getBean(CoreService.class);
             boolean loginSuccess = coreService.login(AccountStore.getUserName(), AccountStore.getPassword());
             Assert.isTrue(loginSuccess, "登录失败，请检查用户名密码");

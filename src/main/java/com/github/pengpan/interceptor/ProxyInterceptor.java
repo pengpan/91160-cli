@@ -12,6 +12,7 @@ import retrofit2.Invocation;
 
 import java.io.IOException;
 import java.lang.reflect.Method;
+import java.util.Objects;
 
 /**
  * @author pengpan
@@ -26,8 +27,7 @@ public class ProxyInterceptor implements Interceptor {
             return chain.proceed(request);
         }
         Invocation invocation = request.tag(Invocation.class);
-        assert invocation != null;
-        Method method = invocation.method();
+        Method method = Objects.requireNonNull(invocation).method();
         Proxy proxy = method.getAnnotation(Proxy.class);
         if (proxy != null && proxy.enable()) {
             SwitchProxySelector.proxyThreadLocal.set(ProxyPool.get());
