@@ -60,4 +60,8 @@ public class CookieStore {
         }
         return loginCookie;
     }
+
+    public static void clear() {
+        cookieStore.clear();
+    }
 }

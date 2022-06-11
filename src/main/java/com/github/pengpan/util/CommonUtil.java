@@ -11,13 +11,13 @@ import java.util.Date;
 @Slf4j
 public class CommonUtil {
 
-    public static void errorExit(String message) {
-        log.error(message);
+    public static void errorExit(String format, Object... arguments) {
+        log.error(format, arguments);
         System.exit(-1);
     }
 
-    public static void normalExit(String message) {
-        log.info(message);
+    public static void normalExit(String format, Object... arguments) {
+        log.info(format, arguments);
         System.exit(0);
     }
 

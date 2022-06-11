@@ -21,6 +21,7 @@ import com.github.pengpan.common.store.AccountStore;
 import com.github.pengpan.entity.*;
 import com.github.pengpan.enums.DataTypeEnum;
 import com.github.pengpan.util.Assert;
+import com.github.pengpan.util.CommonUtil;
 import com.jayway.jsonpath.JsonPath;
 import lombok.extern.slf4j.Slf4j;
 import org.jsoup.Jsoup;
@@ -119,8 +120,8 @@ public class CoreService {
         Integer resultCode = result.getResult_code();
         String errorCode = result.getError_code();
         if (!Objects.equals(1, resultCode) || !"200".equals(errorCode)) {
-            log.info("获取数据失败: {}", JSONKit.toJson(result));
-            return null;
+            log.warn("获取数据失败: {}", JSONKit.toJson(result));
+            CommonUtil.errorExit("刷号中断: {}", result.getError_msg());
         }
         return result.getData();
     }
@@ -277,10 +278,14 @@ public class CoreService {
         String html = mainClient.orderPage(config.getUnitId(), config.getDeptId(), schInfo.getSchedule_id());
         Document document = Jsoup.parse(html);
 
-        List<String> detlidList = Optional.of(document)
+        Elements elmLis = Optional.of(document)
                 .map(x -> x.getElementById("delts"))
-                .map(x -> x.getElementsByTag("li")).orElseGet(Elements::new)
-                .stream()
+                .map(x -> x.getElementsByTag("li")).orElseGet(Elements::new);
+
+        List<String> times = elmLis.stream().map(Element::text).collect(Collectors.toList());
+        log.info("schedule_id: {}, times: {}", schInfo.getSchedule_id(), JSONKit.toJson(times));
+
+        List<String> detlidList = elmLis.stream()
                 .map(x -> x.attr("val"))
                 .filter(StrUtil::isNotBlank)
                 .collect(Collectors.toList());
