@@ -14,6 +14,7 @@ import retrofit2.Invocation;
 import java.io.IOException;
 import java.lang.reflect.Method;
 import java.util.HashSet;
+import java.util.Objects;
 
 /**
  * @author pengpan
@@ -25,8 +26,7 @@ public class RetryInterceptor implements Interceptor {
     public Response intercept(Chain chain) throws IOException {
         Request request = chain.request();
         Invocation invocation = request.tag(Invocation.class);
-        assert invocation != null;
-        Method method = invocation.method();
+        Method method = Objects.requireNonNull(invocation).method();
         Retry retry = method.getAnnotation(Retry.class);
         if (retry == null || !retry.enable()) {
             return chain.proceed(request);

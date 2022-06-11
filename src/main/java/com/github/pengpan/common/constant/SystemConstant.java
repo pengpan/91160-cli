@@ -13,6 +13,8 @@ public class SystemConstant {
 
     public final static String DOMAIN = "https://www.91160.com";
 
+    public final static String LOGIN_URL = "https://user.91160.com/login.html";
+
     public final static Pattern PROXY_PATTERN = Pattern.compile("(socks|http)@(.*):(.*)");
 
     public final static int LIMIT_RETRIES = 100;

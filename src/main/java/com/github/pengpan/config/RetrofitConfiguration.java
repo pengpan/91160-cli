@@ -1,6 +1,9 @@
 package com.github.pengpan.config;
 
-import com.alibaba.fastjson.support.retrofit.Retrofit2ConverterFactory;
+import com.ejlchina.data.jackson.JacksonDataConvertor;
+import com.ejlchina.json.JSONKit;
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.pengpan.client.MainClient;
 import com.github.pengpan.common.constant.SystemConstant;
 import com.github.pengpan.common.cookie.CookieManager;
@@ -17,6 +20,7 @@ import okhttp3.OkHttpClient;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import retrofit2.Retrofit;
+import retrofit2.converter.jackson.JacksonConverterFactory;
 
 import java.util.concurrent.TimeUnit;
 
@@ -44,15 +48,28 @@ public class RetrofitConfiguration {
     }
 
     @Bean
-    public Retrofit retrofit(OkHttpClient okHttpClient) {
+    public Retrofit retrofit(OkHttpClient okHttpClient, ObjectMapper objectMapper) {
         return new Retrofit.Builder()
                 .baseUrl(SystemConstant.DOMAIN)
                 .client(okHttpClient)
                 .addCallAdapterFactory(new BodyCallAdapterFactory())
                 .addCallAdapterFactory(new ResponseCallAdapterFactory())
                 .addConverterFactory(new BasicTypeConverterFactory())
-                .addConverterFactory(Retrofit2ConverterFactory.create())
+                .addConverterFactory(JacksonConverterFactory.create(objectMapper))
                 .build();
+    }
+
+    @Bean
+    public Void initJSONKit(ObjectMapper objectMapper) {
+        JSONKit.init(new JacksonDataConvertor(objectMapper));
+        return null;
+    }
+
+    @Bean
+    public ObjectMapper objectMapper() {
+        ObjectMapper objectMapper = new ObjectMapper();
+        objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+        return objectMapper;
     }
 
     @Bean

@@ -1,8 +1,8 @@
 package com.github.pengpan.client;
 
-import com.alibaba.fastjson.JSONObject;
 import com.github.pengpan.common.proxy.Proxy;
 import com.github.pengpan.common.retry.Retry;
+import com.github.pengpan.entity.BrushSch;
 import retrofit2.Response;
 import retrofit2.http.*;
 
@@ -35,12 +35,12 @@ public interface MainClient {
     @Retry
     @Proxy
     @GET
-    JSONObject dept(@Url String url,
-                    @Query("unit_id") String unitId,
-                    @Query("dep_id") String deptId,
-                    @Query("date") String date,
-                    @Query("p") int page,
-                    @Query("user_key") String userKey);
+    BrushSch dept(@Url String url,
+                  @Query("unit_id") String unitId,
+                  @Query("dep_id") String deptId,
+                  @Query("date") String date,
+                  @Query("p") int page,
+                  @Query("user_key") String userKey);
 
     @GET("/guahao/ystep1/uid-{unitId}/depid-{deptId}/schid-{schId}.html")
     String orderPage(@Path("unitId") String unitId,
