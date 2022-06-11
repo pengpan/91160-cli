@@ -134,7 +134,7 @@ proxyMode=ROUND_ROBIN
 
 如果您觉得`91160-cli`对你有帮助，可以请作者喝杯咖啡哦～
 
-![微信支付](imgs/wechat_pay.png)
+![赞赏码](imgs/reward.png)
 
 ## Q&A
 
