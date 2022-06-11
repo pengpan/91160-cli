@@ -12,6 +12,7 @@ import cn.hutool.core.util.StrUtil;
 import cn.hutool.crypto.SecureUtil;
 import cn.hutool.crypto.asymmetric.KeyType;
 import cn.hutool.crypto.asymmetric.RSA;
+import cn.hutool.setting.dialect.PropsUtil;
 import com.ejlchina.data.TypeRef;
 import com.ejlchina.json.JSONKit;
 import com.github.pengpan.client.MainClient;
@@ -175,7 +176,7 @@ public class CoreService {
                     .collect(Collectors.toList());
 
             // 挂号
-            boolean success = doRegister(formList, false);
+            boolean success = doRegister(formList);
             if (success) {
                 log.info("挂号成功");
                 break;
@@ -235,7 +236,8 @@ public class CoreService {
         return keyList;
     }
 
-    private boolean doRegister(List<Register> formList, boolean isMock) {
+    private boolean doRegister(List<Register> formList) {
+        boolean isMock = PropsUtil.getSystemProps().getBool("mock", false);
         if (isMock) {
             log.info("模拟挂号成功");
             return true;
