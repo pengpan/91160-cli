@@ -122,7 +122,6 @@ public class CoreService {
         String errorCode = result.getError_code();
         if (!Objects.equals(1, resultCode) || !"200".equals(errorCode)) {
             log.warn("获取数据失败: {}", JSONKit.toJson(result));
-            CommonUtil.errorExit("刷号中断: {}", result.getError_msg());
         }
         return result.getData();
     }
