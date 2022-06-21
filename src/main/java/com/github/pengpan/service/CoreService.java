@@ -12,6 +12,7 @@ import cn.hutool.core.util.StrUtil;
 import cn.hutool.crypto.SecureUtil;
 import cn.hutool.crypto.asymmetric.KeyType;
 import cn.hutool.crypto.asymmetric.RSA;
+import cn.hutool.json.JSONUtil;
 import cn.hutool.setting.dialect.PropsUtil;
 import com.ejlchina.data.TypeRef;
 import com.ejlchina.json.JSONKit;
@@ -22,7 +23,6 @@ import com.github.pengpan.common.store.AccountStore;
 import com.github.pengpan.entity.*;
 import com.github.pengpan.enums.DataTypeEnum;
 import com.github.pengpan.util.Assert;
-import com.github.pengpan.util.CommonUtil;
 import com.jayway.jsonpath.JsonPath;
 import lombok.extern.slf4j.Slf4j;
 import org.jsoup.Jsoup;
@@ -117,13 +117,14 @@ public class CoreService {
         String date = StrUtil.isBlank(brushStartDate) ? DateUtil.today() : brushStartDate;
         int page = 0;
         String userKey = CookieStore.accessHash();
-        BrushSch result = mainClient.dept(url, unitId, deptId, date, page, userKey);
-        Integer resultCode = result.getResult_code();
-        String errorCode = result.getError_code();
-        if (!Objects.equals(1, resultCode) || !"200".equals(errorCode)) {
-            log.warn("获取数据失败: {}", JSONKit.toJson(result));
+        String result = mainClient.dept(url, unitId, deptId, date, page, userKey);
+        BrushSch brushSch = Optional.ofNullable(result).filter(JSONUtil::isTypeJSONObject)
+                .map(x -> JSONKit.<BrushSch>toBean(BrushSch.class, x)).orElse(null);
+        if (brushSch == null || !Objects.equals(1, brushSch.getResult_code()) || !"200".equals(brushSch.getError_code())) {
+            log.warn("获取数据失败: {}", result);
+            return null;
         }
-        return result.getData();
+        return brushSch.getData();
     }
 
     public List<Map<String, Object>> getMember() {
