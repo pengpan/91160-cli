@@ -135,7 +135,8 @@ proxyMode=ROUND_ROBIN
 ### Windows终端中文乱码如何解决？
 
 1. 打开终端，先运行命令：`chcp 65001`，设置编码为`UTF-8`；
-2. 执行jar时加入`-Dfile.encoding=utf-8`，即`java -Dfile.encoding=utf-8 -jar 91160-cli.jar init|register`
+2. 执行jar时加入`-Dfile.encoding=utf-8`，即`java -Dfile.encoding=utf-8 -jar 91160-cli.jar init|register`；
+3. 终端不要用`powershell`，要用`cmd.exe`；
 
 ## 加入群聊
 
