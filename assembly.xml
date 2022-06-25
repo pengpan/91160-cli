@@ -6,7 +6,6 @@ Introduction: https://maven.apache.org/plugins/maven-assembly-plugin/index.html
           xsi:schemaLocation="http://maven.apache.org/ASSEMBLY/2.1.0 http://maven.apache.org/xsd/assembly-2.1.0.xsd">
     <id>${project.version}</id>
     <formats>
-        <format>tar.gz</format>
         <format>zip</format>
     </formats>
     <includeBaseDirectory>false</includeBaseDirectory>
@@ -17,4 +16,10 @@ Introduction: https://maven.apache.org/plugins/maven-assembly-plugin/index.html
             <destName>${project.artifactId}.jar</destName>
         </file>
     </files>
+    <fileSets>
+        <fileSet>
+            <directory>${project.basedir}/src/main/resources/bin</directory>
+            <outputDirectory>.</outputDirectory>
+        </fileSet>
+    </fileSets>
 </assembly>

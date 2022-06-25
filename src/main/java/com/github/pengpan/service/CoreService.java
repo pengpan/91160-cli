@@ -167,6 +167,8 @@ public class CoreService {
                 continue;
             }
 
+            log.info("刷到号了");
+
             // 判断登录是否有效
             CookieStore.getLoginCookieNotNull();
 
@@ -270,8 +272,10 @@ public class CoreService {
             String html = mainClient.htmlPage(redirectUrl);
             // 判断结果
             if (StrUtil.contains(html, "预约成功")) {
+                log.info("预约成功");
                 return true;
             }
+            log.info("预约失败");
         }
         return false;
     }
