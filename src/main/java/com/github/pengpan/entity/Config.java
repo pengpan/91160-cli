@@ -62,7 +62,7 @@ public class Config {
     private String memberId;
 
     /**
-     * 刷号休眠时间[单位:秒]
+     * 刷号休眠时间[单位:毫秒]
      */
     private int sleepTime;
 
