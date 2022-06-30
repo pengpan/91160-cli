@@ -51,8 +51,8 @@ doctorId=1690
 weeks=6,7
 # 时间段编号[可多选，如(am,pm)]
 days=am,pm
-# 刷号休眠时间[单位:秒]
-sleepTime=5
+# 刷号休眠时间[单位:毫秒]
+sleepTime=5000
 # 刷号起始日期(表示刷该日期后一周的号,为空取当前日期)[格式: 2022-06-01]
 brushStartDate=
 # 是否开启定时挂号[true/false]
