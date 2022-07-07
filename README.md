@@ -140,7 +140,9 @@ proxyMode=ROUND_ROBIN
 
 ## 加入群聊
 
-![微信交流群](imgs/wechat_group.png)
+加群备注`91160`
+
+![微信交流群](imgs/wechat_group_final.png)
 
 ## 赞赏作者
 
