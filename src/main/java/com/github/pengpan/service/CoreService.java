@@ -245,6 +245,7 @@ public class CoreService {
             return true;
         }
         if (CollUtil.isEmpty(formList)) {
+            log.info("预约失败，号源无效");
             return false;
         }
         for (Register form : formList) {
