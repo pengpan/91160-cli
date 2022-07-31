@@ -41,9 +41,9 @@ public class RetrofitConfiguration {
                 .followRedirects(false)
                 .cookieJar(new CookieManager())
                 .connectionPool(new ConnectionPool(200, 2, TimeUnit.MINUTES))
-                .connectTimeout(10000, TimeUnit.MILLISECONDS)
-                .readTimeout(10000, TimeUnit.MILLISECONDS)
-                .writeTimeout(10000, TimeUnit.MILLISECONDS)
+                .connectTimeout(60000, TimeUnit.MILLISECONDS)
+                .readTimeout(60000, TimeUnit.MILLISECONDS)
+                .writeTimeout(60000, TimeUnit.MILLISECONDS)
                 .build();
     }
 
