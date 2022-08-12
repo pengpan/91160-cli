@@ -6,6 +6,7 @@ import com.github.pengpan.cmd.Register;
 import com.github.pengpan.cmd.Version;
 import io.airlift.airline.Cli;
 import io.airlift.airline.Help;
+import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.annotation.ComponentScan;
 
@@ -14,6 +15,7 @@ import org.springframework.context.annotation.ComponentScan;
  */
 @EnableSpringUtil
 @ComponentScan
+@EnableCaching
 public class App {
 
     public static void main(String[] args) {

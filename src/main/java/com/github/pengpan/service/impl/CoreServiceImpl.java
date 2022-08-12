@@ -4,7 +4,6 @@ import cn.hutool.core.codec.Base64;
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.date.DatePattern;
 import cn.hutool.core.date.DateUtil;
-import cn.hutool.core.date.LocalDateTimeUtil;
 import cn.hutool.core.io.resource.ResourceUtil;
 import cn.hutool.core.map.MapUtil;
 import cn.hutool.core.thread.ThreadUtil;
@@ -22,9 +21,9 @@ import com.github.pengpan.common.cookie.CookieStore;
 import com.github.pengpan.common.store.AccountStore;
 import com.github.pengpan.entity.*;
 import com.github.pengpan.enums.DataTypeEnum;
+import com.github.pengpan.service.BrushService;
 import com.github.pengpan.service.CoreService;
 import com.github.pengpan.util.Assert;
-import com.jayway.jsonpath.JsonPath;
 import lombok.extern.slf4j.Slf4j;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -34,7 +33,6 @@ import org.springframework.stereotype.Service;
 import retrofit2.Response;
 
 import javax.annotation.Resource;
-import java.time.LocalDate;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
@@ -48,6 +46,8 @@ public class CoreServiceImpl implements CoreService {
 
     @Resource
     private MainClient mainClient;
+    @Resource
+    private BrushService brushService;
 
     @Override
     public boolean login(String username, String password) {
@@ -162,13 +162,10 @@ public class CoreServiceImpl implements CoreService {
     public void brushTicketTask(Config config) {
         log.info("挂号开始");
 
-        List<String> keyList = getJSONPathKeys(config);
-        keyList.forEach(log::info);
-
         for (int i = 1; ; i++) {
             log.info("[{}]努力刷号中...", i);
 
-            List<ScheduleInfo> schInfoList = getValidScheduleInfos(config, keyList);
+            List<ScheduleInfo> schInfoList = brushService.getTicket(config);
 
             if (CollUtil.isEmpty(schInfoList)) {
                 // 休眠
@@ -195,56 +192,6 @@ public class CoreServiceImpl implements CoreService {
         }
 
         log.info("挂号结束");
-    }
-
-    private List<ScheduleInfo> getValidScheduleInfos(Config config, List<String> keyList) {
-        BrushSchData ticketData = dept(config.getUnitId(), config.getDeptId(), config.getBrushStartDate());
-        String sch = Optional.ofNullable(ticketData).map(BrushSchData::getSch).map(JSONKit::toJson).orElseGet(String::new);
-
-        // 获取有效的schedule_id
-        List<ScheduleInfo> schInfoList = keyList.stream().parallel()
-                .map(x -> jsonPathEval(sch, x))
-                .filter(Objects::nonNull)
-                .map(JSONKit::toJson)
-                .map(x -> JSONKit.<ScheduleInfo>toBean(ScheduleInfo.class, x))
-                .filter(x -> x.getLeft_num() > 0 && !"0".equals(x.getSchedule_id()))
-                .sorted(Comparator.comparing(ScheduleInfo::getLeft_num).reversed())
-                .collect(Collectors.toList());
-
-        schInfoList.forEach(x -> log.info(JSONKit.toJson(x)));
-        return schInfoList;
-    }
-
-    private Object jsonPathEval(String sch, String jsonPath) {
-        try {
-            return JsonPath.read(sch, jsonPath);
-        } catch (Exception ignored) {
-            return null;
-        }
-    }
-
-    private List<String> getJSONPathKeys(Config config) {
-        LocalDate brushStartDate = StrUtil.isBlank(config.getBrushStartDate())
-                ? LocalDate.now()
-                : LocalDateTimeUtil.parseDate(config.getBrushStartDate(), DatePattern.NORM_DATE_PATTERN);
-        Map<String, String> map = new LinkedHashMap<>();
-        for (int i = 0; i < 7; i++) {
-            LocalDate localDate = brushStartDate.plusDays(i);
-            String k = String.valueOf(localDate.getDayOfWeek().getValue());
-            String v = String.valueOf(i);
-            map.put(k, v);
-        }
-        List<String> weeks = config.getWeeks().stream()
-                .map(map::get).collect(Collectors.toList());
-
-        List<String> keyList = new ArrayList<>();
-        for (String day : config.getDays()) {
-            for (String week : weeks) {
-                String key = StrUtil.format("$.{}.{}.{}", config.getDoctorId(), day, week);
-                keyList.add(key);
-            }
-        }
-        return keyList;
     }
 
     private boolean doRegister(List<Register> formList) {

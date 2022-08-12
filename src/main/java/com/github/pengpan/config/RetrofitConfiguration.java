@@ -17,6 +17,8 @@ import com.github.pengpan.interceptor.ProxyInterceptor;
 import com.github.pengpan.interceptor.RetryInterceptor;
 import okhttp3.ConnectionPool;
 import okhttp3.OkHttpClient;
+import org.springframework.cache.CacheManager;
+import org.springframework.cache.caffeine.CaffeineCacheManager;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import retrofit2.Retrofit;
@@ -75,5 +77,10 @@ public class RetrofitConfiguration {
     @Bean
     public MainClient mainClient(Retrofit retrofit) {
         return retrofit.create(MainClient.class);
+    }
+
+    @Bean
+    public CacheManager cacheManager() {
+        return new CaffeineCacheManager();
     }
 }

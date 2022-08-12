@@ -41,6 +41,18 @@ public interface MainClient {
                 @Query("p") int page,
                 @Query("user_key") String userKey);
 
+    @Retry
+    @Proxy
+    @GET
+    String doctor(@Url String url,
+                  @Query("user_key") String userKey,
+                  @Query("docid") String docid,
+                  @Query("doc_id") String doc_id,
+                  @Query("unit_id") String unitId,
+                  @Query("dep_id") String deptId,
+                  @Query("date") String date,
+                  @Query("days") int days);
+
     @GET("/guahao/ystep1/uid-{unitId}/depid-{deptId}/schid-{schId}.html")
     String orderPage(@Path("unitId") String unitId,
                      @Path("deptId") String deptId,
