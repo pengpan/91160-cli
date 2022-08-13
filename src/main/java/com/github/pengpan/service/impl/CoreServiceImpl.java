@@ -20,6 +20,7 @@ import com.github.pengpan.common.constant.SystemConstant;
 import com.github.pengpan.common.cookie.CookieStore;
 import com.github.pengpan.common.store.AccountStore;
 import com.github.pengpan.entity.*;
+import com.github.pengpan.enums.BrushChannelEnum;
 import com.github.pengpan.enums.DataTypeEnum;
 import com.github.pengpan.service.BrushService;
 import com.github.pengpan.service.CoreService;
@@ -162,6 +163,8 @@ public class CoreServiceImpl implements CoreService {
     public void brushTicketTask(Config config) {
         log.info("挂号开始");
 
+        printBrushChannelInfo(config.getBrushChannel());
+
         for (int i = 1; ; i++) {
             log.info("[{}]努力刷号中...", i);
 
@@ -192,6 +195,16 @@ public class CoreServiceImpl implements CoreService {
         }
 
         log.info("挂号结束");
+    }
+
+    private void printBrushChannelInfo(BrushChannelEnum brushChannel) {
+        if (brushChannel == null) {
+            log.info("当前刷号通道：通道1 + 通道2");
+        } else if (brushChannel == BrushChannelEnum.CHANNEL_1) {
+            log.info("当前刷号通道：通道1");
+        } else if (brushChannel == BrushChannelEnum.CHANNEL_2) {
+            log.info("当前刷号通道：通道2");
+        }
     }
 
     private boolean doRegister(List<Register> formList) {

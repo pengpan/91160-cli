@@ -2,6 +2,7 @@ package com.github.pengpan.service;
 
 import com.github.pengpan.entity.Config;
 import com.github.pengpan.entity.ScheduleInfo;
+import com.github.pengpan.enums.BrushChannelEnum;
 
 import java.util.List;
 
@@ -10,7 +11,7 @@ import java.util.List;
  */
 public interface BrushService {
 
-    TicketService getTicketService();
+    TicketService getTicketService(BrushChannelEnum brushChannel);
 
     List<ScheduleInfo> getTicket(Config config);
 }
