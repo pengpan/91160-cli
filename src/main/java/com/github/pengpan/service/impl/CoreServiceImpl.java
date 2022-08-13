@@ -1,23 +1,16 @@
 package com.github.pengpan.service.impl;
 
-import cn.hutool.core.codec.Base64;
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.date.DatePattern;
 import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.io.resource.ResourceUtil;
-import cn.hutool.core.map.MapUtil;
 import cn.hutool.core.thread.ThreadUtil;
 import cn.hutool.core.util.StrUtil;
-import cn.hutool.crypto.SecureUtil;
-import cn.hutool.crypto.asymmetric.KeyType;
-import cn.hutool.crypto.asymmetric.RSA;
 import cn.hutool.setting.dialect.PropsUtil;
 import com.ejlchina.data.TypeRef;
 import com.ejlchina.json.JSONKit;
 import com.github.pengpan.client.MainClient;
-import com.github.pengpan.common.constant.SystemConstant;
 import com.github.pengpan.common.cookie.CookieStore;
-import com.github.pengpan.common.store.AccountStore;
 import com.github.pengpan.entity.*;
 import com.github.pengpan.enums.BrushChannelEnum;
 import com.github.pengpan.enums.DataTypeEnum;
@@ -44,82 +37,10 @@ import java.util.stream.Collectors;
 @Service
 public class CoreServiceImpl implements CoreService {
 
-    private static final RSA rsa = SecureUtil.rsa(null, SystemConstant.PUBLIC_KEY);
-
     @Resource
     private MainClient mainClient;
     @Resource
     private BrushService brushService;
-
-    @Override
-    public String getToken() {
-        String html = mainClient.htmlPage(SystemConstant.LOGIN_URL);
-        Document document = Jsoup.parse(html);
-        Element tokens = document.getElementById("tokens");
-        Assert.notNull(tokens, "token获取失败");
-        String token = tokens.val();
-        log.info("token: " + token);
-        return token;
-    }
-
-    @Override
-    public boolean checkUser(String username, String password, String token) {
-        Map<String, String> fields = MapUtil.newHashMap();
-        fields.put("username", username);
-        fields.put("password", password);
-        fields.put("type", "m");
-        fields.put("token", token);
-
-        CheckUser checkUser = mainClient.checkUser(SystemConstant.CHECK_USER_URL, fields);
-        Assert.notNull(checkUser, "用户检测失败");
-        if (StrUtil.equals("1", checkUser.getCode())) {
-            log.info("用户检测通过");
-            return true;
-        } else {
-            log.warn("用户检测不通过: " + checkUser.getMsg());
-            return false;
-        }
-    }
-
-    @Override
-    public boolean login(String username, String password, String token) {
-        Map<String, String> fields = MapUtil.newHashMap();
-        fields.put("username", username);
-        fields.put("password", password);
-        fields.put("target", SystemConstant.DOMAIN);
-        fields.put("error_num", "0");
-        fields.put("token", token);
-
-        Response<Void> loginResp = mainClient.doLogin(SystemConstant.LOGIN_URL, fields);
-        if (!loginResp.raw().isRedirect()) {
-            log.warn("登录失败，请检查用户名和密码");
-            return false;
-        }
-
-        String redirectUrl = loginResp.headers().get("Location");
-        Response<String> redirectResp = mainClient.loginRedirect(redirectUrl);
-        boolean loginSuccess = redirectResp.raw().isRedirect();
-        if (loginSuccess) {
-            AccountStore.store(username, password);
-            log.info("登录成功");
-        } else {
-            log.error("登录失败");
-            log.error("Response code: {}", redirectResp.code());
-            log.error("Response body: {}", redirectResp.body());
-            log.error("Response errorBody: {}", redirectResp.errorBody());
-        }
-        return loginSuccess;
-    }
-
-    @Override
-    public boolean doLogin(String username, String password) {
-        String encryptedUsername = Base64.encode(rsa.encrypt(username, KeyType.PublicKey));
-        String encryptedPassword = Base64.encode(rsa.encrypt(password, KeyType.PublicKey));
-
-        String token = getToken();
-        return checkUser(encryptedUsername, encryptedPassword, token)
-                && login(encryptedUsername, encryptedPassword, token);
-    }
 
     @Override
     public List<Map<String, Object>> getData(DataTypeEnum dataType) {

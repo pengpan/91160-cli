@@ -4,7 +4,7 @@ import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.extra.spring.SpringUtil;
 import com.github.pengpan.common.store.AccountStore;
-import com.github.pengpan.service.CoreService;
+import com.github.pengpan.service.LoginService;
 import lombok.extern.slf4j.Slf4j;
 import okhttp3.Cookie;
 
@@ -52,8 +52,8 @@ public class CookieStore {
         if (loginCookie == null || System.currentTimeMillis() > (loginCookie.expiresAt() - 60 * 1000)) {
             log.info("登录失效，正在重新登录...");
             clear();
-            CoreService coreService = SpringUtil.getBean(CoreService.class);
-            coreService.doLogin(AccountStore.getUserName(), AccountStore.getPassword());
+            LoginService loginService = SpringUtil.getBean(LoginService.class);
+            loginService.doLogin(AccountStore.getUserName(), AccountStore.getPassword());
             loginCookie = getLoginCookie();
         }
         return loginCookie;

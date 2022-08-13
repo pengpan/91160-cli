@@ -10,6 +10,7 @@ import com.github.pengpan.entity.InitData;
 import com.github.pengpan.entity.Prop;
 import com.github.pengpan.enums.InitDataEnum;
 import com.github.pengpan.service.CoreService;
+import com.github.pengpan.service.LoginService;
 import com.github.pengpan.util.CommonUtil;
 import io.airlift.airline.Command;
 import lombok.extern.slf4j.Slf4j;
@@ -30,6 +31,7 @@ public class Init implements Runnable {
     private final Scanner in = new Scanner(System.in);
 
     private final CoreService coreService = SpringUtil.getBean(CoreService.class);
+    private final LoginService loginService = SpringUtil.getBean(LoginService.class);
 
     @Override
     public void run() {
@@ -63,7 +65,7 @@ public class Init implements Runnable {
 
             log.info("登录中，请稍等...");
 
-            loginSuccess = coreService.doLogin(userName, password);
+            loginSuccess = loginService.doLogin(userName, password);
 
         } while (!loginSuccess);
     }
