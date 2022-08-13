@@ -13,7 +13,13 @@ import java.util.Map;
  */
 public interface CoreService {
 
-    boolean login(String username, String password);
+    String getToken();
+
+    boolean checkUser(String username, String password, String token);
+
+    boolean login(String username, String password, String token);
+
+    boolean doLogin(String username, String password);
 
     List<Map<String, Object>> getData(DataTypeEnum dataType);
 

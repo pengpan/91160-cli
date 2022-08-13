@@ -11,7 +11,6 @@ import cn.hutool.core.util.StrUtil;
 import cn.hutool.crypto.SecureUtil;
 import cn.hutool.crypto.asymmetric.KeyType;
 import cn.hutool.crypto.asymmetric.RSA;
-import cn.hutool.json.JSONUtil;
 import cn.hutool.setting.dialect.PropsUtil;
 import com.ejlchina.data.TypeRef;
 import com.ejlchina.json.JSONKit;
@@ -45,46 +44,81 @@ import java.util.stream.Collectors;
 @Service
 public class CoreServiceImpl implements CoreService {
 
+    private static final RSA rsa = SecureUtil.rsa(null, SystemConstant.PUBLIC_KEY);
+
     @Resource
     private MainClient mainClient;
     @Resource
     private BrushService brushService;
 
     @Override
-    public boolean login(String username, String password) {
-        Assert.notBlank(username, "用户名不能为空");
-        Assert.notBlank(password, "密码不能为空");
-        RSA rsa = SecureUtil.rsa(null, SystemConstant.PUBLIC_KEY);
-        String encryptedUsername = Base64.encode(rsa.encrypt(username, KeyType.PublicKey));
-        String encryptedPassword = Base64.encode(rsa.encrypt(password, KeyType.PublicKey));
-
-        Map<String, String> fields = MapUtil.newHashMap();
-        fields.put("username", encryptedUsername);
-        fields.put("password", encryptedPassword);
-        fields.put("target", SystemConstant.DOMAIN);
-        fields.put("error_num", "0");
-        fields.put("token", getToken());
-
-        Response<Void> loginResp = mainClient.doLogin(SystemConstant.LOGIN_URL, fields);
-        if (!loginResp.raw().isRedirect()) {
-            return false;
-        }
-
-        String redirectUrl = loginResp.headers().get("Location");
-        Response<Void> redirectResp = mainClient.loginRedirect(redirectUrl);
-        boolean loginSuccess = redirectResp.raw().isRedirect();
-        if (loginSuccess) {
-            AccountStore.store(username, password);
-        }
-        return loginSuccess;
-    }
-
-    private String getToken() {
+    public String getToken() {
         String html = mainClient.htmlPage(SystemConstant.LOGIN_URL);
         Document document = Jsoup.parse(html);
         Element tokens = document.getElementById("tokens");
         Assert.notNull(tokens, "token获取失败");
-        return tokens.val();
+        String token = tokens.val();
+        log.info("token: " + token);
+        return token;
+    }
+
+    @Override
+    public boolean checkUser(String username, String password, String token) {
+        Map<String, String> fields = MapUtil.newHashMap();
+        fields.put("username", username);
+        fields.put("password", password);
+        fields.put("type", "m");
+        fields.put("token", token);
+
+        CheckUser checkUser = mainClient.checkUser(SystemConstant.CHECK_USER_URL, fields);
+        Assert.notNull(checkUser, "用户检测失败");
+        if (StrUtil.equals("1", checkUser.getCode())) {
+            log.info("用户检测通过");
+            return true;
+        } else {
+            log.warn("用户检测不通过: " + checkUser.getMsg());
+            return false;
+        }
+    }
+
+    @Override
+    public boolean login(String username, String password, String token) {
+        Map<String, String> fields = MapUtil.newHashMap();
+        fields.put("username", username);
+        fields.put("password", password);
+        fields.put("target", SystemConstant.DOMAIN);
+        fields.put("error_num", "0");
+        fields.put("token", token);
+
+        Response<Void> loginResp = mainClient.doLogin(SystemConstant.LOGIN_URL, fields);
+        if (!loginResp.raw().isRedirect()) {
+            log.warn("登录失败，请检查用户名和密码");
+            return false;
+        }
+
+        String redirectUrl = loginResp.headers().get("Location");
+        Response<String> redirectResp = mainClient.loginRedirect(redirectUrl);
+        boolean loginSuccess = redirectResp.raw().isRedirect();
+        if (loginSuccess) {
+            AccountStore.store(username, password);
+            log.info("登录成功");
+        } else {
+            log.error("登录失败");
+            log.error("Response code: {}", redirectResp.code());
+            log.error("Response body: {}", redirectResp.body());
+            log.error("Response errorBody: {}", redirectResp.errorBody());
+        }
+        return loginSuccess;
+    }
+
+    @Override
+    public boolean doLogin(String username, String password) {
+        String encryptedUsername = Base64.encode(rsa.encrypt(username, KeyType.PublicKey));
+        String encryptedPassword = Base64.encode(rsa.encrypt(password, KeyType.PublicKey));
+
+        String token = getToken();
+        return checkUser(encryptedUsername, encryptedPassword, token)
+                && login(encryptedUsername, encryptedPassword, token);
     }
 
     @Override
@@ -125,11 +159,10 @@ public class CoreServiceImpl implements CoreService {
         String date = StrUtil.isBlank(brushStartDate) ? DateUtil.today() : brushStartDate;
         int page = 0;
         String userKey = CookieStore.accessHash();
-        String result = mainClient.dept(url, unitId, deptId, date, page, userKey);
-        BrushSch brushSch = Optional.ofNullable(result).filter(JSONUtil::isTypeJSONObject)
-                .map(x -> JSONKit.<BrushSch>toBean(BrushSch.class, x)).orElse(null);
+        BrushSch brushSch = mainClient.dept(url, unitId, deptId, date, page, userKey);
+
         if (brushSch == null || !Objects.equals(1, brushSch.getResult_code()) || !"200".equals(brushSch.getError_code())) {
-            log.warn("获取数据失败: {}", result);
+            log.warn("获取数据失败: {}", JSONKit.toJson(brushSch));
             return null;
         }
         return brushSch.getData();
@@ -199,11 +232,11 @@ public class CoreServiceImpl implements CoreService {
 
     private void printBrushChannelInfo(BrushChannelEnum brushChannel) {
         if (brushChannel == null) {
-            log.info("当前刷号通道：通道1 + 通道2");
+            log.info("当前刷号通道: 通道1+通道2");
         } else if (brushChannel == BrushChannelEnum.CHANNEL_1) {
-            log.info("当前刷号通道：通道1");
+            log.info("当前刷号通道: 通道1");
         } else if (brushChannel == BrushChannelEnum.CHANNEL_2) {
-            log.info("当前刷号通道：通道2");
+            log.info("当前刷号通道: 通道2");
         }
     }
 

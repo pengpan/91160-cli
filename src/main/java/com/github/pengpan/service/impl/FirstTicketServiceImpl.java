@@ -4,7 +4,6 @@ import cn.hutool.core.date.DatePattern;
 import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.date.LocalDateTimeUtil;
 import cn.hutool.core.util.StrUtil;
-import cn.hutool.json.JSONUtil;
 import com.ejlchina.json.JSONKit;
 import com.github.pengpan.common.cookie.CookieStore;
 import com.github.pengpan.entity.BrushSch;
@@ -63,12 +62,10 @@ public class FirstTicketServiceImpl extends AbstractTicketService {
         String date = StrUtil.isBlank(brushStartDate) ? DateUtil.today() : brushStartDate;
         int page = 0;
         String userKey = CookieStore.accessHash();
-        String result = mainClient.dept(url, unitId, deptId, date, page, userKey);
+        BrushSch brushSch = mainClient.dept(url, unitId, deptId, date, page, userKey);
 
-        BrushSch brushSch = Optional.ofNullable(result).filter(JSONUtil::isTypeJSONObject)
-                .map(x -> JSONKit.<BrushSch>toBean(BrushSch.class, x)).orElse(null);
         if (brushSch == null || !Objects.equals(1, brushSch.getResult_code()) || !"200".equals(brushSch.getError_code())) {
-            log.warn("获取数据失败: {}", result);
+            log.warn("获取数据失败: {}", JSONKit.toJson(brushSch));
             return null;
         }
 

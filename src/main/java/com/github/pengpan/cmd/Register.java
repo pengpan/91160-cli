@@ -126,7 +126,7 @@ public class Register implements Runnable {
     private void checkBasicConfig(Config config, CoreService coreService) {
         Assert.notBlank(config.getUserName(), "[userName]不能为空，请检查配置文件");
         Assert.notBlank(config.getPassword(), "[password]不能为空，请检查配置文件");
-        Assert.isTrue(coreService.login(config.getUserName(), config.getPassword()), "登录失败，请检查账号和密码");
+        Assert.isTrue(coreService.doLogin(config.getUserName(), config.getPassword()), "登录失败，请检查账号和密码");
         Assert.notBlank(config.getMemberId(), "[memberId]不能为空，请检查配置文件");
         Assert.isTrue(coreService.getMember().stream()
                 .map(x -> String.valueOf(x.get("id")))
