@@ -131,6 +131,7 @@ public class CoreServiceImpl implements CoreService {
             }
 
             log.info("刷到号了");
+            schInfoList.forEach(x -> log.info(JSONKit.toJson(x)));
 
             // 判断登录是否有效
             CookieStore.getLoginCookieNotNull();

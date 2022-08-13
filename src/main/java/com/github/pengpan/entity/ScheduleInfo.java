@@ -8,6 +8,8 @@ import lombok.Data;
 @Data
 public class ScheduleInfo {
 
+    private String doctor_name;
+
     private int left_num;
 
     private String schedule_id;
