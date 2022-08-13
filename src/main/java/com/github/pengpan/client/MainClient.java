@@ -2,6 +2,9 @@ package com.github.pengpan.client;
 
 import com.github.pengpan.common.proxy.Proxy;
 import com.github.pengpan.common.retry.Retry;
+import com.github.pengpan.entity.BrushSch;
+import com.github.pengpan.entity.CheckUser;
+import com.github.pengpan.entity.DoctorSch;
 import retrofit2.Response;
 import retrofit2.http.*;
 
@@ -18,10 +21,14 @@ public interface MainClient {
 
     @FormUrlEncoded
     @POST
+    CheckUser checkUser(@Url String url, @FieldMap Map<String, String> fields);
+
+    @FormUrlEncoded
+    @POST
     Response<Void> doLogin(@Url String url, @FieldMap Map<String, String> fields);
 
     @GET
-    Response<Void> loginRedirect(@Url String url);
+    Response<String> loginRedirect(@Url String url);
 
     @FormUrlEncoded
     @POST("/ajax/getunitbycity.html")
@@ -34,12 +41,24 @@ public interface MainClient {
     @Retry
     @Proxy
     @GET
-    String dept(@Url String url,
-                @Query("unit_id") String unitId,
-                @Query("dep_id") String deptId,
-                @Query("date") String date,
-                @Query("p") int page,
-                @Query("user_key") String userKey);
+    BrushSch dept(@Url String url,
+                  @Query("unit_id") String unitId,
+                  @Query("dep_id") String deptId,
+                  @Query("date") String date,
+                  @Query("p") int page,
+                  @Query("user_key") String userKey);
+
+    @Retry
+    @Proxy
+    @GET
+    DoctorSch doctor(@Url String url,
+                     @Query("user_key") String userKey,
+                     @Query("docid") String docid,
+                     @Query("doc_id") String doc_id,
+                     @Query("unit_id") String unitId,
+                     @Query("dep_id") String deptId,
+                     @Query("date") String date,
+                     @Query("days") int days);
 
     @GET("/guahao/ystep1/uid-{unitId}/depid-{deptId}/schid-{schId}.html")
     String orderPage(@Path("unitId") String unitId,

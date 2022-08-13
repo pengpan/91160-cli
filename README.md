@@ -65,6 +65,8 @@ enableProxy=false
 proxyFilePath=proxy.txt
 # 获取代理方式[ROUND_ROBIN(轮询)/RANDOM(随机)]
 proxyMode=ROUND_ROBIN
+# 刷号通道[CHANNEL_1(通道1)/CHANNEL_2(通道2)]
+brushChannel=
 ```
 
 6. 开始挂号

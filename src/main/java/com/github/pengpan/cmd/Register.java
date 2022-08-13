@@ -13,6 +13,7 @@ import com.github.pengpan.common.constant.SystemConstant;
 import com.github.pengpan.common.store.ProxyStore;
 import com.github.pengpan.entity.Config;
 import com.github.pengpan.service.CoreService;
+import com.github.pengpan.service.LoginService;
 import com.github.pengpan.util.Assert;
 import com.github.pengpan.util.CommonUtil;
 import io.airlift.airline.Command;
@@ -44,7 +45,9 @@ public class Register implements Runnable {
         Config config = getConfig(configFile);
 
         CoreService coreService = SpringUtil.getBean(CoreService.class);
-        checkBasicConfig(config, coreService);
+        LoginService loginService = SpringUtil.getBean(LoginService.class);
+
+        checkBasicConfig(config, coreService, loginService);
         checkEnableProxy(config);
         checkEnableAppoint(config, coreService);
 
@@ -123,10 +126,10 @@ public class Register implements Runnable {
         return config;
     }
 
-    private void checkBasicConfig(Config config, CoreService coreService) {
+    private void checkBasicConfig(Config config, CoreService coreService, LoginService loginService) {
         Assert.notBlank(config.getUserName(), "[userName]不能为空，请检查配置文件");
         Assert.notBlank(config.getPassword(), "[password]不能为空，请检查配置文件");
-        Assert.isTrue(coreService.login(config.getUserName(), config.getPassword()), "登录失败，请检查账号和密码");
+        Assert.isTrue(loginService.doLogin(config.getUserName(), config.getPassword()), "登录失败，请检查账号和密码");
         Assert.notBlank(config.getMemberId(), "[memberId]不能为空，请检查配置文件");
         Assert.isTrue(coreService.getMember().stream()
                 .map(x -> String.valueOf(x.get("id")))

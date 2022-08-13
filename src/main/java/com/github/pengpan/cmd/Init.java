@@ -10,6 +10,7 @@ import com.github.pengpan.entity.InitData;
 import com.github.pengpan.entity.Prop;
 import com.github.pengpan.enums.InitDataEnum;
 import com.github.pengpan.service.CoreService;
+import com.github.pengpan.service.LoginService;
 import com.github.pengpan.util.CommonUtil;
 import io.airlift.airline.Command;
 import lombok.extern.slf4j.Slf4j;
@@ -30,6 +31,7 @@ public class Init implements Runnable {
     private final Scanner in = new Scanner(System.in);
 
     private final CoreService coreService = SpringUtil.getBean(CoreService.class);
+    private final LoginService loginService = SpringUtil.getBean(LoginService.class);
 
     @Override
     public void run() {
@@ -63,12 +65,8 @@ public class Init implements Runnable {
 
             log.info("登录中，请稍等...");
 
-            loginSuccess = coreService.login(userName, password);
-            if (loginSuccess) {
-                log.info("登录成功");
-            } else {
-                log.warn("用户名或密码错误，请重新输入！");
-            }
+            loginSuccess = loginService.doLogin(userName, password);
+
         } while (!loginSuccess);
     }
 
@@ -137,6 +135,7 @@ public class Init implements Runnable {
         props.add(new Prop("是否开启代理[true/false]", "enableProxy", "false"));
         props.add(new Prop("代理文件路径[格式: /dir/proxy.txt]", "proxyFilePath", "proxy.txt"));
         props.add(new Prop("获取代理方式[ROUND_ROBIN(轮询)/RANDOM(随机)]", "proxyMode", "ROUND_ROBIN"));
+        props.add(new Prop("刷号通道[CHANNEL_1(通道1)/CHANNEL_2(通道2)]", "brushChannel", ""));
 
         StringBuilder sb = new StringBuilder();
         for (Prop prop : props) {
