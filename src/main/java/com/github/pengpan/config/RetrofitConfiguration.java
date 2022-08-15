@@ -1,5 +1,6 @@
 package com.github.pengpan.config;
 
+import cn.hutool.core.collection.CollUtil;
 import com.ejlchina.data.jackson.JacksonDataConvertor;
 import com.ejlchina.json.JSONKit;
 import com.fasterxml.jackson.databind.DeserializationFeature;
@@ -17,13 +18,16 @@ import com.github.pengpan.interceptor.ProxyInterceptor;
 import com.github.pengpan.interceptor.RetryInterceptor;
 import okhttp3.ConnectionPool;
 import okhttp3.OkHttpClient;
+import org.springframework.cache.Cache;
 import org.springframework.cache.CacheManager;
-import org.springframework.cache.caffeine.CaffeineCacheManager;
+import org.springframework.cache.concurrent.ConcurrentMapCache;
+import org.springframework.cache.support.SimpleCacheManager;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import retrofit2.Retrofit;
 import retrofit2.converter.jackson.JacksonConverterFactory;
 
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -81,6 +85,10 @@ public class RetrofitConfiguration {
 
     @Bean
     public CacheManager cacheManager() {
-        return new CaffeineCacheManager();
+        SimpleCacheManager cacheManager = new SimpleCacheManager();
+        Cache cache = new ConcurrentMapCache("KEY_LIST");
+        List<Cache> caches = CollUtil.newArrayList(cache);
+        cacheManager.setCaches(caches);
+        return cacheManager;
     }
 }

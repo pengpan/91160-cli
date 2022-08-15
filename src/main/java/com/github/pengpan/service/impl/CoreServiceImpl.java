@@ -4,6 +4,7 @@ import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.date.DatePattern;
 import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.io.resource.ResourceUtil;
+import cn.hutool.core.map.MapUtil;
 import cn.hutool.core.thread.ThreadUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.setting.dialect.PropsUtil;
@@ -172,7 +173,16 @@ public class CoreServiceImpl implements CoreService {
             log.info("预约失败，号源无效");
             return false;
         }
+
+        int failCountMax = 3;
+        String errorMsg = StrUtil.format("同一号源预约失败次数达到{}次，已终止程序！请检查号源是否有效！", failCountMax);
+        Map<String, Integer> failCount = MapUtil.newHashMap();
+
         for (Register form : formList) {
+
+            int count = failCount.getOrDefault(form.getSchId(), 0);
+            Assert.isTrue(count < failCountMax, errorMsg);
+
             Response<Void> submitResp = mainClient.doSubmit(
                     form.getSchData(),
                     form.getUnitId(),
@@ -200,7 +210,9 @@ public class CoreServiceImpl implements CoreService {
                 log.info("预约成功");
                 return true;
             }
-            log.info("预约失败");
+            log.info("预约失败:{}次 ({} {})", count + 1, form.getToDate(), form.getDetlName());
+
+            failCount.put(form.getSchId(), ++count);
         }
         return false;
     }
@@ -220,7 +232,13 @@ public class CoreServiceImpl implements CoreService {
                 .map(x -> x.attr("val"))
                 .filter(StrUtil::isNotBlank)
                 .collect(Collectors.toList());
-        if (CollUtil.isEmpty(detlidList)) {
+
+        List<Appointment> appointmentList = elmLis.stream()
+                .map(x -> Appointment.builder().name(x.text()).value(x.attr("val")).build())
+                .filter(x -> StrUtil.isNotBlank(x.getValue()))
+                .collect(Collectors.toList());
+
+        if (CollUtil.isEmpty(appointmentList)) {
             return CollUtil.newArrayList();
         }
 
@@ -248,7 +266,7 @@ public class CoreServiceImpl implements CoreService {
             return CollUtil.newArrayList();
         }
 
-        return detlidList.stream()
+        return appointmentList.stream()
                 .map(x -> Register.builder()
                         .schData(sch_data)
                         .unitId(config.getUnitId())
@@ -258,11 +276,13 @@ public class CoreServiceImpl implements CoreService {
                         .memberId(config.getMemberId())
                         .accept("1")
                         .timeType(schInfo.getTime_type())
-                        .detlid(x)
+                        .detlName(x.getName())
+                        .detlid(x.getValue())
                         .detlidRealtime(detlid_realtime)
                         .levelCode(level_code)
                         .addressId("3317")
                         .address("Civic Center")
+                        .toDate(schInfo.getTo_date())
                         .build())
                 .collect(Collectors.toList());
     }

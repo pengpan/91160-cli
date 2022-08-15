@@ -14,6 +14,8 @@ public class ScheduleInfo {
 
     private String schedule_id;
 
+    private String to_date;
+
     private String time_type;
 
 }

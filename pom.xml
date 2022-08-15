@@ -6,7 +6,7 @@
 
     <groupId>com.github.pengpan</groupId>
     <artifactId>91160-cli</artifactId>
-    <version>1.1.8</version>
+    <version>1.1.9</version>
 
     <properties>
         <maven.compiler.source>1.8</maven.compiler.source>
@@ -105,12 +105,6 @@
             <artifactId>junit</artifactId>
             <version>4.13.2</version>
             <scope>test</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>com.github.ben-manes.caffeine</groupId>
-            <artifactId>caffeine</artifactId>
-            <version>2.9.3</version>
         </dependency>
 
     </dependencies>
