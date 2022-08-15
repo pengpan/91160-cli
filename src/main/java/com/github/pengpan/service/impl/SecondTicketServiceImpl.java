@@ -27,7 +27,7 @@ import java.util.stream.LongStream;
 @Service
 public class SecondTicketServiceImpl extends AbstractTicketService {
 
-    @Cacheable("SECOND_CHANNEL_KEY_LIST")
+    @Cacheable(value = "KEY_LIST", key = "'second'")
     @Override
     public List<String> getKeyList(Config config) {
         LocalDate brushStartDate = StrUtil.isBlank(config.getBrushStartDate())

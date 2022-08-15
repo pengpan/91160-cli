@@ -26,7 +26,7 @@ import java.util.stream.Collectors;
 @Service
 public class FirstTicketServiceImpl extends AbstractTicketService {
 
-    @Cacheable("FIRST_CHANNEL_KEY_LIST")
+    @Cacheable(value = "KEY_LIST", key = "'first'")
     @Override
     public List<String> getKeyList(Config config) {
         LocalDate brushStartDate = StrUtil.isBlank(config.getBrushStartDate())
