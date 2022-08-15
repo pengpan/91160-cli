@@ -175,14 +175,13 @@ public class CoreServiceImpl implements CoreService {
         }
 
         int failCountMax = 3;
+        String errorMsg = StrUtil.format("同一号源预约失败次数达到{}次，已终止程序！请检查号源是否有效！", failCountMax);
         Map<String, Integer> failCount = MapUtil.newHashMap();
 
         for (Register form : formList) {
 
             int count = failCount.getOrDefault(form.getSchId(), 0);
-            if (count >= failCountMax) {
-                continue;
-            }
+            Assert.isTrue(count < failCountMax, errorMsg);
 
             Response<Void> submitResp = mainClient.doSubmit(
                     form.getSchData(),
@@ -211,7 +210,7 @@ public class CoreServiceImpl implements CoreService {
                 log.info("预约成功");
                 return true;
             }
-            log.info("预约失败({} {})", form.getToDate(), form.getDetlName());
+            log.info("预约失败:{}次 ({} {})", count + 1, form.getToDate(), form.getDetlName());
 
             failCount.put(form.getSchId(), ++count);
         }
