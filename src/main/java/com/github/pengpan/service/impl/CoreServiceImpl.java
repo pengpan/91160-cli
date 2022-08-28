@@ -96,7 +96,7 @@ public class CoreServiceImpl implements CoreService {
         String html = mainClient.htmlPage(url);
         Document document = Jsoup.parse(html);
         Element tbody = document.getElementById("mem_list");
-        Assert.notNull(tbody, "就诊人为空");
+        Assert.notNull(tbody, "就诊人为空，请先去家庭成员管理(https://user.91160.com/member.html)添加家庭成员并完成认证");
         Elements trs = tbody.getElementsByTag("tr");
         List<Map<String, Object>> memberList = new ArrayList<>();
         for (Element tr : trs) {

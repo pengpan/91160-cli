@@ -22,13 +22,13 @@
 
 2. 下载`91160-cli.jar`，[下载地址](https://github.com/pengpan/91160-cli/releases)
 
-3. 初始化配置
+3. 初始化配置（仅需运行一次，再次运行将覆盖配置）
 
 ```shell
 $ java -jar 91160-cli.jar init
 ```
 
-4. 查看配置
+4. 查看配置（运行初始化配置后自动生成）
 
 ```properties
 # 91160账号
