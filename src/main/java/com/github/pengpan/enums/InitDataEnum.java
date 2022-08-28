@@ -24,7 +24,7 @@ public enum InitDataEnum {
             .attrId("id")
             .attrName("name")
             .banner("=====请选择就诊人=====")
-            .inputTips("请输入就诊人编号: ")
+            .inputTips("请输入就诊人编号（中括号中间的值为编号，下同）: ")
             .data(CoreService::getMember)
             .store(ConfigStore::setMemberId)
             .build()),

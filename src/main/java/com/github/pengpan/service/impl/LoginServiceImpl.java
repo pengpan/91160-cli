@@ -93,9 +93,8 @@ public class LoginServiceImpl implements LoginService {
             AccountStore.store(username, password);
             log.info("登录成功");
         } else {
-            log.warn("登录失败");
+            log.warn("登录失败，请先去网页端(https://user.91160.com/login.html)登录成功后再次尝试");
             log.error("Response code: {}", redirectResp.code());
-            log.error("Response body: {}", redirectResp.body());
             String errorBody = null;
             try {
                 if (redirectResp.errorBody() != null) {
