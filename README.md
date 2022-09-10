@@ -18,95 +18,62 @@
 
 ## 如何使用
 
-1. 搭建Java运行环境，最低版本支持1.8
+1. 搭建Java运行环境，最低版本支持1.8，已有请跳过
+- [Java下载](https://www.java.com/zh-CN/download)
+- [1分钟设置Java环境变量](https://www.bilibili.com/video/BV1vy4y127mL)
 
-2. 下载`91160-cli.jar`，[下载地址](https://github.com/pengpan/91160-cli/releases)
+2. 下载`91160-cli-{version}.zip`并解压
+- [下载地址](https://github.com/pengpan/91160-cli/releases)
 
-3. 初始化配置（仅需运行一次，再次运行将覆盖配置）
-
+3. 初始化配置（仅需运行一次，运行结束后将生成配置文件`config.properties`，再次运行将覆盖配置）
 ```shell
 $ java -jar 91160-cli.jar init
 ```
 
-4. 查看配置（运行初始化配置后自动生成）
-
-```properties
-# 91160账号
-userName=[your userName]
-# 91160密码
-password=[your password]
-# 就诊人编号
-memberId=[your memberId]
-# 城市编号
-cityId=5
-# 医院编号
-unitId=21
-# 大科室编号
-bigDeptId=1
-# 小科室编号
-deptId=556
-# 医生编号
-doctorId=1690
-# 需要周几的号[可多选，如(6,7)]
-weeks=6,7
-# 时间段编号[可多选，如(am,pm)]
-days=am,pm
-# 刷号休眠时间[单位:毫秒]
-sleepTime=5000
-# 刷号起始日期(表示刷该日期后一周的号,为空取当前日期)[格式: 2022-06-01]
-brushStartDate=
-# 是否开启定时挂号[true/false]
-enableAppoint=false
-# 定时挂号时间[格式: 2022-06-01 15:00:00]
-appointTime=
-# 是否开启代理[true/false]
-enableProxy=false
-# 代理文件路径[格式: /dir/proxy.txt]
-proxyFilePath=proxy.txt
-# 获取代理方式[ROUND_ROBIN(轮询)/RANDOM(随机)]
-proxyMode=ROUND_ROBIN
-# 刷号通道[CHANNEL_1(通道1)/CHANNEL_2(通道2)]
-brushChannel=
-```
-
-6. 开始挂号
-
+4. 开始挂号
 ```shell
 $ java -jar 91160-cli.jar register -c config.properties
 ```
 
-5. 查看日志
+## 设置刷号休眠时间
 
-```text
-2022-05-26 00:22:12.152  INFO - --> GET https://user.91160.com/login.html
-2022-05-26 00:22:12.488  INFO - <-- 200 OK https://user.91160.com/login.html (332ms, unknown-length body)
-2022-05-26 00:22:12.549  INFO - --> POST https://user.91160.com/login.html (467-byte body)
-2022-05-26 00:22:13.243  INFO - <-- 302 Found https://user.91160.com/login.html (692ms, unknown-length body)
-2022-05-26 00:22:13.244  INFO - --> GET https://www.91160.com/client/login.html
-2022-05-26 00:22:15.087  INFO - <-- 302 https://www.91160.com/client/login.html (1842ms, unknown-length body)
-2022-05-26 00:22:15.088  INFO - 挂号开始
-2022-05-26 00:22:15.096  INFO - $.sch.1699.am.4
-2022-05-26 00:22:15.096  INFO - $.sch.1699.am.5
-2022-05-26 00:22:15.097  INFO - $.sch.1699.am.6
-2022-05-26 00:22:15.097  INFO - $.sch.1699.am.0
-2022-05-26 00:22:15.097  INFO - $.sch.1699.pm.4
-2022-05-26 00:22:15.097  INFO - $.sch.1699.pm.5
-2022-05-26 00:22:15.097  INFO - $.sch.1699.pm.6
-2022-05-26 00:22:15.097  INFO - $.sch.1699.pm.0
-2022-05-26 00:22:15.098  INFO - 努力刷号中...
-2022-05-26 00:22:15.255  INFO - --> GET https://gate.91160.com/guahao/v1/pc/sch/dep
-2022-05-26 00:22:16.006  INFO - <-- 200 https://gate.91160.com/guahao/v1/pc/sch/dep (750ms, unknown-length body)
-2022-05-26 00:22:16.089  INFO - {"left_num":1,"schedule_id":"628c7442687bcb522d0d4fcd","time_type":"am"}
-2022-05-26 00:22:16.090  INFO - --> GET https://user.91160.com/member.html
-2022-05-26 00:22:16.620  INFO - <-- 200 OK https://user.91160.com/member.html (529ms, unknown-length body)
-2022-05-26 00:22:16.652  INFO - --> GET https://www.91160.com/guahao/ystep1/uid-21/depid-556/schid-628c7442687bcb522d0d4fcd.html
-2022-05-26 00:22:17.545  INFO - <-- 200 https://www.91160.com/guahao/ystep1/uid-21/depid-556/schid-628c7442687bcb522d0d4fcd.html (892ms, unknown-length body)
-2022-05-26 00:22:17.630  INFO - --> POST https://www.91160.com/guahao/ysubmit.html (1534-byte body)
-2022-05-26 00:22:19.385  INFO - <-- 302 https://www.91160.com/guahao/ysubmit.html (1755ms, unknown-length body)
-2022-05-26 00:22:19.387  INFO - --> GET https://www.91160.com/guahao/ysuccess/yuyue_id-436015454.html
-2022-05-26 00:22:20.615  INFO - <-- 200 https://www.91160.com/guahao/ysuccess/yuyue_id-436015454.html (1228ms, unknown-length body)
-2022-05-26 00:22:20.620  INFO - 挂号成功
-2022-05-26 00:22:20.620  INFO - 挂号结束
+操作：编辑配置文件`config.properties`，加入`sleepTime`，默认`5000ms`，可适当降低
+
+```properties
+# 刷号休眠时间[单位:毫秒]
+sleepTime=5000
+```
+
+## 设置刷号起始日期
+
+操作：编辑配置文件`config.properties`，加入`brushStartDate`，默认为空，格式`yyyy-MM-dd`
+
+```properties
+# 刷号起始日期(表示刷该日期后一周的号,为空取当前日期)[格式: 2022-06-01]
+brushStartDate=
+```
+
+## 设置定时挂号
+
+- 场景：今天6月1号，得知张医生下午3点系统会自动放号，现在还没到时间，我想到了这个时间立马开抢，但我又怕到时候忘记
+- 操作：编辑配置文件`config.properties`，加入`enableAppoint=true`，加入`appointTime=2022-06-01 15:00:00`，运行挂号程序
+
+```properties
+# 是否开启定时挂号[true/false]
+enableAppoint=false
+# 定时挂号时间[格式: 2022-06-01 15:00:00]
+appointTime=
+```
+
+## 设置刷号模式
+
+- 场景：在官网上，科室排班页没号，医生详情页却有号，明明有号，程序却还在空刷，什么鬼
+- 分析：最开始，有且只有科室排班页有刷号接口（通道1），程序也一直在用，后面医生详情页也提供了刷号接口（通道2），程序没做支持，再后面程序升级，同时支持两个刷号接口
+- 操作：编辑配置文件`config.properties`，加入`brushChannel=`，默认为空表示支持 通道1+通道2 轮询刷号，也可单独这是其中一种
+
+```properties
+# 刷号通道[CHANNEL_1(通道1)/CHANNEL_2(通道2)]
+brushChannel=
 ```
 
 ## 使用代理
@@ -142,7 +109,7 @@ proxyMode=ROUND_ROBIN
 
 ## 加入群聊
 
-加群备注`91160`
+加群备注`91160`，作者会在第一时间拉你进群
 
 ![微信交流群](imgs/wechat_group_final.png)
 
@@ -151,3 +118,7 @@ proxyMode=ROUND_ROBIN
 如果您觉得`91160-cli`对你有帮助，可以请作者喝杯咖啡哦～
 
 ![赞赏码](imgs/reward.png)
+
+## More
+
+如果有好的想法和建议，请联系作者

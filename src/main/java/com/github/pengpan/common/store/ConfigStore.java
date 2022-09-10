@@ -9,8 +9,6 @@ public class ConfigStore {
 
     private static String unitId;
 
-    private static String bigDeptId;
-
     private static String deptId;
 
     private static String doctorId;
@@ -35,14 +33,6 @@ public class ConfigStore {
 
     public static void setUnitId(String unitId) {
         ConfigStore.unitId = unitId;
-    }
-
-    public static String getBigDeptId() {
-        return bigDeptId;
-    }
-
-    public static void setBigDeptId(String bigDeptId) {
-        ConfigStore.bigDeptId = bigDeptId;
     }
 
     public static String getDeptId() {

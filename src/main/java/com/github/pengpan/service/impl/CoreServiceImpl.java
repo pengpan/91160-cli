@@ -60,7 +60,11 @@ public class CoreServiceImpl implements CoreService {
     @Override
     public List<Map<String, Object>> getDept(String unitId) {
         Assert.notBlank(unitId, "[unitId]不能为空");
-        return mainClient.getDept(unitId);
+        return mainClient.getDept(unitId).stream().flatMap(x -> {
+            String child = Optional.ofNullable(x.get("childs")).map(JSONKit::toJson).orElseGet(String::new);
+            return JSONKit.<List<LinkedHashMap<String, Object>>>toBean(new TypeRef<List<LinkedHashMap<String, Object>>>() {
+            }.getType(), child).stream();
+        }).collect(Collectors.toList());
     }
 
     @Override

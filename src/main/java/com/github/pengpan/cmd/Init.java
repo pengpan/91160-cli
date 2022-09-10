@@ -39,7 +39,6 @@ public class Init implements Runnable {
         initData(InitDataEnum.MEMBER);
         initData(InitDataEnum.CITY);
         initData(InitDataEnum.UNIT);
-        initData(InitDataEnum.BIG_DEPT);
         initData(InitDataEnum.DEPT);
         initData(InitDataEnum.DOCTOR);
         initData(InitDataEnum.WEEK);
@@ -76,9 +75,8 @@ public class Init implements Runnable {
         log.info(initData.getBanner());
         List<Object> ids = new ArrayList<>();
         List<Map<String, Object>> data = initData.getData().apply(coreService);
-        for (int i = 0; i < data.size(); i++) {
-            Map<String, Object> datum = data.get(i);
-            String id = String.valueOf("index".equals(initData.getAttrId()) ? (i + 1) : datum.get(initData.getAttrId()));
+        for (Map<String, Object> datum : data) {
+            String id = String.valueOf(datum.get(initData.getAttrId()));
             ids.add(id);
             String name = StrUtil.format("[{}]. {}", id, datum.get(initData.getAttrName()));
             log.info(name);
@@ -122,8 +120,7 @@ public class Init implements Runnable {
         props.add(new Prop("就诊人编号", "memberId", ConfigStore.getMemberId()));
         props.add(new Prop("城市编号", "cityId", ConfigStore.getCityId()));
         props.add(new Prop("医院编号", "unitId", ConfigStore.getUnitId()));
-        props.add(new Prop("大科室编号", "bigDeptId", ConfigStore.getBigDeptId()));
-        props.add(new Prop("小科室编号", "deptId", ConfigStore.getDeptId()));
+        props.add(new Prop("科室编号", "deptId", ConfigStore.getDeptId()));
         props.add(new Prop("医生编号", "doctorId", ConfigStore.getDoctorId()));
         props.add(new Prop("需要周几的号[可多选，如(6,7)]", "weeks", ConfigStore.getWeekId()));
         props.add(new Prop("时间段编号[可多选，如(am,pm)]", "days", ConfigStore.getDayId()));
