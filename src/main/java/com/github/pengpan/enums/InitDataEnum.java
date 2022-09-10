@@ -1,17 +1,10 @@
 package com.github.pengpan.enums;
 
-import com.ejlchina.data.TypeRef;
-import com.ejlchina.json.JSONKit;
 import com.github.pengpan.common.store.ConfigStore;
 import com.github.pengpan.entity.InitData;
 import com.github.pengpan.service.CoreService;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
 
 /**
  * @author pengpan
@@ -47,27 +40,12 @@ public enum InitDataEnum {
             .store(ConfigStore::setUnitId)
             .build()),
 
-    BIG_DEPT(InitData.builder()
-            .attrId("index")
-            .attrName("pubcat")
-            .banner("=====请选择大科室=====")
-            .inputTips("请输入大科室编号: ")
-            .data(x -> x.getDept(ConfigStore.getUnitId()))
-            .store(ConfigStore::setBigDeptId)
-            .build()),
-
     DEPT(InitData.builder()
             .attrId("dep_id")
             .attrName("dep_name")
-            .banner("=====请选择小科室=====")
-            .inputTips("请输入小科室编号: ")
-            .data(x -> {
-                List<Map<String, Object>> dept = x.getDept(ConfigStore.getUnitId());
-                Map<String, Object> bigDept = dept.get(Integer.parseInt(ConfigStore.getBigDeptId()) - 1);
-                String child = Optional.ofNullable(bigDept.get("childs")).map(JSONKit::toJson).orElseGet(String::new);
-                return JSONKit.toBean(new TypeRef<List<LinkedHashMap<String, Object>>>() {
-                }.getType(), child);
-            })
+            .banner("=====请选择科室=====")
+            .inputTips("请输入科室编号: ")
+            .data(x -> x.getDept(ConfigStore.getUnitId()))
             .store(ConfigStore::setDeptId)
             .build()),
 

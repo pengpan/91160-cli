@@ -33,12 +33,7 @@ public class Config {
     private String unitId;
 
     /**
-     * 大科室编号
-     */
-    private String bigDeptId;
-
-    /**
-     * 小科室编号
+     * 科室编号
      */
     private String deptId;
 
