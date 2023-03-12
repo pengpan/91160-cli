@@ -79,7 +79,8 @@ public interface MainClient {
                             @Field("detlid_realtime") String detlid_realtime,
                             @Field("level_code") String level_code,
                             @Field("addressId") String addressId,
-                            @Field("address") String address);
+                            @Field("address") String address,
+                            @Field("hisMemId") String hisMemId);
 
     @GET("/favicon.ico")
     Response<Void> serverTime();

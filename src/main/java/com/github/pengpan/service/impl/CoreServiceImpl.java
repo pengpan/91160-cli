@@ -200,7 +200,8 @@ public class CoreServiceImpl implements CoreService {
                     form.getDetlidRealtime(),
                     form.getLevelCode(),
                     form.getAddressId(),
-                    form.getAddress()
+                    form.getAddress(),
+                    form.getHisMemId()
             );
 
             if (!submitResp.raw().isRedirect()) {
@@ -287,6 +288,7 @@ public class CoreServiceImpl implements CoreService {
                         .addressId("3317")
                         .address("Civic Center")
                         .toDate(schInfo.getTo_date())
+                        .hisMemId(StrUtil.blankToDefault(config.getMedicalCard(), null))
                         .build())
                 .collect(Collectors.toList());
     }
