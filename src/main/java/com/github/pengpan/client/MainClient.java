@@ -32,7 +32,7 @@ public interface MainClient {
 
     @FormUrlEncoded
     @POST("/ajax/getunitbycity.html")
-    List<Map<String, Object>> getUnit(@Field("c") String cityId);
+    List<Map<String, String>> getUnit(@Field("c") String cityId);
 
     @FormUrlEncoded
     @POST("/ajax/getdepbyunit.html")

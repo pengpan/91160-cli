@@ -14,17 +14,17 @@ import java.util.Map;
 public interface CoreService {
 
 
-    List<Map<String, Object>> getData(DataTypeEnum dataType);
+    List<Map<String, String>> getData(DataTypeEnum dataType);
 
-    List<Map<String, Object>> getUnit(String cityId);
+    List<Map<String, String>> getUnit(String cityId);
 
-    List<Map<String, Object>> getDept(String unitId);
+    List<Map<String, String>> getDept(String unitId);
 
-    List<Map<String, Object>> getDoctor(String unitId, String deptId);
+    List<Map<String, String>> getDoctor(String unitId, String deptId);
 
     BrushSchData dept(String unitId, String deptId, String brushStartDate);
 
-    List<Map<String, Object>> getMember();
+    List<Map<String, String>> getMember();
 
     void brushTicketTask(Config config);
 

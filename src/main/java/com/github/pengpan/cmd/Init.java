@@ -14,6 +14,7 @@ import com.github.pengpan.service.LoginService;
 import com.github.pengpan.util.CommonUtil;
 import io.airlift.airline.Command;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.util.StringUtils;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -47,20 +48,19 @@ public class Init implements Runnable {
         CommonUtil.normalExit("init success.");
     }
 
+    public static void main(String[] args) {
+        Init init = new Init();
+        init.run();
+    }
+
     private void login() {
         boolean loginSuccess;
         do {
             String userName = AccountStore.getUserName();
-            while (StrUtil.isBlank(userName)) {
-                System.out.print("请输入用户名: ");
-                userName = in.nextLine();
-            }
+            userName = inputMsg("请输入用户名: ");
 
             String password = AccountStore.getPassword();
-            while (StrUtil.isBlank(password)) {
-                System.out.print("请输入密码: ");
-                password = in.nextLine();
-            }
+            password = inputMsg("请输入密码: ");
 
             log.info("登录中，请稍等...");
 
@@ -73,28 +73,48 @@ public class Init implements Runnable {
         log.info("");
         InitData initData = initDataEnum.getInitData();
         log.info(initData.getBanner());
-        List<Object> ids = new ArrayList<>();
-        List<Map<String, Object>> data = initData.getData().apply(coreService);
-        for (Map<String, Object> datum : data) {
-            String id = String.valueOf(datum.get(initData.getAttrId()));
-            ids.add(id);
-            String name = StrUtil.format("[{}]. {}", id, datum.get(initData.getAttrName()));
-            log.info(name);
+        List<Map<String, String>> data = initData.getData().apply(coreService);
+        List<Object> ids = printList(data, initData, null);
+
+        if (StringUtils.hasText(initData.getInputName())) {
+            printList(data, initData, inputMsg(initData.getInputName()));
         }
-        boolean success;
+
+        String id = null;
         do {
-            String id = null;
-            while (StrUtil.isBlank(id)) {
-                System.out.print(initData.getInputTips());
-                id = in.nextLine();
-            }
-            success = checkInput(ids, id);
-            if (success) {
-                initData.getStore().accept(id);
+            id = inputMsg(initData.getInputTips());
+            if (checkInput(ids, id)) {
+                break;
             } else {
                 log.warn("输入有误，请重新输入！");
             }
-        } while (!success);
+        } while (true);
+
+        initData.getStore().accept(id);
+    }
+
+    private String inputMsg(String tips) {
+        String id = null;
+        while (StrUtil.isBlank(id)) {
+            System.out.print(tips);
+            id = in.nextLine();
+        }
+        return id;
+    }
+
+    private static List<Object> printList(List<Map<String, String>> data, InitData initData, String naneFilter) {
+        List<Object> ids = new ArrayList<>();
+        for (Map<String, String> datum : data) {
+            String attrName = datum.get(initData.getAttrName());
+            if (naneFilter != null && attrName != null && !attrName.contains(naneFilter)) {
+                continue;
+            }
+            String id = String.valueOf(datum.get(initData.getAttrId()));
+            ids.add(id);
+            String name = StrUtil.format("[{}]. {}", id, attrName);
+            log.info(name);
+        }
+        return ids;
     }
 
     private boolean checkInput(List<Object> ids, String id) {

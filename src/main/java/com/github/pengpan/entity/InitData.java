@@ -22,9 +22,11 @@ public class InitData {
 
     private String banner;
 
+    private String inputName;
+
     private String inputTips;
 
-    private Function<CoreService, List<Map<String, Object>>> data;
+    private Function<CoreService, List<Map<String, String>>> data;
 
     private Consumer<String> store;
 }

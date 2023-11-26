@@ -44,7 +44,7 @@ public class CoreServiceImpl implements CoreService {
     private BrushService brushService;
 
     @Override
-    public List<Map<String, Object>> getData(DataTypeEnum dataType) {
+    public List<Map<String, String>> getData(DataTypeEnum dataType) {
         Assert.notNull(dataType, "[dataType]不能为空");
         String cities = ResourceUtil.readUtf8Str(dataType.getPath());
         return JSONKit.toBean(new TypeRef<List<LinkedHashMap<String, Object>>>() {
@@ -52,27 +52,27 @@ public class CoreServiceImpl implements CoreService {
     }
 
     @Override
-    public List<Map<String, Object>> getUnit(String cityId) {
+    public List<Map<String, String>> getUnit(String cityId) {
         Assert.notBlank(cityId, "[cityId]不能为空");
         return mainClient.getUnit(cityId);
     }
 
     @Override
-    public List<Map<String, Object>> getDept(String unitId) {
+    public List<Map<String, String>> getDept(String unitId) {
         Assert.notBlank(unitId, "[unitId]不能为空");
         return mainClient.getDept(unitId).stream().flatMap(x -> {
             String child = Optional.ofNullable(x.get("childs")).map(JSONKit::toJson).orElseGet(String::new);
-            return JSONKit.<List<LinkedHashMap<String, Object>>>toBean(new TypeRef<List<LinkedHashMap<String, Object>>>() {
+            return JSONKit.<List<LinkedHashMap<String, String>>>toBean(new TypeRef<List<LinkedHashMap<String, String>>>() {
             }.getType(), child).stream();
         }).collect(Collectors.toList());
     }
 
     @Override
-    public List<Map<String, Object>> getDoctor(String unitId, String deptId) {
+    public List<Map<String, String>> getDoctor(String unitId, String deptId) {
         BrushSchData data = dept(unitId, deptId, null);
         return Optional.ofNullable(data).map(BrushSchData::getDoc).orElseGet(ArrayList::new).stream()
                 .map(JSONKit::toJson)
-                .map(x -> JSONKit.<Map<String, Object>>toBean(new TypeRef<LinkedHashMap<String, Object>>() {
+                .map(x -> JSONKit.<Map<String, String>>toBean(new TypeRef<LinkedHashMap<String, Object>>() {
                 }.getType(), x))
                 .collect(Collectors.toList());
     }
@@ -95,18 +95,18 @@ public class CoreServiceImpl implements CoreService {
     }
 
     @Override
-    public List<Map<String, Object>> getMember() {
+    public List<Map<String, String>> getMember() {
         String url = "https://user.91160.com/member.html";
         String html = mainClient.htmlPage(url);
         Document document = Jsoup.parse(html);
         Element tbody = document.getElementById("mem_list");
         Assert.notNull(tbody, "就诊人为空，请先去家庭成员管理(https://user.91160.com/member.html)添加家庭成员并完成认证");
         Elements trs = tbody.getElementsByTag("tr");
-        List<Map<String, Object>> memberList = new ArrayList<>();
+        List<Map<String, String>> memberList = new ArrayList<>();
         for (Element tr : trs) {
             String id = StrUtil.removePrefix(tr.id(), "mem");
             Elements tds = tr.getElementsByTag("td");
-            Map<String, Object> member = new LinkedHashMap<>();
+            Map<String, String> member = new LinkedHashMap<>();
             member.put("id", id);
             member.put("name", tds.get(0).text());
             member.put("sex", tds.get(1).text());
