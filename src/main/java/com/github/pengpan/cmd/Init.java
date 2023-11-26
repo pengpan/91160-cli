@@ -6,6 +6,7 @@ import cn.hutool.core.util.StrUtil;
 import cn.hutool.extra.spring.SpringUtil;
 import com.github.pengpan.common.store.AccountStore;
 import com.github.pengpan.common.store.ConfigStore;
+import com.github.pengpan.entity.Config;
 import com.github.pengpan.entity.InitData;
 import com.github.pengpan.entity.Prop;
 import com.github.pengpan.enums.InitDataEnum;
@@ -33,6 +34,7 @@ public class Init implements Runnable {
 
     private final CoreService coreService = SpringUtil.getBean(CoreService.class);
     private final LoginService loginService = SpringUtil.getBean(LoginService.class);
+    private final String configFile = "config.properties";
 
     @Override
     public void run() {
@@ -56,12 +58,17 @@ public class Init implements Runnable {
     private void login() {
         boolean loginSuccess;
         do {
-            String userName = AccountStore.getUserName();
-            userName = inputMsg("请输入用户名: ");
-
-            String password = AccountStore.getPassword();
-            password = inputMsg("请输入密码: ");
-
+            Config config = new Config();
+            File file = FileUtil.file(configFile);
+            if (file.exists()) {
+                config = CommonUtil.getConfig(configFile);
+            }
+            String userName = config.getUserName();
+            String password = config.getPassword();
+            if (StringUtils.hasText(userName) && inputMsg("用户名存在，是否使用[Y or N]: ").equals("N")) {
+                userName = inputMsg("请输入用户名: ");
+                password = inputMsg("请输入密码: ");
+            }
             log.info("登录中，请稍等...");
 
             loginSuccess = loginService.doLogin(userName, password);
@@ -80,7 +87,7 @@ public class Init implements Runnable {
             printList(data, initData, inputMsg(initData.getInputName()));
         }
 
-        String id = null;
+        String id;
         do {
             id = inputMsg(initData.getInputTips());
             if (checkInput(ids, id)) {
@@ -161,7 +168,7 @@ public class Init implements Runnable {
             sb.append(line1).append(System.lineSeparator()).append(line2).append(System.lineSeparator());
         }
 
-        File file = new File("config.properties");
+        File file = new File(configFile);
         FileUtil.writeUtf8String(sb.toString(), file);
         log.info("The file config.properties has been generated.");
     }

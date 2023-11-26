@@ -10,6 +10,7 @@ import com.github.pengpan.entity.BrushSch;
 import com.github.pengpan.entity.BrushSchData;
 import com.github.pengpan.entity.Config;
 import com.github.pengpan.entity.ScheduleInfo;
+import com.github.pengpan.exception.AuthenticationFailureException;
 import com.github.pengpan.service.AbstractTicketService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cache.annotation.Cacheable;
@@ -64,8 +65,13 @@ public class FirstTicketServiceImpl extends AbstractTicketService {
         String userKey = CookieStore.accessHash();
         BrushSch brushSch = mainClient.dept(url, unitId, deptId, date, page, userKey);
 
-        if (brushSch == null || !Objects.equals(1, brushSch.getResult_code()) || !"200".equals(brushSch.getError_code())) {
+        if (brushSch == null) {
+            log.warn("获取数据失败: brushSch null");
+            return null;
+        }
+        if (!Objects.equals(1, brushSch.getResult_code()) || !"200".equals(brushSch.getError_code())) {
             log.warn("获取数据失败: {}", JSONKit.toJson(brushSch));
+            AuthenticationFailureException.tryFail(brushSch.getError_msg());
             return null;
         }
 
@@ -74,4 +80,5 @@ public class FirstTicketServiceImpl extends AbstractTicketService {
 
         return getScheduleInfos(sch, keyList);
     }
+
 }

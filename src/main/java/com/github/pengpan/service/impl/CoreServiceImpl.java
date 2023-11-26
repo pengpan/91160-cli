@@ -131,7 +131,12 @@ public class CoreServiceImpl implements CoreService {
 
             if (CollUtil.isEmpty(schInfoList)) {
                 // 休眠
-                ThreadUtil.sleep(config.getSleepTime(), TimeUnit.MILLISECONDS);
+                int minute = Calendar.getInstance().get(Calendar.MINUTE);
+                if (minute <= 1) {
+                    ThreadUtil.sleep(1000, TimeUnit.MILLISECONDS);
+                } else {
+                    ThreadUtil.sleep(config.getSleepTime(), TimeUnit.MILLISECONDS);
+                }
                 continue;
             }
 

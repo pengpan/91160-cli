@@ -5,13 +5,12 @@ import cn.hutool.core.date.DatePattern;
 import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.thread.ThreadUtil;
-import cn.hutool.core.util.CharsetUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.extra.spring.SpringUtil;
-import cn.hutool.setting.dialect.Props;
 import com.github.pengpan.common.constant.SystemConstant;
 import com.github.pengpan.common.store.ProxyStore;
 import com.github.pengpan.entity.Config;
+import com.github.pengpan.exception.AuthenticationFailureException;
 import com.github.pengpan.service.CoreService;
 import com.github.pengpan.service.LoginService;
 import com.github.pengpan.util.Assert;
@@ -20,7 +19,6 @@ import io.airlift.airline.Command;
 import io.airlift.airline.Option;
 import lombok.extern.slf4j.Slf4j;
 
-import java.io.File;
 import java.util.Date;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -42,7 +40,7 @@ public class Register implements Runnable {
 
     @Override
     public void run() {
-        Config config = getConfig(configFile);
+        Config config = CommonUtil.getConfig(configFile);
 
         CoreService coreService = SpringUtil.getBean(CoreService.class);
         LoginService loginService = SpringUtil.getBean(LoginService.class);
@@ -54,6 +52,9 @@ public class Register implements Runnable {
         try {
             coreService.brushTicketTask(config);
             System.exit(0);
+        } catch (AuthenticationFailureException e) {
+            log.error("login...", e);
+            run();
         } catch (Exception e) {
             log.error("", e);
             System.exit(-1);
@@ -113,17 +114,6 @@ public class Register implements Runnable {
         log.info("等待中...");
         ThreadUtil.sleep(waitTime);
         log.info("时间到！！！");
-    }
-
-    private Config getConfig(String configFile) {
-        Assert.notBlank(configFile, "请指定配置文件");
-        Assert.isTrue(configFile.endsWith(Props.EXT_NAME), "配置文件不正确");
-        File file = FileUtil.file(configFile);
-        Assert.isTrue(file.exists(), "配置文件不存在，请检查文件路径");
-        Props props = new Props(file, CharsetUtil.CHARSET_UTF_8);
-        Config config = new Config();
-        props.fillBean(config, null);
-        return config;
     }
 
     private void checkBasicConfig(Config config, CoreService coreService, LoginService loginService) {
