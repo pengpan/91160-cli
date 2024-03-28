@@ -1,0 +1,10 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="init" type="Application" factoryName="Application">
+    <option name="MAIN_CLASS_NAME" value="com.github.pengpan.App" />
+    <module name="91160-cli" />
+    <option name="PROGRAM_PARAMETERS" value="init" />
+    <method v="2">
+      <option name="Make" enabled="true" />
+    </method>
+  </configuration>
+</component>
