@@ -18,6 +18,10 @@ public interface CoreService {
 
     List<Map<String, String>> getUnit(String cityId);
 
+    List<Map<String, Object>> getLocalUnit(String cityId);
+
+    List<Map<String, Object>> getFullUnit(String cityId);
+
     List<Map<String, String>> getDept(String unitId);
 
     List<Map<String, String>> getDoctor(String unitId, String deptId);

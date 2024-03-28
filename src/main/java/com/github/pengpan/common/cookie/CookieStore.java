@@ -18,6 +18,10 @@ public class CookieStore {
 
     public static final Map<String, List<Cookie>> cookieStore = new HashMap<>();
 
+    public static void put(String key, Cookie value) {
+        put(key, CollUtil.newArrayList(value));
+    }
+
     public static void put(String key, List<Cookie> value) {
         List<Cookie> oldValue = cookieStore.get(key);
         if (CollUtil.isEmpty(oldValue)) {
@@ -30,8 +34,25 @@ public class CookieStore {
         }
     }
 
-    public static List<Cookie> get(String name) {
-        return cookieStore.get(name);
+    public static List<Cookie> get(String key) {
+        return cookieStore.get(key);
+    }
+
+    public static void remove(String key) {
+        cookieStore.remove(key);
+    }
+
+    public static void remove(String key, String name) {
+        List<Cookie> oldValue = cookieStore.get(key);
+        if (CollUtil.isNotEmpty(oldValue)) {
+            List<Cookie> newValue = CollUtil.newArrayList();
+            for (Cookie cookie : oldValue) {
+                if (!StrUtil.equals(cookie.name(), name)) {
+                    newValue.add(cookie);
+                }
+            }
+            cookieStore.put(key, newValue);
+        }
     }
 
     public static String accessHash() {

@@ -13,6 +13,8 @@ public class SystemConstant {
 
     public final static String DOMAIN = "https://www.91160.com";
 
+    public final static String HOST = "www.91160.com";
+
     public final static String LOGIN_URL = "https://user.91160.com/login.html";
 
     public final static String CHECK_USER_URL = "https://user.91160.com/checkUser.html";

@@ -25,4 +25,5 @@ public class Register {
     private String addressId;
     private String address;
     private String toDate;
+    private String hisMemId;
 }

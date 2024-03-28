@@ -39,7 +39,7 @@ public enum InitDataEnum {
             .banner("=====请选择医院=====")
             .inputName("请输入医院名称：")
             .inputTips("请输入医院编号: ")
-            .data(x -> x.getUnit(ConfigStore.getCityId()))
+            .data(x -> x.getFullUnit(ConfigStore.getCityId()))
             .store(ConfigStore::setUnitId)
             .build()),
 

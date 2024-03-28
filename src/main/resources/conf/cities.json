@@ -385,13 +385,6 @@
     "sanzima": "nujiang"
   },
   {
-    "name": "思茅",
-    "match": "思茅|simao|simao",
-    "cityId": "2974",
-    "pinyin": "simao",
-    "sanzima": "simao"
-  },
-  {
     "name": "文山州",
     "match": "文山州|wenshan|wenshan",
     "cityId": "2975",
@@ -757,10 +750,10 @@
   },
   {
     "name": "绍兴",
-    "match": "绍兴|sx|sx",
+    "match": "绍兴|shaoxing|shaoxing",
     "cityId": "3031",
-    "pinyin": "sx",
-    "sanzima": "sx"
+    "pinyin": "shaoxing",
+    "sanzima": "shaoxing"
   },
   {
     "name": "温州",
@@ -2541,13 +2534,6 @@
     "sanzima": "tj"
   },
   {
-    "name": "三沙",
-    "match": "三沙||",
-    "cityId": "14974",
-    "pinyin": "",
-    "sanzima": ""
-  },
-  {
     "name": "澳门",
     "match": "澳门|mac|mac",
     "cityId": "3312",
@@ -2569,11 +2555,46 @@
     "sanzima": "cq"
   },
   {
+    "name": "印度尼西亚",
+    "match": "印度尼西亚|indonesia|indonesia",
+    "cityId": "13904",
+    "pinyin": "indonesia",
+    "sanzima": "indonesia"
+  },
+  {
+    "name": "新西兰",
+    "match": "新西兰|newzealand|newzealand",
+    "cityId": "13909",
+    "pinyin": "newzealand",
+    "sanzima": "newzealand"
+  },
+  {
+    "name": "菲律宾",
+    "match": "菲律宾|philippines|philippines",
+    "cityId": "13911",
+    "pinyin": "philippines",
+    "sanzima": "philippines"
+  },
+  {
+    "name": "俄罗斯",
+    "match": "俄罗斯|russia|russia",
+    "cityId": "13912",
+    "pinyin": "russia",
+    "sanzima": "russia"
+  },
+  {
     "name": "宜州",
     "match": "宜州|yizhou|yizhou",
     "cityId": "14251",
     "pinyin": "yizhou",
     "sanzima": "yizhou"
+  },
+  {
+    "name": "加拿大",
+    "match": "加拿大|canada|canada",
+    "cityId": "14851",
+    "pinyin": "canada",
+    "sanzima": "canada"
   },
   {
     "name": "自治区直辖县级行政区划",
@@ -2583,11 +2604,102 @@
     "sanzima": "659000000000"
   },
   {
-    "name": "县级",
-    "match": "县级|chongjin|chongjin",
-    "cityId": "14973",
-    "pinyin": "chongjin",
-    "sanzima": "chongjin"
+    "name": "普洱",
+    "match": "普洱|puer|puer",
+    "cityId": "14962",
+    "pinyin": "puer",
+    "sanzima": "puer"
+  },
+  {
+    "name": "三沙",
+    "match": "三沙||",
+    "cityId": "14974",
+    "pinyin": "",
+    "sanzima": ""
+  },
+  {
+    "name": "美国",
+    "match": "美国|usa|usa",
+    "cityId": "18501",
+    "pinyin": "usa",
+    "sanzima": "usa"
+  },
+  {
+    "name": "日本",
+    "match": "日本|japans|japans",
+    "cityId": "18651",
+    "pinyin": "japans",
+    "sanzima": "japans"
+  },
+  {
+    "name": "韩国",
+    "match": "韩国|korea|korea",
+    "cityId": "18701",
+    "pinyin": "korea",
+    "sanzima": "korea"
+  },
+  {
+    "name": "泰国",
+    "match": "泰国|thailand|thailand",
+    "cityId": "20303",
+    "pinyin": "thailand",
+    "sanzima": "thailand"
+  },
+  {
+    "name": "英国",
+    "match": "英国|uk|uk",
+    "cityId": "20401",
+    "pinyin": "uk",
+    "sanzima": "uk"
+  },
+  {
+    "name": "马来西亚",
+    "match": "马来西亚|malaysia|malaysia",
+    "cityId": "20402",
+    "pinyin": "malaysia",
+    "sanzima": "malaysia"
+  },
+  {
+    "name": "法国",
+    "match": "法国|france|france",
+    "cityId": "20403",
+    "pinyin": "france",
+    "sanzima": "france"
+  },
+  {
+    "name": "越南",
+    "match": "越南|vietnam|vietnam",
+    "cityId": "20404",
+    "pinyin": "vietnam",
+    "sanzima": "vietnam"
+  },
+  {
+    "name": "新加坡",
+    "match": "新加坡|singapore|singapore",
+    "cityId": "20501",
+    "pinyin": "singapore",
+    "sanzima": "singapore"
+  },
+  {
+    "name": "澳大利亚",
+    "match": "澳大利亚|australia|australia",
+    "cityId": "20502",
+    "pinyin": "australia",
+    "sanzima": "australia"
+  },
+  {
+    "name": "秘鲁",
+    "match": "秘鲁|peru|peru",
+    "cityId": "21111",
+    "pinyin": "peru",
+    "sanzima": "peru"
+  },
+  {
+    "name": "南非",
+    "match": "南非|south africa|south africa",
+    "cityId": "21137",
+    "pinyin": "south africa",
+    "sanzima": "south africa"
   },
   {
     "name": "雄安新区",
@@ -2595,5 +2707,68 @@
     "cityId": "21532",
     "pinyin": "130629020079",
     "sanzima": "130629020079"
+  },
+  {
+    "name": "台北",
+    "match": "台北|taibei|taibei",
+    "cityId": "29877",
+    "pinyin": "taibei",
+    "sanzima": "taibei"
+  },
+  {
+    "name": "新北",
+    "match": "新北|xinbei|xinbei",
+    "cityId": "29878",
+    "pinyin": "xinbei",
+    "sanzima": "xinbei"
+  },
+  {
+    "name": "桃园",
+    "match": "桃园|taoyuan|taoyuan",
+    "cityId": "29879",
+    "pinyin": "taoyuan",
+    "sanzima": "taoyuan"
+  },
+  {
+    "name": "台中",
+    "match": "台中|taizhong|taizhong",
+    "cityId": "29880",
+    "pinyin": "taizhong",
+    "sanzima": "taizhong"
+  },
+  {
+    "name": "台南",
+    "match": "台南|tainan|tainan",
+    "cityId": "29881",
+    "pinyin": "tainan",
+    "sanzima": "tainan"
+  },
+  {
+    "name": "高雄",
+    "match": "高雄|gaoxiong|gaoxiong",
+    "cityId": "29882",
+    "pinyin": "gaoxiong",
+    "sanzima": "gaoxiong"
+  },
+  {
+    "name": "基隆",
+    "match": "基隆|jilong|jilong",
+    "cityId": "29883",
+    "pinyin": "jilong",
+    "sanzima": "jilong"
+  },
+  {
+    "name": "新竹",
+    "match": "新竹|xinzhu|xinzhu",
+    "cityId": "29884",
+    "pinyin": "xinzhu",
+    "sanzima": "xinzhu"
+  },
+  {
+    "name": "嘉义",
+    "match": "嘉义|jiayi|jiayi",
+    "cityId": "29885",
+    "pinyin": "jiayi",
+    "sanzima": "jiayi"
   }
 ]

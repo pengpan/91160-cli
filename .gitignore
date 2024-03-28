@@ -2,6 +2,7 @@ logs/
 target/
 !**/src/main/**/target/
 !**/src/test/**/target/
+config.properties
 
 ### STS ###
 .apt_generated

@@ -1,0 +1,11 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="register" type="Application" factoryName="Application">
+    <option name="MAIN_CLASS_NAME" value="com.github.pengpan.App" />
+    <module name="91160-cli" />
+    <option name="PROGRAM_PARAMETERS" value="register -c $PROJECT_DIR$/config.properties" />
+    <option name="VM_PARAMETERS" value="-Dmock=true" /><!-- mock=true，抢到号不会下订单 -->
+    <method v="2">
+      <option name="Make" enabled="true" />
+    </method>
+  </configuration>
+</component>
