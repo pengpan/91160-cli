@@ -36,7 +36,7 @@ public enum InitDataEnum {
             .attrName("unit_name")
             .banner("=====请选择医院=====")
             .inputTips("请输入医院编号: ")
-            .data(x -> x.getUnit(ConfigStore.getCityId()))
+            .data(x -> x.getFullUnit(ConfigStore.getCityId()))
             .store(ConfigStore::setUnitId)
             .build()),
 

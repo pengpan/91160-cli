@@ -11,6 +11,7 @@ import cn.hutool.setting.dialect.PropsUtil;
 import com.ejlchina.data.TypeRef;
 import com.ejlchina.json.JSONKit;
 import com.github.pengpan.client.MainClient;
+import com.github.pengpan.common.constant.SystemConstant;
 import com.github.pengpan.common.cookie.CookieStore;
 import com.github.pengpan.entity.*;
 import com.github.pengpan.enums.BrushChannelEnum;
@@ -19,6 +20,7 @@ import com.github.pengpan.service.BrushService;
 import com.github.pengpan.service.CoreService;
 import com.github.pengpan.util.Assert;
 import lombok.extern.slf4j.Slf4j;
+import okhttp3.Cookie;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -55,6 +57,63 @@ public class CoreServiceImpl implements CoreService {
     public List<Map<String, Object>> getUnit(String cityId) {
         Assert.notBlank(cityId, "[cityId]不能为空");
         return mainClient.getUnit(cityId);
+    }
+
+    @Override
+    public List<Map<String, Object>> getLocalUnit(String cityId) {
+        Assert.notBlank(cityId, "[cityId]不能为空");
+
+        setCityCookie(cityId);
+        Map<String, Object> fullUnit = mainClient.getLocalUnit();
+
+        String cId = String.valueOf(fullUnit.get("city_id"));
+        String content = String.valueOf(fullUnit.get("quikhospitals"));
+
+        if (!StrUtil.equals(cId, cityId) || StrUtil.isBlank(content)) {
+            return CollUtil.newArrayList();
+        }
+
+        Document document = Jsoup.parse(content);
+        Elements optionList = document.getElementsByTag("option");
+
+        List<Map<String, Object>> data = CollUtil.newArrayList();
+        for (Element element : optionList) {
+            String unitId = element.val();
+            String unitName = element.text();
+            if (!"0".equals(unitId)) {
+                Map<String, Object> map = new HashMap<>();
+                map.put("unit_id", unitId);
+                map.put("unit_name", unitName);
+                data.add(map);
+            }
+        }
+        return data;
+    }
+
+    private void setCityCookie(String cityId) {
+        String code = getCityPinYin(cityId);
+        if (StrUtil.isBlank(code)) {
+            return;
+        }
+        Cookie cookie = new Cookie.Builder().name("ip_city").value(code)
+                .path("/").domain("91160.com").secure().httpOnly().build();
+        CookieStore.remove(SystemConstant.HOST, "ip_city");
+        CookieStore.put(SystemConstant.HOST, cookie);
+    }
+
+    private String getCityPinYin(String cityId) {
+        List<Map<String, Object>> cities = getData(DataTypeEnum.CITIES);
+        return cities.stream().parallel().filter(x -> StrUtil.equals(String.valueOf(x.get("cityId")), cityId)).findFirst()
+                .map(x -> x.get("pinyin")).map(String::valueOf).orElseGet(String::new);
+    }
+
+    @Override
+    public List<Map<String, Object>> getFullUnit(String cityId) {
+        List<Map<String, Object>> localUnit = getLocalUnit(cityId);
+        if (CollUtil.isNotEmpty(localUnit)) {
+            return localUnit;
+        }
+        return getUnit(cityId);
     }
 
     @Override

@@ -34,6 +34,10 @@ public interface MainClient {
     @POST("/ajax/getunitbycity.html")
     List<Map<String, Object>> getUnit(@Field("c") String cityId);
 
+    @POST("/home/ajaxgetguahaourl.html")
+    @Headers("X-Requested-With: XMLHttpRequest")
+    Map<String, Object> getLocalUnit();
+
     @FormUrlEncoded
     @POST("/ajax/getdepbyunit.html")
     List<Map<String, Object>> getDept(@Field("keyValue") String unitId);
