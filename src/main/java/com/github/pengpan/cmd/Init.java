@@ -52,7 +52,7 @@ public class Init implements Runnable {
         do {
             String userName = AccountStore.getUserName();
             while (StrUtil.isBlank(userName)) {
-                System.out.print("请输入用户名: ");
+                System.out.print("请输入用户名（手机号码）: ");
                 userName = in.nextLine();
             }
 
