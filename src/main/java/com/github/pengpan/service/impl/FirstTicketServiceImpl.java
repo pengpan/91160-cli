@@ -43,10 +43,12 @@ public class FirstTicketServiceImpl extends AbstractTicketService {
                 .map(map::get).collect(Collectors.toList());
 
         List<String> keyList = new ArrayList<>();
-        for (String day : config.getDays()) {
-            for (String week : weeks) {
-                String key = StrUtil.format("$.{}.{}.{}", config.getDoctorId(), day, week);
-                keyList.add(key);
+        for (String doctorId : config.getDoctorId()) {
+            for (String day : config.getDays()) {
+                for (String week : weeks) {
+                    String key = StrUtil.format("$.{}.{}.{}", doctorId, day, week);
+                    keyList.add(key);
+                }
             }
         }
         return keyList;

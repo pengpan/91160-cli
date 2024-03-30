@@ -167,11 +167,11 @@ public class CoreServiceImpl implements CoreService {
             Elements tds = tr.getElementsByTag("td");
             Map<String, Object> member = new LinkedHashMap<>();
             member.put("id", id);
-            member.put("name", tds.get(0).text());
-            member.put("sex", tds.get(1).text());
-            member.put("birth", tds.get(2).text());
-            member.put("idCard", tds.get(3).text());
-            member.put("mobile", tds.get(4).text());
+            String name = tds.stream().findFirst()
+                    .map(Element::text)
+                    .map(x -> x.replace("默认", ""))
+                    .map(StrUtil::trim).orElseGet(String::new);
+            member.put("name", name);
             memberList.add(member);
         }
         return memberList;
@@ -335,7 +335,7 @@ public class CoreServiceImpl implements CoreService {
                         .schData(sch_data)
                         .unitId(config.getUnitId())
                         .depId(config.getDeptId())
-                        .doctorId(config.getDoctorId())
+                        .doctorId(schInfo.getDoctor_id())
                         .schId(schInfo.getSchedule_id())
                         .memberId(config.getMemberId())
                         .accept("1")

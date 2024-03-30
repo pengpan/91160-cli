@@ -38,9 +38,9 @@ public class Config {
     private String deptId;
 
     /**
-     * 医生编号
+     * 医生编号[可多选，如(1001,1002)]
      */
-    private String doctorId;
+    private List<String> doctorId;
 
     /**
      * 需要周几的号[可多选，如(6,7)]
