@@ -121,7 +121,7 @@ public class Init implements Runnable {
         props.add(new Prop("城市编号", "cityId", ConfigStore.getCityId()));
         props.add(new Prop("医院编号", "unitId", ConfigStore.getUnitId()));
         props.add(new Prop("科室编号", "deptId", ConfigStore.getDeptId()));
-        props.add(new Prop("医生编号", "doctorId", ConfigStore.getDoctorId()));
+        props.add(new Prop("医生编号[可多选，如(1001,1002)]", "doctorId", ConfigStore.getDoctorId()));
         props.add(new Prop("需要周几的号[可多选，如(6,7)]", "weeks", ConfigStore.getWeekId()));
         props.add(new Prop("时间段编号[可多选，如(am,pm)]", "days", ConfigStore.getDayId()));
         props.add(new Prop("刷号休眠时间[单位:毫秒]", "sleepTime", "5000"));

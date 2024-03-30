@@ -53,7 +53,7 @@ public enum InitDataEnum {
             .attrId("doctor_id")
             .attrName("doctor_name")
             .banner("=====请选择医生=====")
-            .inputTips("请输入医生编号: ")
+            .inputTips("请输入医生编号[可多选，如(1001,1002)]: ")
             .data(x -> x.getDoctor(ConfigStore.getUnitId(), ConfigStore.getDeptId()))
             .store(ConfigStore::setDoctorId)
             .build()),

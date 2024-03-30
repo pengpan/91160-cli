@@ -335,7 +335,7 @@ public class CoreServiceImpl implements CoreService {
                         .schData(sch_data)
                         .unitId(config.getUnitId())
                         .depId(config.getDeptId())
-                        .doctorId(config.getDoctorId())
+                        .doctorId(schInfo.getDoctor_id())
                         .schId(schInfo.getSchedule_id())
                         .memberId(config.getMemberId())
                         .accept("1")

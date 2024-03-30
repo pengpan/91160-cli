@@ -137,7 +137,7 @@ public class Register implements Runnable {
         Assert.notBlank(config.getCityId(), "[cityId]不能为空，请检查配置文件");
         Assert.notBlank(config.getUnitId(), "[unitId]不能为空，请检查配置文件");
         Assert.notBlank(config.getDeptId(), "[deptId]不能为空，请检查配置文件");
-        Assert.notBlank(config.getDoctorId(), "[doctorId]不能为空，请检查配置文件");
+        Assert.notEmpty(config.getDoctorId(), "[doctorId]不能为空，请检查配置文件");
         Assert.notEmpty(config.getWeeks(), "[weeks]不能为空，请检查配置文件");
         Assert.notEmpty(config.getDays(), "[days]不能为空，请检查配置文件");
         Assert.isTrue(config.getSleepTime() >= 0, "[sleepTime]格式不正确，请检查配置文件");

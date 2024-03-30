@@ -46,8 +46,8 @@ public class SecondTicketServiceImpl extends AbstractTicketService {
         for (String day : config.getDays()) {
             for (String week : weeks) {
                 String key = StrUtil.format("$.{}.{}.{}",
-                        StrUtil.format("{}_{}", config.getDeptId(), config.getDoctorId()),
-                        StrUtil.format("{}_{}_{}", config.getDeptId(), config.getDoctorId(), day),
+                        StrUtil.format("{}_{}", config.getDeptId(), config.getDoctorId().get(0)),
+                        StrUtil.format("{}_{}_{}", config.getDeptId(), config.getDoctorId().get(0), day),
                         week);
                 keyList.add(key);
             }
@@ -59,7 +59,7 @@ public class SecondTicketServiceImpl extends AbstractTicketService {
     public List<ScheduleInfo> getTicket(Config config, List<String> keyList) {
         String unitId = config.getUnitId();
         String deptId = config.getDeptId();
-        String doctorId = config.getDoctorId();
+        String doctorId = config.getDoctorId().get(0);
         String brushStartDate = config.getBrushStartDate();
 
         String url = "https://gate.91160.com/guahao/v1/pc/sch/doctor";
