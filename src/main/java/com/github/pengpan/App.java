@@ -3,6 +3,7 @@ package com.github.pengpan;
 import cn.hutool.extra.spring.EnableSpringUtil;
 import com.github.pengpan.cmd.Init;
 import com.github.pengpan.cmd.Register;
+import com.github.pengpan.cmd.Startup;
 import com.github.pengpan.cmd.Version;
 import io.airlift.airline.Cli;
 import io.airlift.airline.Help;
@@ -32,7 +33,8 @@ public class App {
                         .withCommands(Help.class,
                                 Version.class,
                                 Init.class,
-                                Register.class
+                                Register.class,
+                                Startup.class
                         );
         builder.build().parse(args).run();
     }
