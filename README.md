@@ -37,11 +37,11 @@ $ java -jar 91160-cli.jar register -c config.properties
 
 ## 设置刷号休眠时间
 
-操作：编辑配置文件`config.properties`，加入`sleepTime`，默认`5000ms`，可适当降低
+操作：编辑配置文件`config.properties`，加入`sleepTime`，默认`3000ms`，可适当降低
 
 ```properties
 # 刷号休眠时间[单位:毫秒]
-sleepTime=5000
+sleepTime=3000
 ```
 
 ## 设置刷号起始日期
