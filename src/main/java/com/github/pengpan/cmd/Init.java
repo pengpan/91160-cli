@@ -88,6 +88,7 @@ public class Init implements Runnable {
                 System.out.print(initData.getInputTips());
                 id = in.nextLine();
             }
+            log.info("input is: {}", id);
             success = checkInput(ids, id);
             if (success) {
                 initData.getStore().accept(id);
