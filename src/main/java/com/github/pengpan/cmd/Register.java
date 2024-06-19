@@ -53,10 +53,9 @@ public class Register implements Runnable {
 
         try {
             coreService.brushTicketTask(config);
-            System.exit(0);
+            CommonUtil.normalExit();
         } catch (Exception e) {
-            log.error("", e);
-            System.exit(-1);
+            CommonUtil.errorExit("", e);
         }
     }
 
