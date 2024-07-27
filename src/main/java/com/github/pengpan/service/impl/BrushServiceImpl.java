@@ -52,4 +52,9 @@ public class BrushServiceImpl implements BrushService {
         List<String> keyList = ticketService.getKeyList(config);
         return ticketService.getTicket(config, keyList);
     }
+
+    @Override
+    public BrushChannelEnum getCurrentBrushChannel() {
+        return currIndex.get() == 0 ? BrushChannelEnum.CHANNEL_1 : BrushChannelEnum.CHANNEL_2;
+    }
 }
