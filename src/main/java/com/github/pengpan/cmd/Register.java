@@ -53,10 +53,9 @@ public class Register implements Runnable {
 
         try {
             coreService.brushTicketTask(config);
-            System.exit(0);
+            CommonUtil.normalExit();
         } catch (Exception e) {
-            log.error("", e);
-            System.exit(-1);
+            CommonUtil.errorExit("", e);
         }
     }
 
@@ -118,7 +117,7 @@ public class Register implements Runnable {
     private Config getConfig(String configFile) {
         Assert.notBlank(configFile, "请指定配置文件");
         Assert.isTrue(configFile.endsWith(Props.EXT_NAME), "配置文件不正确");
-        File file = FileUtil.file(configFile);
+        File file = new File(configFile);
         Assert.isTrue(file.exists(), "配置文件不存在，请检查文件路径");
         Props props = new Props(file, CharsetUtil.CHARSET_UTF_8);
         Config config = new Config();

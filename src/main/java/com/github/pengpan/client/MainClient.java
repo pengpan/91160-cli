@@ -42,7 +42,7 @@ public interface MainClient {
     @POST("/ajax/getdepbyunit.html")
     List<Map<String, Object>> getDept(@Field("keyValue") String unitId);
 
-    @Retry
+    @Retry(maxRetries = 10)
     @Proxy
     @GET
     BrushSch dept(@Url String url,
@@ -52,7 +52,7 @@ public interface MainClient {
                   @Query("p") int page,
                   @Query("user_key") String userKey);
 
-    @Retry
+    @Retry(maxRetries = 10)
     @Proxy
     @GET
     DoctorSch doctor(@Url String url,

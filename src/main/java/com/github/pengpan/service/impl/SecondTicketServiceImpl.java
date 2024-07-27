@@ -57,9 +57,15 @@ public class SecondTicketServiceImpl extends AbstractTicketService {
 
     @Override
     public List<ScheduleInfo> getTicket(Config config, List<String> keyList) {
+        return config.getDoctorId().stream().parallel()
+                .map(x -> getTicket(x, config, keyList))
+                .filter(Objects::nonNull).flatMap(Collection::stream)
+                .collect(Collectors.toList());
+    }
+
+    private List<ScheduleInfo> getTicket(String doctorId, Config config, List<String> keyList) {
         String unitId = config.getUnitId();
         String deptId = config.getDeptId();
-        String doctorId = config.getDoctorId().get(0);
         String brushStartDate = config.getBrushStartDate();
 
         String url = "https://gate.91160.com/guahao/v1/pc/sch/doctor";

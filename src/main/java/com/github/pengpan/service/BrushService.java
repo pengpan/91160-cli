@@ -14,4 +14,6 @@ public interface BrushService {
     TicketService getTicketService(BrushChannelEnum brushChannel);
 
     List<ScheduleInfo> getTicket(Config config);
+
+    BrushChannelEnum getCurrentBrushChannel();
 }

@@ -184,7 +184,7 @@ public class CoreServiceImpl implements CoreService {
         printBrushChannelInfo(config.getBrushChannel());
 
         for (int i = 1; ; i++) {
-            log.info("[{}]努力刷号中...", i);
+            log.info("[{}][{}]努力刷号中...", i, brushService.getCurrentBrushChannel().getName());
 
             List<ScheduleInfo> schInfoList = brushService.getTicket(config);
 
