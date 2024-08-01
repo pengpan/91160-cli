@@ -82,14 +82,16 @@ public class Init implements Runnable {
             log.info(name);
         }
         boolean success;
+        boolean allowEmpty = initDataEnum.getInitData().isAllowEmpty();
         do {
             String id = null;
-            while (StrUtil.isBlank(id)) {
+            do {
                 System.out.print(initData.getInputTips());
                 id = in.nextLine();
-            }
+            } while (StrUtil.isBlank(id) && !allowEmpty);
+
             log.info("input is: {}", id);
-            success = checkInput(ids, id);
+            success = checkInput(ids, id, allowEmpty);
             if (success) {
                 initData.getStore().accept(id);
             } else {
@@ -98,7 +100,10 @@ public class Init implements Runnable {
         } while (!success);
     }
 
-    private boolean checkInput(List<Object> ids, String id) {
+    private boolean checkInput(List<Object> ids, String id,boolean allowEmpty) {
+        if (allowEmpty && StrUtil.isBlank(id)) {
+            return true;
+        }
         if (CollUtil.isEmpty(ids) || StrUtil.isBlank(id)) {
             return false;
         }
