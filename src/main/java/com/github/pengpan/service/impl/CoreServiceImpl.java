@@ -194,9 +194,6 @@ public class CoreServiceImpl implements CoreService {
                 continue;
             }
 
-            log.info("刷到号了");
-            schInfoList.forEach(x -> log.info(JSONKit.toJson(x)));
-
             // 判断登录是否有效
             CookieStore.getLoginCookieNotNull();
 
@@ -204,6 +201,18 @@ public class CoreServiceImpl implements CoreService {
             List<Register> formList = schInfoList.stream().parallel()
                     .flatMap(x -> buildForm(x, config).stream())
                     .collect(Collectors.toList());
+
+            if (CollUtil.isEmpty(formList)) {
+                // 休眠
+                ThreadUtil.sleep(config.getSleepTime(), TimeUnit.MILLISECONDS);
+                continue;
+            }
+
+            log.info("刷到号了");
+            formList.forEach(x -> log.info(JSONKit.toJson(x)));
+
+            // 判断登录是否有效
+            CookieStore.getLoginCookieNotNull();
 
             // 挂号
             boolean success = doRegister(formList);
@@ -304,6 +313,16 @@ public class CoreServiceImpl implements CoreService {
 
         if (CollUtil.isEmpty(appointmentList)) {
             return CollUtil.newArrayList();
+        }
+
+        if (CollUtil.isNotEmpty(config.getHours())) {
+            appointmentList = appointmentList.stream()
+                    .filter(x -> config.getHours().contains(x.getName()))
+                    .sorted(Comparator.comparingInt(x -> config.getHours().indexOf(x.getName())))
+                    .collect(Collectors.toList());
+            if (CollUtil.isEmpty(appointmentList)) {
+                return CollUtil.newArrayList();
+            }
         }
 
         String sch_data = Optional.of(document)

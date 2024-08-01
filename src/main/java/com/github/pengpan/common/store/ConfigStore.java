@@ -17,6 +17,8 @@ public class ConfigStore {
 
     private static String dayId;
 
+    private static String hour;
+
     private static String memberId;
 
     public static String getCityId() {
@@ -73,5 +75,13 @@ public class ConfigStore {
 
     public static void setMemberId(String memberId) {
         ConfigStore.memberId = memberId;
+    }
+
+    public static String getHour() {
+        return hour;
+    }
+
+    public static void setHour(String hour) {
+        ConfigStore.hour = hour;
     }
 }

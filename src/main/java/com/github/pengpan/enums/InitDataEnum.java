@@ -75,6 +75,16 @@ public enum InitDataEnum {
             .data(x -> x.getData(DataTypeEnum.DAYS))
             .store(ConfigStore::setDayId)
             .build()),
+
+    HOURS(InitData.builder()
+            .attrId("value")
+            .attrName("name")
+            .banner("=====请选择时间点=====")
+            .inputTips("请输入时间点(如填写了多个且同时有号，提交先填写的。若为填写则不限制时间点)[可多选，如(10:00-10:30,08:00-08:30)]: ")
+            .data(x -> x.getData(DataTypeEnum.HOURS))
+            .store(ConfigStore::setHour)
+            .allowEmpty(true)
+            .build())
     ;
 
     private InitData initData;
