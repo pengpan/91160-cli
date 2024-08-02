@@ -27,4 +27,6 @@ public class InitData {
     private Function<CoreService, List<Map<String, Object>>> data;
 
     private Consumer<String> store;
+
+    private boolean allowEmpty;
 }

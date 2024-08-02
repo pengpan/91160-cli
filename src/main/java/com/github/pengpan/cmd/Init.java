@@ -43,6 +43,7 @@ public class Init implements Runnable {
         initData(InitDataEnum.DOCTOR);
         initData(InitDataEnum.WEEK);
         initData(InitDataEnum.DAY);
+        initData(InitDataEnum.HOURS);
         storeConfig();
         CommonUtil.normalExit("init success.");
     }
@@ -82,14 +83,16 @@ public class Init implements Runnable {
             log.info(name);
         }
         boolean success;
+        boolean allowEmpty = initDataEnum.getInitData().isAllowEmpty();
         do {
             String id = null;
-            while (StrUtil.isBlank(id)) {
+            do {
                 System.out.print(initData.getInputTips());
                 id = in.nextLine();
-            }
+            } while (StrUtil.isBlank(id) && !allowEmpty);
+
             log.info("input is: {}", id);
-            success = checkInput(ids, id);
+            success = checkInput(ids, id, allowEmpty);
             if (success) {
                 initData.getStore().accept(id);
             } else {
@@ -98,7 +101,10 @@ public class Init implements Runnable {
         } while (!success);
     }
 
-    private boolean checkInput(List<Object> ids, String id) {
+    private boolean checkInput(List<Object> ids, String id,boolean allowEmpty) {
+        if (allowEmpty && StrUtil.isBlank(id)) {
+            return true;
+        }
         if (CollUtil.isEmpty(ids) || StrUtil.isBlank(id)) {
             return false;
         }
@@ -125,6 +131,7 @@ public class Init implements Runnable {
         props.add(new Prop("医生编号[可多选，如(1001,1002)]", "doctorId", ConfigStore.getDoctorId()));
         props.add(new Prop("需要周几的号[可多选，如(6,7)]", "weeks", ConfigStore.getWeekId()));
         props.add(new Prop("时间段编号[可多选，如(am,pm)]", "days", ConfigStore.getDayId()));
+        props.add(new Prop("时间点(如填写了多个且同时有号，提交先填写的。若为填写则不限制时间点)[可多选，如(10:00-10:30,08:00-08:30)]", "hours", ConfigStore.getHours()));
         props.add(new Prop("刷号休眠时间[单位:毫秒]", "sleepTime", "3000"));
         props.add(new Prop("刷号起始日期(表示刷该日期后一周的号,为空取当前日期)[格式: 2022-06-01]", "brushStartDate", ""));
         // custom config

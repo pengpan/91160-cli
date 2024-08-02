@@ -12,7 +12,8 @@ public enum DataTypeEnum {
 
     CITIES("conf/cities.json"),
     DAYS("conf/days.json"),
-    WEEKS("conf/weeks.json");
+    WEEKS("conf/weeks.json"),
+    HOURS("conf/hours.json");
 
     private final String path;
 

@@ -1,14 +1,18 @@
 package com.github.pengpan.common.cookie;
 
 import cn.hutool.core.collection.CollUtil;
+import cn.hutool.core.thread.ThreadUtil;
+import cn.hutool.core.util.RandomUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.extra.spring.SpringUtil;
 import com.github.pengpan.common.store.AccountStore;
 import com.github.pengpan.service.LoginService;
+import com.github.pengpan.util.CommonUtil;
 import lombok.extern.slf4j.Slf4j;
 import okhttp3.Cookie;
 
 import java.util.*;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author pengpan
@@ -70,14 +74,29 @@ public class CookieStore {
 
     public static Cookie getLoginCookieNotNull() {
         Cookie loginCookie = getLoginCookie();
-        if (loginCookie == null || System.currentTimeMillis() > (loginCookie.expiresAt() - 60 * 1000)) {
+        if (loginCookieIsExpired(loginCookie)) {
             log.info("登录失效，正在重新登录...");
             clear();
             LoginService loginService = SpringUtil.getBean(LoginService.class);
-            loginService.doLogin(AccountStore.getUserName(), AccountStore.getPassword());
+            int maxLoginRetry = 3;
+            for (int i = 0; i < maxLoginRetry; i++) {
+                if (loginService.doLogin(AccountStore.getUserName(), AccountStore.getPassword())) {
+                    break;
+                }
+                int sleepMs = RandomUtil.randomInt(1000, 3000);
+                log.warn("第{}次登录失败，等待{}毫秒后重试...", i + 1, sleepMs);
+                ThreadUtil.sleep(sleepMs, TimeUnit.MILLISECONDS);
+            }
             loginCookie = getLoginCookie();
+            if (loginCookieIsExpired(loginCookie)) {
+                CommonUtil.errorExit("连续登录{}次均失败，已终止运行。请先去网页端(https://user.91160.com/login.html)登录成功后再次尝试", maxLoginRetry);
+            }
         }
         return loginCookie;
+    }
+
+    private static boolean loginCookieIsExpired(Cookie loginCookie) {
+        return loginCookie == null || System.currentTimeMillis() > (loginCookie.expiresAt() - 60 * 1000);
     }
 
     public static void clear() {

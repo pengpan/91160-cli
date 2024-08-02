@@ -53,6 +53,11 @@ public class Config {
     private List<String> days;
 
     /**
+     * 时间点编号[可多选，如(08:00-08:30,10:00-10:30)]
+     */
+    private List<String> hours;
+
+    /**
      * 就诊人编号
      */
     private String memberId;
