@@ -88,7 +88,7 @@ public class CookieStore {
             }
             loginCookie = getLoginCookie();
             if (loginCookieIsExpired(loginCookie)) {
-                CommonUtil.errorExit("连续登录{}次均失败，已终止运行，请检查用户名密码是否正确", maxLoginRetry);
+                CommonUtil.errorExit("连续登录{}次均失败，已终止运行。请先去网页端(https://user.91160.com/login.html)登录成功后再次尝试", maxLoginRetry);
             }
         }
         return loginCookie;
