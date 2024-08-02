@@ -17,7 +17,7 @@ public class ConfigStore {
 
     private static String dayId;
 
-    private static String hour;
+    private static String hours;
 
     private static String memberId;
 
@@ -77,11 +77,11 @@ public class ConfigStore {
         ConfigStore.memberId = memberId;
     }
 
-    public static String getHour() {
-        return hour;
+    public static String getHours() {
+        return hours;
     }
 
-    public static void setHour(String hour) {
-        ConfigStore.hour = hour;
+    public static void setHours(String hours) {
+        ConfigStore.hours = hours;
     }
 }
