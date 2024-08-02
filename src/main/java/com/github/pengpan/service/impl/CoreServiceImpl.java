@@ -202,6 +202,14 @@ public class CoreServiceImpl implements CoreService {
                     .flatMap(x -> buildForm(x, config).stream())
                     .collect(Collectors.toList());
 
+            // 依据配置的时间点过滤并排序
+            if (CollUtil.isNotEmpty(formList) && CollUtil.isNotEmpty(config.getHours())) {
+                formList = formList.stream()
+                        .filter(x -> config.getHours().contains(x.getDetlName()))
+                        .sorted(Comparator.comparingInt(x -> config.getHours().indexOf(x.getDetlName())))
+                        .collect(Collectors.toList());
+            }
+
             if (CollUtil.isEmpty(formList)) {
                 // 休眠
                 ThreadUtil.sleep(config.getSleepTime(), TimeUnit.MILLISECONDS);
@@ -313,16 +321,6 @@ public class CoreServiceImpl implements CoreService {
 
         if (CollUtil.isEmpty(appointmentList)) {
             return CollUtil.newArrayList();
-        }
-
-        if (CollUtil.isNotEmpty(config.getHours())) {
-            appointmentList = appointmentList.stream()
-                    .filter(x -> config.getHours().contains(x.getName()))
-                    .sorted(Comparator.comparingInt(x -> config.getHours().indexOf(x.getName())))
-                    .collect(Collectors.toList());
-            if (CollUtil.isEmpty(appointmentList)) {
-                return CollUtil.newArrayList();
-            }
         }
 
         String sch_data = Optional.of(document)

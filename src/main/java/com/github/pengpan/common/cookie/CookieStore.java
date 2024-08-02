@@ -12,6 +12,7 @@ import lombok.extern.slf4j.Slf4j;
 import okhttp3.Cookie;
 
 import java.util.*;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author pengpan
@@ -84,7 +85,7 @@ public class CookieStore {
                 }
                 int sleepMs = RandomUtil.randomInt(1000, 3000);
                 log.warn("第{}次登录失败，等待{}毫秒后重试...", i + 1, sleepMs);
-                ThreadUtil.sleep(sleepMs);
+                ThreadUtil.sleep(sleepMs, TimeUnit.MILLISECONDS);
             }
             loginCookie = getLoginCookie();
             if (loginCookieIsExpired(loginCookie)) {
