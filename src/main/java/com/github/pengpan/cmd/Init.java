@@ -13,6 +13,7 @@ import com.github.pengpan.service.CoreService;
 import com.github.pengpan.service.LoginService;
 import com.github.pengpan.util.CommonUtil;
 import io.airlift.airline.Command;
+import io.airlift.airline.Option;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.File;
@@ -27,6 +28,13 @@ import java.util.Scanner;
 @Slf4j
 @Command(name = "init", description = "Initialization data")
 public class Init implements Runnable {
+
+    @Option(
+            name = {"-c", "--config"},
+            title = "configuration file",
+            required = false,
+            description = "Path to properties configuration file.")
+    private String configFile;
 
     private final Scanner in = new Scanner(System.in);
 
@@ -150,7 +158,7 @@ public class Init implements Runnable {
             sb.append(line1).append(System.lineSeparator()).append(line2).append(System.lineSeparator());
         }
 
-        File file = new File("config.properties");
+        File file = new File(StrUtil.blankToDefault(configFile, "config.properties"));
         FileUtil.writeUtf8String(sb.toString(), file);
         log.info("The file config.properties has been generated.");
     }
