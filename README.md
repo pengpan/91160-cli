@@ -16,6 +16,27 @@
 - [x] 自定义刷号起始日期
 - [x] 刷号失败重试
 
+## Docker（推荐）
+1. 初始化
+```shell
+docker run --rm \
+-v $PWD/91160-cli/config:/app/config \
+-it pengpan/91160-cli:latest \
+init -c config/config.properties
+```
+2. 挂号
+```shell
+docker run --name 91160-cli \
+-v $PWD/91160-cli/config:/app/config \
+-v $PWD/91160-cli/logs:/app/logs \
+-d pengpan/91160-cli:latest \
+register -c config/config.properties
+```
+3. 查看日志
+```shell
+docker logs -f 91160-cli
+```
+
 ## 如何使用
 
 1. 搭建Java运行环境，最低版本支持1.8，已有请跳过
