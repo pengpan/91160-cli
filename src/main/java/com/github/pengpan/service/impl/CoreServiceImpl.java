@@ -206,7 +206,7 @@ public class CoreServiceImpl implements CoreService {
             if (CollUtil.isNotEmpty(formList) && CollUtil.isNotEmpty(config.getHours())) {
                 formList = formList.stream()
                         .filter(x -> config.getHours().contains(x.getDetlName()))
-                        .sorted(Comparator.comparingInt(x -> config.getHours().indexOf(x.getDetlName())))
+                        .sorted(Comparator.comparing(Register::getDetlName))
                         .collect(Collectors.toList());
             }
 
