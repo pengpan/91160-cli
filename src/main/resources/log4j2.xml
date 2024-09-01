@@ -11,10 +11,10 @@
             <PatternLayout charset="${LOG_CHARSET}" pattern="${CONSOLE_LOG_PATTERN}"/>
         </Console>
         <RollingFile name="File" fileName="${LOG_PATH}/log.log"
-                     filePattern="${LOG_PATH}/$${date:yyyy-MM}/log-%d{yyyy-MM-dd-HH}-%i.log.gz">
+                     filePattern="${LOG_PATH}/log-%d{yyyy-MM-dd}.log">
             <PatternLayout charset="${LOG_CHARSET}" pattern="${FILE_LOG_PATTERN}"/>
             <Policies>
-                <SizeBasedTriggeringPolicy size="10 MB"/>
+                <TimeBasedTriggeringPolicy interval="1"/>
             </Policies>
         </RollingFile>
     </Appenders>
