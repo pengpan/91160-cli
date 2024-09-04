@@ -4,7 +4,7 @@ COPY . /building
 
 WORKDIR /building
 
-RUN mvn clean package -DSkipTests
+RUN mvn clean package -Dmaven.test.skip=true
 
 FROM openjdk:8-jdk-alpine
 
