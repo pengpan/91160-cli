@@ -1,4 +1,4 @@
-FROM maven:3.5-jdk-8-alpine AS building
+FROM maven:3.5-jdk-8 AS building
 
 COPY . /building
 
