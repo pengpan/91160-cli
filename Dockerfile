@@ -1,4 +1,4 @@
-FROM maven:3.5.3-jdk-11-slim AS building
+FROM maven:3.5-jdk-8 AS building
 
 COPY . /building
 
