@@ -6,7 +6,7 @@ WORKDIR /building
 
 RUN mvn clean package -Dmaven.test.skip=true
 
-FROM openjdk:8-jdk-alpine
+FROM openjdk:11-jre-slim-sid
 
 WORKDIR /app
 
