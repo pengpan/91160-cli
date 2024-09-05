@@ -1,4 +1,4 @@
-FROM maven:3.5-jdk-8 AS building
+FROM maven:3.5.3-jdk-11-slim AS building
 
 COPY . /building
 
@@ -6,7 +6,7 @@ WORKDIR /building
 
 RUN mvn clean package -Dmaven.test.skip=true
 
-FROM openjdk:8-jdk-alpine
+FROM openjdk:11-jre-slim-stretch
 
 WORKDIR /app
 
