@@ -6,7 +6,7 @@ WORKDIR /building
 
 RUN mvn clean package -Dmaven.test.skip=true
 
-FROM openjdk:11-jre-slim-sid
+FROM openjdk:11-jre-slim-stretch
 
 WORKDIR /app
 
