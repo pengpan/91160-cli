@@ -13,5 +13,12 @@ RUN ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime && dpkg-reconfigure 
 WORKDIR /app
 
 COPY --from=building /building/target/91160-cli-jar-with-dependencies.jar /app/91160-cli.jar
+COPY --from=building /building/entrypoint.sh /app/entrypoint.sh
 
-ENTRYPOINT ["java", "-jar", "91160-cli.jar"]
+RUN chmod +x /app/entrypoint.sh
+
+ENV JAVA_OPTS="-Xms512m -Xmx512m -Xmn256m"
+ENV APP_CMD=""
+ENV APP_CMD_ARGS=""
+
+ENTRYPOINT ["/app/entrypoint.sh"]
