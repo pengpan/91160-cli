@@ -28,7 +28,6 @@ docker run --rm \
 2. 挂号
 ```shell
 docker run --name 91160-cli \
---restart always \
 -v $PWD/91160-cli/config:/app/config \
 -v $PWD/91160-cli/logs:/app/logs \
 -e APP_CMD='register' \
