@@ -1,7 +1,7 @@
 #!/bin/bash
 
 if [ ! -z "$JAVA_OPTS" ]; then
-    jvm_options="$JAVA_OPTS"
+    JAVA_OPTS="$JAVA_OPTS"
 fi
 
 if [ ! -z "$APP_CMD" ]; then
