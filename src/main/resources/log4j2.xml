@@ -14,8 +14,9 @@
                      filePattern="${LOG_PATH}/log-%d{yyyy-MM-dd}.log">
             <PatternLayout charset="${LOG_CHARSET}" pattern="${FILE_LOG_PATTERN}"/>
             <Policies>
-                <TimeBasedTriggeringPolicy interval="1"/>
+                <TimeBasedTriggeringPolicy interval="1" modulate="true"/>
             </Policies>
+            <DefaultRolloverStrategy max="365"/>
         </RollingFile>
     </Appenders>
     <Loggers>
