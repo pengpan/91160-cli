@@ -21,16 +21,19 @@
 ```shell
 docker run --rm \
 -v $PWD/91160-cli/config:/app/config \
--it pengpan/91160-cli:latest \
-init -c config/config.properties
+-e APP_CMD='init' \
+-e APP_CMD_ARGS='-c config/config.properties' \
+-it pengpan/91160-cli:latest
 ```
 2. 挂号
 ```shell
 docker run --name 91160-cli \
+--restart always \
 -v $PWD/91160-cli/config:/app/config \
 -v $PWD/91160-cli/logs:/app/logs \
--d pengpan/91160-cli:latest \
-register -c config/config.properties
+-e APP_CMD='register' \
+-e APP_CMD_ARGS='-c config/config.properties' \
+-d pengpan/91160-cli:latest
 ```
 3. 查看日志
 ```shell
