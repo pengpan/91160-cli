@@ -13,7 +13,7 @@ RUN ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime && dpkg-reconfigure 
 WORKDIR /app
 
 COPY --from=building /building/target/91160-cli-jar-with-dependencies.jar /app/91160-cli.jar
-COPY --from=building /building/entrypoint.sh /app/entrypoint.sh
+COPY --from=building /building/docker/entrypoint.sh /app/entrypoint.sh
 
 RUN chmod +x /app/entrypoint.sh
 
