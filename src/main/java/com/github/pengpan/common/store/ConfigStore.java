@@ -21,6 +21,8 @@ public class ConfigStore {
 
     private static String memberId;
 
+    private static String sendKey;
+
     public static String getCityId() {
         return cityId;
     }
@@ -83,5 +85,13 @@ public class ConfigStore {
 
     public static void setHours(String hours) {
         ConfigStore.hours = hours;
+    }
+
+    public static String getSendKey() {
+        return sendKey;
+    }
+
+    public static void setSendKey(String sendKey) {
+        ConfigStore.sendKey = sendKey;
     }
 }
