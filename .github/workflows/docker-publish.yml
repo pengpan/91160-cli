@@ -23,8 +23,8 @@ jobs:
         uses: docker/metadata-action@v5
         with:
           images: |
-            docker.io/${{ github.repository }}
             ghcr.io/${{ github.repository }}
+            ${{ secrets.DOCKER_USERNAME }}/${{ github.repository }}
           tags: |
             type=semver,pattern={{version}}
 
