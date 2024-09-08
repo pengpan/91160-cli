@@ -4,7 +4,7 @@ COPY . /building
 
 WORKDIR /building
 
-RUN mvn clean package -Dmaven.test.skip=true
+RUN mvn clean package -Dmaven.test.skip=true -q
 
 FROM openjdk:11-jre-slim-stretch
 
