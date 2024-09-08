@@ -5,10 +5,6 @@ on:
     tags:
       - "v*"
 
-env:
-  REGISTRY: docker.io
-  IMAGE_NAME: ${{ github.repository }}
-
 jobs:
   push_to_registry:
     name: Push Docker image to Docker Hub and GitHub Container Registry
@@ -27,8 +23,8 @@ jobs:
         uses: docker/metadata-action@v5
         with:
           images: |
-            ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
-            ghcr.io/${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+            docker.io/${{ github.repository }}
+            ghcr.io/${{ github.repository }}
           tags: |
             type=semver,pattern={{version}}
 
