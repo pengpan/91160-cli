@@ -24,7 +24,7 @@ jobs:
         with:
           images: |
             ghcr.io/${{ github.repository }}
-            ${{ secrets.DOCKER_USERNAME }}/${{ github.repository }}
+            ${{ github.repository }}
           tags: |
             type=semver,pattern={{version}}
 
