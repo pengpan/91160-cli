@@ -52,8 +52,15 @@ public class Init implements Runnable {
         initData(InitDataEnum.WEEK);
         initData(InitDataEnum.DAY);
         initData(InitDataEnum.HOURS);
+        initNotify();
         storeConfig();
         CommonUtil.normalExit("init success.");
+    }
+
+    private void initNotify() {
+        System.out.print("请输入Server酱(https://sct.ftqq.com)的SendKey(用于挂号成功后通知，可跳过): ");
+        String sendKey = in.nextLine();
+        ConfigStore.setSendKey(sendKey);
     }
 
     private void login() {
@@ -140,6 +147,7 @@ public class Init implements Runnable {
         props.add(new Prop("需要周几的号[可多选，如(6,7)]", "weeks", ConfigStore.getWeekId()));
         props.add(new Prop("时间段编号[可多选，如(am,pm)]", "days", ConfigStore.getDayId()));
         props.add(new Prop("时间点(如填写了多个且同时有号，提交先填写的。若为填写则不限制时间点)[可多选，如(10:00-10:30,08:00-08:30)]", "hours", ConfigStore.getHours()));
+        props.add(new Prop("Server酱(https://sct.ftqq.com)的SendKey", "sendKey", ConfigStore.getSendKey()));
         props.add(new Prop("刷号休眠时间[单位:毫秒]", "sleepTime", "3000"));
         props.add(new Prop("刷号起始日期(表示刷该日期后一周的号,为空取当前日期)[格式: 2022-06-01]", "brushStartDate", ""));
         // custom config

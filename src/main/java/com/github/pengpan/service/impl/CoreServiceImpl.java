@@ -5,8 +5,10 @@ import cn.hutool.core.date.DatePattern;
 import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.io.resource.ResourceUtil;
 import cn.hutool.core.map.MapUtil;
+import cn.hutool.core.text.UnicodeUtil;
 import cn.hutool.core.thread.ThreadUtil;
 import cn.hutool.core.util.StrUtil;
+import cn.hutool.http.HttpUtil;
 import cn.hutool.setting.dialect.PropsUtil;
 import com.ejlchina.data.TypeRef;
 import com.ejlchina.json.JSONKit;
@@ -226,11 +228,31 @@ public class CoreServiceImpl implements CoreService {
             boolean success = doRegister(formList);
             if (success) {
                 log.info("挂号成功");
+                serverChanNotify(config);
                 break;
             }
         }
 
         log.info("挂号结束");
+    }
+
+    private void serverChanNotify(Config config) {
+        String sendKey = config.getSendKey();
+        if (StrUtil.isBlank(sendKey)) {
+            return;
+        }
+        String url = "https://sctapi.ftqq.com/" + config.getSendKey() + ".send";
+        Map<String, Object> paramMap = MapUtil.<String, Object>builder()
+                .put("title", "91160-cli")
+                .put("desp", "挂号成功")
+                .put("channel", "9")
+                .build();
+        String response = UnicodeUtil.toString(HttpUtil.post(url, paramMap));
+        if (StrUtil.contains(response, "SUCCESS")) {
+            log.info("通知成功");
+        } else {
+            log.info("通知失败 {}", response);
+        }
     }
 
     private void printBrushChannelInfo(BrushChannelEnum brushChannel) {

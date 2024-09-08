@@ -58,6 +58,11 @@ public class Config {
     private List<String> hours;
 
     /**
+     * Server酱(https://sct.ftqq.com)的SendKey
+     */
+    private String sendKey;
+
+    /**
      * 就诊人编号
      */
     private String memberId;
