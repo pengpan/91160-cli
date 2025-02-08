@@ -5,6 +5,7 @@ import com.github.pengpan.common.retry.Retry;
 import com.github.pengpan.entity.BrushSch;
 import com.github.pengpan.entity.CheckUser;
 import com.github.pengpan.entity.DoctorSch;
+import okhttp3.ResponseBody;
 import retrofit2.Response;
 import retrofit2.http.*;
 
@@ -88,4 +89,11 @@ public interface MainClient {
 
     @GET("/favicon.ico")
     Response<Void> serverTime();
+
+    @GET
+    Response<ResponseBody> captcha(@Url String url);
+
+    @FormUrlEncoded
+    @POST
+    Response<String> doLoginV2(@Url String url, @FieldMap Map<String, String> fields);
 }

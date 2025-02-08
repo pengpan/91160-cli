@@ -15,9 +15,15 @@ public class SystemConstant {
 
     public final static String HOST = "www.91160.com";
 
+    public final static String FATEADM_DOMAIN = "http://pred.fateadm.com";
+
+    public final static String CAPTCHA_COLLECT_URL = "http://captcha.dcode.top:8080/captchaCollect/save";
+
     public final static String LOGIN_URL = "https://user.91160.com/login.html";
 
     public final static String CHECK_USER_URL = "https://user.91160.com/checkUser.html";
+
+    public final static String CAPTCHA_URL = "https://user.91160.com/Captcha.png";
 
     public final static Pattern PROXY_PATTERN = Pattern.compile("(socks|http)@(.*):(.*)");
 

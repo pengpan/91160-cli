@@ -80,7 +80,7 @@ public class CookieStore {
             LoginService loginService = SpringUtil.getBean(LoginService.class);
             int maxLoginRetry = 3;
             for (int i = 0; i < maxLoginRetry; i++) {
-                if (loginService.doLogin(AccountStore.getUserName(), AccountStore.getPassword())) {
+                if (loginService.doLoginV2(AccountStore.getUserName(), AccountStore.getPassword())) {
                     break;
                 }
                 int sleepMs = RandomUtil.randomInt(1000, 3000);
