@@ -46,6 +46,7 @@ public class Init implements Runnable {
 
     @Override
     public void run() {
+        tips();
         captcha();
         login();
         initData(InitDataEnum.MEMBER);
@@ -61,12 +62,19 @@ public class Init implements Runnable {
         CommonUtil.normalExit("init success.");
     }
 
+    private void tips() {
+        List<String> tips = CollUtil.newArrayList();
+        tips.add("脚本已接入斐斐打码用于识别图形验证码，请前往平台(http://www.fateadm.com/user_home.php)获取PD账号和PD秘钥");
+
+        System.out.println();
+        System.out.println("Tips: ");
+        for (String tip : tips) {
+            System.out.println("\t" + tip);
+        }
+        System.out.println();
+    }
+
     private void captcha() {
-
-        System.out.println();
-        System.out.println("Tips: 脚本已接入斐斐打码用于识别图形验证码，请前往平台(http://www.fateadm.com/user_home.php)获取PD账号和PD秘钥");
-        System.out.println();
-
         boolean captchaCheck;
         do {
             String pdId = CapRegStore.getPdId();
@@ -147,7 +155,7 @@ public class Init implements Runnable {
         } while (!success);
     }
 
-    private boolean checkInput(List<Object> ids, String id,boolean allowEmpty) {
+    private boolean checkInput(List<Object> ids, String id, boolean allowEmpty) {
         if (allowEmpty && StrUtil.isBlank(id)) {
             return true;
         }
