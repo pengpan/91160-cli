@@ -5,6 +5,7 @@ import com.ejlchina.data.jackson.JacksonDataConvertor;
 import com.ejlchina.json.JSONKit;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.github.pengpan.client.FateadmClient;
 import com.github.pengpan.client.MainClient;
 import com.github.pengpan.common.constant.SystemConstant;
 import com.github.pengpan.common.cookie.CookieManager;
@@ -83,6 +84,19 @@ public class RetrofitConfiguration {
     @Bean
     public MainClient mainClient(Retrofit retrofit) {
         return retrofit.create(MainClient.class);
+    }
+
+    @Bean
+    public FateadmClient fateadmClient(OkHttpClient okHttpClient, ObjectMapper objectMapper) {
+        return new Retrofit.Builder()
+                .baseUrl(SystemConstant.FATEADM_DOMAIN)
+                .client(okHttpClient)
+                .addCallAdapterFactory(new BodyCallAdapterFactory())
+                .addCallAdapterFactory(new ResponseCallAdapterFactory())
+                .addConverterFactory(new BasicTypeConverterFactory())
+                .addConverterFactory(JacksonConverterFactory.create(objectMapper))
+                .build()
+                .create(FateadmClient.class);
     }
 
     @Bean

@@ -5,10 +5,12 @@ import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.extra.spring.SpringUtil;
 import com.github.pengpan.common.store.AccountStore;
+import com.github.pengpan.common.store.CapRegStore;
 import com.github.pengpan.common.store.ConfigStore;
 import com.github.pengpan.entity.InitData;
 import com.github.pengpan.entity.Prop;
 import com.github.pengpan.enums.InitDataEnum;
+import com.github.pengpan.service.CaptchaService;
 import com.github.pengpan.service.CoreService;
 import com.github.pengpan.service.LoginService;
 import com.github.pengpan.util.CommonUtil;
@@ -40,9 +42,12 @@ public class Init implements Runnable {
 
     private final CoreService coreService = SpringUtil.getBean(CoreService.class);
     private final LoginService loginService = SpringUtil.getBean(LoginService.class);
+    private final CaptchaService captchaService = SpringUtil.getBean(CaptchaService.class);
 
     @Override
     public void run() {
+        tips();
+        captcha();
         login();
         initData(InitDataEnum.MEMBER);
         initData(InitDataEnum.CITY);
@@ -55,6 +60,40 @@ public class Init implements Runnable {
         initNotify();
         storeConfig();
         CommonUtil.normalExit("init success.");
+    }
+
+    private void tips() {
+        List<String> tips = CollUtil.newArrayList();
+        tips.add("脚本已接入斐斐打码用于识别图形验证码，请前往平台(http://www.fateadm.com/user_home.php)获取PD账号和PD秘钥");
+
+        System.out.println();
+        System.out.println("Tips: ");
+        for (String tip : tips) {
+            System.out.println("\t" + tip);
+        }
+        System.out.println();
+    }
+
+    private void captcha() {
+        boolean captchaCheck;
+        do {
+            String pdId = CapRegStore.getPdId();
+            while (StrUtil.isBlank(pdId)) {
+                System.out.print("请输入斐斐打码PD账号: ");
+                pdId = in.nextLine();
+            }
+
+            String pdKey = CapRegStore.getPdKey();
+            while (StrUtil.isBlank(pdKey)) {
+                System.out.print("请输入斐斐打码PD秘钥: ");
+                pdKey = in.nextLine();
+            }
+
+            log.info("PD账号验证中，请稍等...");
+
+            captchaCheck = captchaService.pdCheck(pdId, pdKey);
+
+        } while (!captchaCheck);
     }
 
     private void initNotify() {
@@ -80,7 +119,7 @@ public class Init implements Runnable {
 
             log.info("登录中，请稍等...");
 
-            loginSuccess = loginService.doLogin(userName, password);
+            loginSuccess = loginService.doLoginRetry(userName, password, 3);
 
         } while (!loginSuccess);
     }
@@ -116,7 +155,7 @@ public class Init implements Runnable {
         } while (!success);
     }
 
-    private boolean checkInput(List<Object> ids, String id,boolean allowEmpty) {
+    private boolean checkInput(List<Object> ids, String id, boolean allowEmpty) {
         if (allowEmpty && StrUtil.isBlank(id)) {
             return true;
         }
@@ -137,6 +176,8 @@ public class Init implements Runnable {
 
     private void storeConfig() {
         List<Prop> props = new ArrayList<>();
+        props.add(new Prop("斐斐打码PD账号", "pdId", CapRegStore.getPdId()));
+        props.add(new Prop("斐斐打码PD秘钥", "pdKey", CapRegStore.getPdKey()));
         props.add(new Prop("91160账号", "userName", AccountStore.getUserName()));
         props.add(new Prop("91160密码", "password", AccountStore.getPassword()));
         props.add(new Prop("就诊人编号", "memberId", ConfigStore.getMemberId()));

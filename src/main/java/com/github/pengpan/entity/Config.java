@@ -111,4 +111,14 @@ public class Config {
      * 就诊卡号
      */
     private String medicalCard;
+
+    /**
+     * 斐斐打码PD账号
+     */
+    private String pdId;
+
+    /**
+     * 斐斐打码PD秘钥
+     */
+    private String pdKey;
 }
