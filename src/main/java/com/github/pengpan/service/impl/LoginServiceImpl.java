@@ -244,8 +244,12 @@ public class LoginServiceImpl implements LoginService {
                 .put("image", image)
                 .put("code", code)
                 .build();
-        String result = HttpUtil.post(SystemConstant.CAPTCHA_COLLECT_URL, JSONKit.toJson(body));
-        log.info("collect: " + result);
+        try {
+            String result = HttpUtil.post(SystemConstant.CAPTCHA_COLLECT_URL, JSONKit.toJson(body));
+            log.info("collect: " + result);
+        } catch (Exception e) {
+            log.error("collect: " + e.getMessage());
+        }
     }
 
     @Override
