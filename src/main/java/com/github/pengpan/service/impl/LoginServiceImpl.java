@@ -3,6 +3,8 @@ package com.github.pengpan.service.impl;
 import cn.hutool.core.codec.Base64;
 import cn.hutool.core.img.ImgUtil;
 import cn.hutool.core.map.MapUtil;
+import cn.hutool.core.thread.ThreadUtil;
+import cn.hutool.core.util.RandomUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.crypto.SecureUtil;
 import cn.hutool.crypto.asymmetric.KeyType;
@@ -31,6 +33,7 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.Map;
 import java.util.Optional;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author pengpan
@@ -244,8 +247,12 @@ public class LoginServiceImpl implements LoginService {
                 .put("image", image)
                 .put("code", code)
                 .build();
-        String result = HttpUtil.post(SystemConstant.CAPTCHA_COLLECT_URL, JSONKit.toJson(body));
-        log.info("collect: " + result);
+        try {
+            String result = HttpUtil.post(SystemConstant.CAPTCHA_COLLECT_URL, JSONKit.toJson(body), 5000);
+            log.info("collect: " + result);
+        } catch (Exception e) {
+            log.error("collect error: " + e.getMessage());
+        }
     }
 
     @Override
@@ -257,6 +264,8 @@ public class LoginServiceImpl implements LoginService {
             return true;
         } else {
             log.warn("登录失败，剩余重试次数: " + (retries - 1));
+            int sleepMs = RandomUtil.randomInt(1000, 3000);
+            ThreadUtil.sleep(sleepMs, TimeUnit.MILLISECONDS);
             return doLoginRetry(username, password, retries - 1);
         }
     }
