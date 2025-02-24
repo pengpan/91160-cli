@@ -18,7 +18,7 @@ public class CacheRefreshScheduler {
     @Resource
     private CacheManager cacheManager;
 
-    @Scheduled(cron = "0 0 */1 * * ?")
+    @Scheduled(cron = "0 5 */1 * * ?")
     public void refreshCache() {
         Cache cache = cacheManager.getCache("KEY_LIST");
         if (cache != null) {
