@@ -6,7 +6,7 @@
 
     <groupId>com.github.pengpan</groupId>
     <artifactId>91160-cli</artifactId>
-    <version>1.3.4</version>
+    <version>1.3.5</version>
 
     <properties>
         <maven.compiler.source>1.8</maven.compiler.source>
