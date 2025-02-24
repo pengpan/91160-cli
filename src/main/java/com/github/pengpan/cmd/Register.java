@@ -4,7 +4,6 @@ import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.date.DatePattern;
 import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.io.FileUtil;
-import cn.hutool.core.thread.ThreadUtil;
 import cn.hutool.core.util.CharsetUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.extra.spring.SpringUtil;
@@ -24,6 +23,8 @@ import lombok.extern.slf4j.Slf4j;
 import java.io.File;
 import java.util.Date;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 
@@ -51,8 +52,37 @@ public class Register implements Runnable {
 
         checkBasicConfig(config, coreService, loginService, captchaService);
         checkEnableProxy(config);
-        checkEnableAppoint(config, coreService);
 
+        if (config.isEnableAppoint()) {
+            Assert.notBlank(config.getAppointTime(), "[appointTime]不能为空");
+            Date appointTime = CommonUtil.parseDate(config.getAppointTime(), DatePattern.NORM_DATETIME_PATTERN);
+            Assert.notNull(appointTime, "[appointTime]格式不正确，请检查配置文件");
+
+            Date serverDate = coreService.serverDate();
+            log.info("当前服务器时间: {}", DateUtil.formatDateTime(serverDate));
+            log.info("指定的挂号时间: {}", DateUtil.formatDateTime(appointTime));
+
+            long waitTime = appointTime.getTime() - serverDate.getTime();
+            waitTime = waitTime < 0 ? 0 : waitTime;
+            log.info("需等待: {}秒", TimeUnit.MILLISECONDS.toSeconds(waitTime));
+
+            Timer timer = new Timer();
+            TimerTask task = new TimerTask() {
+                @Override
+                public void run() {
+                    log.info("时间到！！！");
+                    doTask(coreService, config);
+                }
+            };
+            timer.schedule(task, waitTime);
+
+            log.info("等待中...");
+        } else {
+            doTask(coreService, config);
+        }
+    }
+
+    private static void doTask(CoreService coreService, Config config) {
         try {
             coreService.brushTicketTask(config);
             CommonUtil.normalExit();
@@ -92,28 +122,6 @@ public class Register implements Runnable {
         ProxyStore.setProxyList(proxyList);
         ProxyStore.setEnabled(true);
         ProxyStore.setProxyMode(config.getProxyMode());
-    }
-
-    private void checkEnableAppoint(Config config, CoreService coreService) {
-        if (!config.isEnableAppoint()) {
-            return;
-        }
-
-        Assert.notBlank(config.getAppointTime(), "[appointTime]不能为空");
-        Date appointTime = CommonUtil.parseDate(config.getAppointTime(), DatePattern.NORM_DATETIME_PATTERN);
-        Assert.notNull(appointTime, "[appointTime]格式不正确，请检查配置文件");
-
-        Date serverDate = coreService.serverDate();
-        log.info("当前服务器时间: {}", DateUtil.formatDateTime(serverDate));
-        log.info("指定的挂号时间: {}", DateUtil.formatDateTime(appointTime));
-
-        long waitTime = appointTime.getTime() - serverDate.getTime();
-        waitTime = waitTime < 0 ? 0 : waitTime;
-        log.info("需等待: {}秒", TimeUnit.MILLISECONDS.toSeconds(waitTime));
-
-        log.info("等待中...");
-        ThreadUtil.sleep(waitTime);
-        log.info("时间到！！！");
     }
 
     private Config getConfig(String configFile) {
