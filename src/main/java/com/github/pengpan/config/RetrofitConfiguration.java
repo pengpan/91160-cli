@@ -5,6 +5,7 @@ import com.ejlchina.data.jackson.JacksonDataConvertor;
 import com.ejlchina.json.JSONKit;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.github.pengpan.client.DdddOcrClient;
 import com.github.pengpan.client.FateadmClient;
 import com.github.pengpan.client.MainClient;
 import com.github.pengpan.common.constant.SystemConstant;
@@ -97,6 +98,19 @@ public class RetrofitConfiguration {
                 .addConverterFactory(JacksonConverterFactory.create(objectMapper))
                 .build()
                 .create(FateadmClient.class);
+    }
+
+    @Bean
+    public DdddOcrClient ddddOcrClient(OkHttpClient okHttpClient, ObjectMapper objectMapper) {
+        return new Retrofit.Builder()
+                .baseUrl(SystemConstant.DEFAULT_DDDD_OCR_BASE_URL)
+                .client(okHttpClient)
+                .addCallAdapterFactory(new BodyCallAdapterFactory())
+                .addCallAdapterFactory(new ResponseCallAdapterFactory())
+                .addConverterFactory(new BasicTypeConverterFactory())
+                .addConverterFactory(JacksonConverterFactory.create(objectMapper))
+                .build()
+                .create(DdddOcrClient.class);
     }
 
     @Bean

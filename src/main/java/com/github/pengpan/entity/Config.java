@@ -1,6 +1,7 @@
 package com.github.pengpan.entity;
 
 import com.github.pengpan.enums.BrushChannelEnum;
+import com.github.pengpan.enums.OcrPlatformEnum;
 import com.github.pengpan.enums.ProxyModeEnum;
 import lombok.Data;
 
@@ -121,4 +122,14 @@ public class Config {
      * 斐斐打码PD秘钥
      */
     private String pdKey;
+
+    /**
+     * 打码平台
+     */
+    private OcrPlatformEnum ocrPlatform;
+
+    /**
+     * 91160-ocr-server的服务地址
+     */
+    private String baseUrl;
 }
