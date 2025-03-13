@@ -9,11 +9,13 @@ import cn.hutool.core.util.StrUtil;
 import cn.hutool.extra.spring.SpringUtil;
 import cn.hutool.setting.dialect.Props;
 import com.github.pengpan.common.constant.SystemConstant;
+import com.github.pengpan.common.store.ConfigStore;
 import com.github.pengpan.common.store.ProxyStore;
 import com.github.pengpan.entity.Config;
 import com.github.pengpan.enums.OcrPlatformEnum;
 import com.github.pengpan.service.CaptchaService;
 import com.github.pengpan.service.CoreService;
+import com.github.pengpan.service.DdddOcrService;
 import com.github.pengpan.service.LoginService;
 import com.github.pengpan.util.Assert;
 import com.github.pengpan.util.CommonUtil;
@@ -48,10 +50,8 @@ public class Register implements Runnable {
         Config config = getConfig(configFile);
 
         CoreService coreService = SpringUtil.getBean(CoreService.class);
-        LoginService loginService = SpringUtil.getBean(LoginService.class);
-        CaptchaService captchaService = SpringUtil.getBean(CaptchaService.class);
 
-        checkBasicConfig(config, coreService, loginService, captchaService);
+        checkBasicConfig(config);
         checkEnableProxy(config);
 
         if (config.isEnableAppoint()) {
@@ -136,17 +136,24 @@ public class Register implements Runnable {
         return config;
     }
 
-    private void checkBasicConfig(Config config, CoreService coreService, LoginService loginService, CaptchaService captchaService) {
+    private void checkBasicConfig(Config config) {
+        CoreService coreService = SpringUtil.getBean(CoreService.class);
+        LoginService loginService = SpringUtil.getBean(LoginService.class);
+        CaptchaService captchaService = SpringUtil.getBean(CaptchaService.class);
+        DdddOcrService ddddOcrService = SpringUtil.getBean(DdddOcrService.class);
+
         OcrPlatformEnum ocrPlatform = config.getOcrPlatform() == null ? OcrPlatformEnum.FATEADM : config.getOcrPlatform();
         Assert.notNull(ocrPlatform, "[ocrPlatform]不能为空，请检查配置文件");
+        ConfigStore.setOcrPlatform(ocrPlatform.getId());
         if (ocrPlatform == OcrPlatformEnum.FATEADM) {
             Assert.notBlank(config.getPdId(), "[pdId]不能为空，请检查配置文件");
             Assert.notBlank(config.getPdKey(), "[pdKey]不能为空，请检查配置文件");
+            Assert.isTrue(captchaService.pdCheck(config.getPdId(), config.getPdKey()), "PD账号验证失败，请检查PD账号和PD密钥");
         }
         if (ocrPlatform == OcrPlatformEnum.DDDDOCR) {
             Assert.notBlank(config.getBaseUrl(), "[baseUrl]不能为空，请检查配置文件");
+            Assert.isTrue(ddddOcrService.baseUrlCheck(config.getBaseUrl()), "[baseUrl]验证失败，请检查配置文件");
         }
-        Assert.isTrue(captchaService.pdCheck(config.getPdId(), config.getPdKey()), "PD账号验证失败，请检查PD账号和PD密钥");
         Assert.notBlank(config.getUserName(), "[userName]不能为空，请检查配置文件");
         Assert.notBlank(config.getPassword(), "[password]不能为空，请检查配置文件");
         Assert.isTrue(loginService.doLoginRetry(config.getUserName(), config.getPassword(), SystemConstant.MAX_LOGIN_RETRY), "登录失败，请检查账号和密码");

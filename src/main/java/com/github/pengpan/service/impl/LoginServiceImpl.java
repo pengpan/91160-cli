@@ -275,13 +275,15 @@ public class LoginServiceImpl implements LoginService {
     @Override
     public boolean doLogon(String username, String password) {
         OcrPlatformEnum ocrPlatform = OcrPlatformEnum.getById(ConfigStore.getOcrPlatform());
+
         if (ocrPlatform == OcrPlatformEnum.FATEADM) {
             return doLoginV2(username, password);
-        } else if (ocrPlatform == OcrPlatformEnum.DDDDOCR) {
-            return doLoginV3(username, password);
-        } else {
-            return doLoginV2(username, password);
         }
+        if (ocrPlatform == OcrPlatformEnum.DDDDOCR) {
+            return doLoginV3(username, password);
+        }
+
+        return doLoginV2(username, password);
     }
 
     private void captchaCollect(String image, String code) {
