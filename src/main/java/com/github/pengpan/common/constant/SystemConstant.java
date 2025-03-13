@@ -28,4 +28,8 @@ public class SystemConstant {
     public final static Pattern PROXY_PATTERN = Pattern.compile("(socks|http)@(.*):(.*)");
 
     public final static int LIMIT_RETRIES = 100;
+
+    public final static int MAX_LOGIN_RETRY = 5;
+
+    public final static String DEFAULT_DDDD_OCR_BASE_URL = "http://127.0.0.1:8000";
 }

@@ -23,6 +23,8 @@ public class ConfigStore {
 
     private static String sendKey;
 
+    private static String ocrPlatform;
+
     public static String getCityId() {
         return cityId;
     }
@@ -93,5 +95,13 @@ public class ConfigStore {
 
     public static void setSendKey(String sendKey) {
         ConfigStore.sendKey = sendKey;
+    }
+
+    public static String getOcrPlatform() {
+        return ocrPlatform;
+    }
+
+    public static void setOcrPlatform(String ocrPlatform) {
+        ConfigStore.ocrPlatform = ocrPlatform;
     }
 }

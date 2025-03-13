@@ -14,10 +14,13 @@ import com.ejlchina.json.JSONKit;
 import com.github.pengpan.client.MainClient;
 import com.github.pengpan.common.constant.SystemConstant;
 import com.github.pengpan.common.store.AccountStore;
+import com.github.pengpan.common.store.ConfigStore;
 import com.github.pengpan.entity.CheckUser;
 import com.github.pengpan.entity.fateadm.CapRegResult;
 import com.github.pengpan.enums.LoginResultEnum;
+import com.github.pengpan.enums.OcrPlatformEnum;
 import com.github.pengpan.service.CaptchaService;
+import com.github.pengpan.service.DdddOcrService;
 import com.github.pengpan.service.LoginService;
 import com.github.pengpan.util.Assert;
 import lombok.extern.slf4j.Slf4j;
@@ -49,6 +52,9 @@ public class LoginServiceImpl implements LoginService {
 
     @Resource
     private CaptchaService captchaService;
+
+    @Resource
+    private DdddOcrService ddddOcrService;
 
     @Override
     public String getToken() {
@@ -242,6 +248,44 @@ public class LoginServiceImpl implements LoginService {
         return false;
     }
 
+    @Override
+    public boolean doLoginV3(String username, String password) {
+        String token = getToken();
+
+        BufferedImage captchaImage = getCaptchaImage();
+        String code = ddddOcrService.ocr(captchaImage);
+
+        boolean checkUser = checkUserV2(username, password, token, code);
+        if (!checkUser) {
+            return false;
+        }
+
+        LoginResultEnum loginResult = loginV2(username, password, token, code);
+        if (loginResult == LoginResultEnum.SUCCESS) {
+            String captchaBase64 = ImgUtil.toBase64DataUri(captchaImage, "png");
+            log.info("captcha: " + captchaBase64);
+            log.info("code: " + code);
+            // collect
+            captchaCollect(captchaBase64, code);
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public boolean doLogon(String username, String password) {
+        OcrPlatformEnum ocrPlatform = OcrPlatformEnum.getById(ConfigStore.getOcrPlatform());
+
+        if (ocrPlatform == OcrPlatformEnum.FATEADM) {
+            return doLoginV2(username, password);
+        }
+        if (ocrPlatform == OcrPlatformEnum.DDDDOCR) {
+            return doLoginV3(username, password);
+        }
+
+        return doLoginV2(username, password);
+    }
+
     private void captchaCollect(String image, String code) {
         Map<String, String> body = MapUtil.<String, String>builder()
                 .put("image", image)
@@ -260,7 +304,7 @@ public class LoginServiceImpl implements LoginService {
         if (retries <= 0) {
             return false;
         }
-        if (doLoginV2(username, password)) {
+        if (doLogon(username, password)) {
             return true;
         } else {
             log.warn("登录失败，剩余重试次数: " + (retries - 1));

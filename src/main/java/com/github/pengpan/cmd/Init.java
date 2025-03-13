@@ -4,14 +4,18 @@ import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.extra.spring.SpringUtil;
+import com.github.pengpan.common.constant.SystemConstant;
 import com.github.pengpan.common.store.AccountStore;
 import com.github.pengpan.common.store.CapRegStore;
 import com.github.pengpan.common.store.ConfigStore;
+import com.github.pengpan.common.store.DdddOcrStore;
 import com.github.pengpan.entity.InitData;
 import com.github.pengpan.entity.Prop;
 import com.github.pengpan.enums.InitDataEnum;
+import com.github.pengpan.enums.OcrPlatformEnum;
 import com.github.pengpan.service.CaptchaService;
 import com.github.pengpan.service.CoreService;
+import com.github.pengpan.service.DdddOcrService;
 import com.github.pengpan.service.LoginService;
 import com.github.pengpan.util.CommonUtil;
 import io.airlift.airline.Command;
@@ -19,10 +23,8 @@ import io.airlift.airline.Option;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Scanner;
+import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * @author pengpan
@@ -43,11 +45,12 @@ public class Init implements Runnable {
     private final CoreService coreService = SpringUtil.getBean(CoreService.class);
     private final LoginService loginService = SpringUtil.getBean(LoginService.class);
     private final CaptchaService captchaService = SpringUtil.getBean(CaptchaService.class);
+    private final DdddOcrService ddddOcrService = SpringUtil.getBean(DdddOcrService.class);
 
     @Override
     public void run() {
         tips();
-        captcha();
+        choseOcr();
         login();
         initData(InitDataEnum.MEMBER);
         initData(InitDataEnum.CITY);
@@ -65,6 +68,7 @@ public class Init implements Runnable {
     private void tips() {
         List<String> tips = CollUtil.newArrayList();
         tips.add("脚本已接入斐斐打码用于识别图形验证码，请前往平台(http://www.fateadm.com/user_home.php)获取PD账号和PD秘钥");
+        tips.add("[免费]脚本已接入ddddocr用于识别图形验证码，请前往91160-ocr-server(https://github.com/pengpan/91160-ocr-server)自行搭建服务，模型已经过训练，识别率很高");
 
         System.out.println();
         System.out.println("Tips: ");
@@ -72,6 +76,33 @@ public class Init implements Runnable {
             System.out.println("\t" + tip);
         }
         System.out.println();
+    }
+
+    private void choseOcr() {
+        boolean check;
+        do {
+            String ocrPlatform = ConfigStore.getOcrPlatform();
+            while (StrUtil.isBlank(ocrPlatform)) {
+                System.out.print("请选择打码平台(1.斐斐打码/2.ddddocr),请输入1或2: ");
+                ocrPlatform = in.nextLine();
+            }
+            List<String> ocrPlatformIds = Arrays.stream(OcrPlatformEnum.values())
+                    .map(OcrPlatformEnum::getId)
+                    .collect(Collectors.toList());
+            check = ocrPlatformIds.contains(ocrPlatform);
+
+            if (check) {
+                ConfigStore.setOcrPlatform(ocrPlatform);
+            }
+        } while (!check);
+
+        OcrPlatformEnum ocrPlatform = OcrPlatformEnum.getById(ConfigStore.getOcrPlatform());
+        if (ocrPlatform == OcrPlatformEnum.FATEADM) {
+            captcha();
+        }
+        if (ocrPlatform == OcrPlatformEnum.DDDDOCR) {
+            ddddocr();
+        }
     }
 
     private void captcha() {
@@ -92,6 +123,22 @@ public class Init implements Runnable {
             log.info("PD账号验证中，请稍等...");
 
             captchaCheck = captchaService.pdCheck(pdId, pdKey);
+
+        } while (!captchaCheck);
+    }
+
+    private void ddddocr() {
+        boolean captchaCheck;
+        do {
+            String baseUrl = DdddOcrStore.getBaseUrl();
+            while (StrUtil.isBlank(baseUrl)) {
+                System.out.print("请输入91160-ocr-server的服务地址[示例: http://127.0.0.1:8000 ]: ");
+                baseUrl = in.nextLine();
+            }
+
+            log.info("服务地址验证中，请稍等...");
+
+            captchaCheck = ddddOcrService.baseUrlCheck(baseUrl);
 
         } while (!captchaCheck);
     }
@@ -119,7 +166,7 @@ public class Init implements Runnable {
 
             log.info("登录中，请稍等...");
 
-            loginSuccess = loginService.doLoginRetry(userName, password, 3);
+            loginSuccess = loginService.doLoginRetry(userName, password, SystemConstant.MAX_LOGIN_RETRY);
 
         } while (!loginSuccess);
     }
@@ -176,8 +223,10 @@ public class Init implements Runnable {
 
     private void storeConfig() {
         List<Prop> props = new ArrayList<>();
-        props.add(new Prop("斐斐打码PD账号", "pdId", CapRegStore.getPdId()));
-        props.add(new Prop("斐斐打码PD秘钥", "pdKey", CapRegStore.getPdKey()));
+        props.add(new Prop("打码平台", "ocrPlatform", ConfigStore.getOcrPlatform()));
+        props.add(new Prop("91160-ocr-server的服务地址", "baseUrl", StrUtil.blankToDefault(DdddOcrStore.getBaseUrl(), "")));
+        props.add(new Prop("斐斐打码PD账号", "pdId", StrUtil.blankToDefault(CapRegStore.getPdId(), "")));
+        props.add(new Prop("斐斐打码PD秘钥", "pdKey", StrUtil.blankToDefault(CapRegStore.getPdKey(), "")));
         props.add(new Prop("91160账号", "userName", AccountStore.getUserName()));
         props.add(new Prop("91160密码", "password", AccountStore.getPassword()));
         props.add(new Prop("就诊人编号", "memberId", ConfigStore.getMemberId()));

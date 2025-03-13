@@ -28,5 +28,9 @@ public interface LoginService {
 
     boolean doLoginV2(String username, String password);
 
+    boolean doLoginV3(String username, String password);
+
+    boolean doLogon(String username, String password);
+
     boolean doLoginRetry(String username, String password, int retries);
 }
