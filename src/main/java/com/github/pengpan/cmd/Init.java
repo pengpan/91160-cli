@@ -4,6 +4,7 @@ import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.extra.spring.SpringUtil;
+import com.github.pengpan.common.constant.SystemConstant;
 import com.github.pengpan.common.store.AccountStore;
 import com.github.pengpan.common.store.CapRegStore;
 import com.github.pengpan.common.store.ConfigStore;
@@ -119,7 +120,7 @@ public class Init implements Runnable {
 
             log.info("登录中，请稍等...");
 
-            loginSuccess = loginService.doLoginRetry(userName, password, 3);
+            loginSuccess = loginService.doLoginRetry(userName, password, SystemConstant.MAX_LOGIN_RETRY);
 
         } while (!loginSuccess);
     }

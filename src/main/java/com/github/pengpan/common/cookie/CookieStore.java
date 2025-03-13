@@ -5,6 +5,7 @@ import cn.hutool.core.thread.ThreadUtil;
 import cn.hutool.core.util.RandomUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.extra.spring.SpringUtil;
+import com.github.pengpan.common.constant.SystemConstant;
 import com.github.pengpan.common.store.AccountStore;
 import com.github.pengpan.service.LoginService;
 import com.github.pengpan.util.CommonUtil;
@@ -78,7 +79,7 @@ public class CookieStore {
             log.info("登录失效，正在重新登录...");
             clear();
             LoginService loginService = SpringUtil.getBean(LoginService.class);
-            int maxLoginRetry = 3;
+            int maxLoginRetry = SystemConstant.MAX_LOGIN_RETRY;
             for (int i = 0; i < maxLoginRetry; i++) {
                 if (loginService.doLoginV2(AccountStore.getUserName(), AccountStore.getPassword())) {
                     break;

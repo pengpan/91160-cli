@@ -28,4 +28,6 @@ public class SystemConstant {
     public final static Pattern PROXY_PATTERN = Pattern.compile("(socks|http)@(.*):(.*)");
 
     public final static int LIMIT_RETRIES = 100;
+
+    public final static int MAX_LOGIN_RETRY = 5;
 }
