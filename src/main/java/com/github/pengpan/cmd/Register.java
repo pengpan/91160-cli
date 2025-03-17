@@ -4,6 +4,7 @@ import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.date.DatePattern;
 import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.io.FileUtil;
+import cn.hutool.core.util.BooleanUtil;
 import cn.hutool.core.util.CharsetUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.extra.spring.SpringUtil;
@@ -24,10 +25,7 @@ import io.airlift.airline.Option;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.File;
-import java.util.Date;
-import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
+import java.util.*;
 import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 
@@ -158,9 +156,13 @@ public class Register implements Runnable {
         Assert.notBlank(config.getPassword(), "[password]不能为空，请检查配置文件");
         Assert.isTrue(loginService.doLoginRetry(config.getUserName(), config.getPassword(), SystemConstant.MAX_LOGIN_RETRY), "登录失败，请检查账号和密码");
         Assert.notBlank(config.getMemberId(), "[memberId]不能为空，请检查配置文件");
-        Assert.isTrue(coreService.getMember().stream()
-                .map(x -> String.valueOf(x.get("id")))
-                .anyMatch(x -> StrUtil.equals(x, config.getMemberId())), "[memberId]不正确，请检查配置文件");
+
+        Map<String, Object> selectMember = coreService.getMember().stream()
+                .filter(x -> StrUtil.equals(String.valueOf(x.get("id")), config.getMemberId()))
+                .findFirst().orElse(null);
+        Assert.notNull(selectMember, "[memberId]不正确，请检查配置文件");
+        Assert.isTrue(BooleanUtil.toBoolean(String.valueOf(selectMember.get("certified"))), "[memberId]未认证，请检查配置文件");
+
         Assert.notBlank(config.getCityId(), "[cityId]不能为空，请检查配置文件");
         Assert.notBlank(config.getUnitId(), "[unitId]不能为空，请检查配置文件");
         Assert.notBlank(config.getDeptId(), "[deptId]不能为空，请检查配置文件");

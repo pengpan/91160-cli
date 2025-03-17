@@ -169,11 +169,20 @@ public class CoreServiceImpl implements CoreService {
             Elements tds = tr.getElementsByTag("td");
             Map<String, Object> member = new LinkedHashMap<>();
             member.put("id", id);
+
+            boolean certified = tds.stream()
+                    .map(Element::text)
+                    .filter(x -> x.contains("认证"))
+                    .findFirst()
+                    .map("已认证"::equals)
+                    .orElse(Boolean.FALSE);
+            member.put("certified", certified);
+
             String name = tds.stream().findFirst()
                     .map(Element::text)
                     .map(x -> x.replace("默认", ""))
                     .map(StrUtil::trim).orElseGet(String::new);
-            member.put("name", name);
+            member.put("name", certified ? name : name + "（未认证）");
             memberList.add(member);
         }
         return memberList;
