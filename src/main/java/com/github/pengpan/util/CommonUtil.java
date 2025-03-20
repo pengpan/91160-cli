@@ -1,15 +1,14 @@
 package com.github.pengpan.util;
 
 import cn.hutool.core.date.DateUtil;
-import cn.hutool.http.HttpRequest;
-import cn.hutool.http.HttpResponse;
-import cn.hutool.http.HttpUtil;
 import cn.hutool.setting.dialect.PropsUtil;
 import com.github.pengpan.common.constant.SystemConstant;
 import lombok.extern.slf4j.Slf4j;
 
+import java.net.HttpURLConnection;
 import java.net.InetSocketAddress;
 import java.net.Proxy;
+import java.net.URL;
 import java.util.Date;
 import java.util.regex.Matcher;
 
@@ -53,13 +52,13 @@ public class CommonUtil {
         }
     }
 
-    public static boolean isProxyValid(Proxy proxy) {
-        HttpRequest request = HttpUtil.createGet(SystemConstant.DOMAIN);
-        request.setProxy(proxy);
-        request.timeout(3000);
-
-        try (HttpResponse response = request.execute()) {
-            return response.isOk();
+    public static boolean validateProxy(Proxy proxy) {
+        try {
+            URL url = new URL("https://www.baidu.com");
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection(proxy);
+            connection.setConnectTimeout(5000);
+            connection.setReadTimeout(5000);
+            return connection.getResponseCode() == HttpURLConnection.HTTP_OK;
         } catch (Exception ignored) {
             return false;
         }

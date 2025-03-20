@@ -114,7 +114,7 @@ public class Register implements Runnable {
                 continue;
             }
             Proxy proxy = CommonUtil.getProxy(line);
-            boolean proxyValid = CommonUtil.isProxyValid(proxy);
+            boolean proxyValid = CommonUtil.validateProxy(proxy);
             if (!proxyValid) {
                 log.error("[{}]代理无效，已剔除", line);
                 continue;
