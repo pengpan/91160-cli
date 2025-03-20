@@ -96,6 +96,8 @@ public class Register implements Runnable {
             return;
         }
 
+        log.info("代理检测中...");
+
         String proxyFilePath = config.getProxyFilePath();
 
         Assert.notBlank(proxyFilePath, "[proxyFilePath]不能为空");
@@ -124,6 +126,8 @@ public class Register implements Runnable {
 
         Assert.notEmpty(proxyList, "[proxyFilePath]至少要有一个可用的代理项");
         Assert.notNull(config.getProxyMode(), "[proxyMode]格式不正确，请检查配置文件");
+
+        log.info("代理检测完成");
 
         ProxyStore.setProxyList(proxyList);
         ProxyStore.setEnabled(true);
