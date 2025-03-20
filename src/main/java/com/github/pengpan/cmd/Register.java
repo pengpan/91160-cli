@@ -25,6 +25,7 @@ import io.airlift.airline.Option;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.File;
+import java.net.Proxy;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
@@ -112,10 +113,16 @@ public class Register implements Runnable {
             if (!matcher.matches()) {
                 continue;
             }
+            Proxy proxy = CommonUtil.getProxy(line);
+            boolean proxyValid = CommonUtil.isProxyValid(proxy);
+            if (!proxyValid) {
+                log.error("[{}]代理无效，已剔除", line);
+                continue;
+            }
             proxyList.add(line);
         }
 
-        Assert.notEmpty(proxyList, "[proxyFilePath]至少要有一个正确格式的代理项");
+        Assert.notEmpty(proxyList, "[proxyFilePath]至少要有一个可用的代理项");
         Assert.notNull(config.getProxyMode(), "[proxyMode]格式不正确，请检查配置文件");
 
         ProxyStore.setProxyList(proxyList);
