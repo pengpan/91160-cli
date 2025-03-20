@@ -24,7 +24,6 @@ public class SwitchProxySelector extends ProxySelector {
         if (proxy == null) {
             return null;
         }
-        SwitchProxySelector.proxyThreadLocal.remove();
         return CollUtil.newArrayList(proxy);
     }
 

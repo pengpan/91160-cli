@@ -3,6 +3,7 @@ target/
 !**/src/main/**/target/
 !**/src/test/**/target/
 config.properties
+proxy.txt
 
 ### STS ###
 .apt_generated
