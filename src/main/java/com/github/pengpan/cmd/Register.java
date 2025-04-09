@@ -172,7 +172,11 @@ public class Register implements Runnable {
                 .filter(x -> StrUtil.equals(String.valueOf(x.get("id")), config.getMemberId()))
                 .findFirst().orElse(null);
         Assert.notNull(selectMember, "[memberId]不正确，请检查配置文件");
-        Assert.isTrue(BooleanUtil.toBoolean(String.valueOf(selectMember.get("certified"))), "[memberId]未认证，请检查配置文件");
+        //Assert.isTrue(BooleanUtil.toBoolean(String.valueOf(selectMember.get("certified"))), "[memberId]未认证，请检查配置文件");
+        boolean certified = BooleanUtil.toBoolean(String.valueOf(selectMember.get("certified")));
+        if (!certified) {
+            log.warn("注意：[memberId]就诊人未认证，可能会导致挂号失败！");
+        }
 
         Assert.notBlank(config.getCityId(), "[cityId]不能为空，请检查配置文件");
         Assert.notBlank(config.getUnitId(), "[unitId]不能为空，请检查配置文件");
