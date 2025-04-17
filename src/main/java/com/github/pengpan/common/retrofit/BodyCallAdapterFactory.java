@@ -1,5 +1,6 @@
 package com.github.pengpan.common.retrofit;
 
+import lombok.extern.slf4j.Slf4j;
 import okhttp3.ResponseBody;
 import retrofit2.*;
 
@@ -12,6 +13,7 @@ import java.util.concurrent.CompletableFuture;
 /**
  * @author pengpan
  */
+@Slf4j
 public final class BodyCallAdapterFactory extends CallAdapter.Factory {
 
     @Override
@@ -58,6 +60,11 @@ public final class BodyCallAdapterFactory extends CallAdapter.Factory {
 
             if (response.isSuccessful()) {
                 return response.body();
+            }
+
+            if (response.code() == 403) {
+                log.warn("请求过于频繁，请调整调用频率或启用代理！");
+                return null;
             }
 
             ResponseBody errorBody = response.errorBody();
