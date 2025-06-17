@@ -96,4 +96,7 @@ public interface MainClient {
     @FormUrlEncoded
     @POST
     Response<String> doLoginV2(@Url String url, @FieldMap Map<String, String> fields);
+
+    @GET("/dep/show/depid-{deptId}.html")
+    String deptPage(@Path("deptId") String deptId);
 }

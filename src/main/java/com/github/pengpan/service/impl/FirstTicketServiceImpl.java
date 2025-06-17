@@ -33,7 +33,8 @@ public class FirstTicketServiceImpl extends AbstractTicketService {
                 ? LocalDate.now()
                 : LocalDateTimeUtil.parseDate(config.getBrushStartDate(), DatePattern.NORM_DATE_PATTERN);
         Map<String, String> map = new LinkedHashMap<>();
-        for (int i = 0; i < 7; i++) {
+        long maxBrushDays = getMaxBrushDays(brushStartDate,config);
+        for (int i = 0; i < maxBrushDays; i++) {
             LocalDate localDate = brushStartDate.plusDays(i);
             String k = String.valueOf(localDate.getDayOfWeek().getValue());
             String v = String.valueOf(i);

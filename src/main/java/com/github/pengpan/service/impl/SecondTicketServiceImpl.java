@@ -34,7 +34,8 @@ public class SecondTicketServiceImpl extends AbstractTicketService {
                 ? LocalDate.now()
                 : LocalDateTimeUtil.parseDate(config.getBrushStartDate(), DatePattern.NORM_DATE_PATTERN);
         Map<String, String> map = new LinkedHashMap<>();
-        LongStream.range(0, 7).mapToObj(brushStartDate::plusDays).forEach(x -> {
+        long maxBrushDays = getMaxBrushDays(brushStartDate,config);
+        LongStream.range(0, maxBrushDays).mapToObj(brushStartDate::plusDays).forEach(x -> {
             String week = String.valueOf(x.getDayOfWeek().getValue());
             String date = x.format(DateTimeFormatter.ofPattern(DatePattern.NORM_DATE_PATTERN));
             map.put(week, date);
