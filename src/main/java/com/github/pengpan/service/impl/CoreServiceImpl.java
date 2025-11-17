@@ -7,6 +7,7 @@ import cn.hutool.core.io.resource.ResourceUtil;
 import cn.hutool.core.map.MapUtil;
 import cn.hutool.core.text.UnicodeUtil;
 import cn.hutool.core.thread.ThreadUtil;
+import cn.hutool.core.util.RandomUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.http.HttpUtil;
 import cn.hutool.setting.dialect.PropsUtil;
@@ -233,6 +234,8 @@ public class CoreServiceImpl implements CoreService {
             // 判断登录是否有效
             CookieStore.getLoginCookieNotNull();
 
+            ThreadUtil.sleep(RandomUtil.randomInt(5000, 6000), TimeUnit.MILLISECONDS);
+
             // 挂号
             boolean success = doRegister(formList);
             if (success) {
@@ -294,7 +297,13 @@ public class CoreServiceImpl implements CoreService {
             int count = failCount.getOrDefault(form.getSchId(), 0);
             Assert.isTrue(count < failCountMax, errorMsg);
 
+            Map<String, String> headers = new HashMap<>();
+            headers.put("Referer", String.format("https://www.91160.com/guahao/ystep1/uid-%s/depid-%s/schid-%s.html",
+                    form.getUnitId(), form.getDepId(), form.getSchId()));
+            headers.put("Origin", "https://www.91160.com");
+
             Response<Void> submitResp = mainClient.doSubmit(
+                    headers,
                     form.getSchData(),
                     form.getUnitId(),
                     form.getDepId(),
@@ -316,9 +325,8 @@ public class CoreServiceImpl implements CoreService {
             }
 
             String redirectUrl = submitResp.headers().get("Location");
-            String html = mainClient.htmlPage(redirectUrl);
             // 判断结果
-            if (StrUtil.contains(html, "预约成功")) {
+            if (StrUtil.contains(redirectUrl, "ysuccess")) {
                 log.info("预约成功");
                 return true;
             }

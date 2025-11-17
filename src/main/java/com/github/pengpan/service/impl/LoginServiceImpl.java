@@ -255,6 +255,8 @@ public class LoginServiceImpl implements LoginService {
         BufferedImage captchaImage = getCaptchaImage();
         String code = ddddOcrService.ocr(captchaImage);
 
+        ThreadUtil.sleep(RandomUtil.randomInt(3500, 4000), TimeUnit.MILLISECONDS);
+
         boolean checkUser = checkUserV2(username, password, token, code);
         if (!checkUser) {
             return false;

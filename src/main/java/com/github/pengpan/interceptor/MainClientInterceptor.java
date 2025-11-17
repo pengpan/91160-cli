@@ -17,8 +17,8 @@ public class MainClientInterceptor implements Interceptor {
         Request request = chain.request();
         Request newReq = request.newBuilder()
                 .addHeader("User-Agent", SystemConstant.DEFECT_USER_AGENT)
-                .addHeader("Referer", SystemConstant.DOMAIN)
-                .addHeader("Origin", SystemConstant.DOMAIN)
+                //.addHeader("Referer", SystemConstant.DOMAIN)
+                //.addHeader("Origin", SystemConstant.DOMAIN)
                 .addHeader("Connection", "keep-alive")
                 .addHeader("Pragma", "no-cache")
                 .addHeader("Cache-Control", "no-cache")

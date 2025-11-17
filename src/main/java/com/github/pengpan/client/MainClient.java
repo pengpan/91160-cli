@@ -22,6 +22,7 @@ public interface MainClient {
 
     @FormUrlEncoded
     @POST
+    @Headers({"Referer: https://user.91160.com/login.html"})
     CheckUser checkUser(@Url String url, @FieldMap Map<String, String> fields);
 
     @FormUrlEncoded
@@ -72,7 +73,8 @@ public interface MainClient {
 
     @FormUrlEncoded
     @POST("/guahao/ysubmit.html")
-    Response<Void> doSubmit(@Field("sch_data") String schData,
+    Response<Void> doSubmit(@HeaderMap Map<String, String> headers,
+                            @Field("sch_data") String schData,
                             @Field("unit_id") String unitId,
                             @Field("dep_id") String depId,
                             @Field("doctor_id") String doctorId,
@@ -95,6 +97,7 @@ public interface MainClient {
 
     @FormUrlEncoded
     @POST
+    @Headers({"Referer: https://user.91160.com/login.html"})
     Response<String> doLoginV2(@Url String url, @FieldMap Map<String, String> fields);
 
     @GET("/dep/show/depid-{deptId}.html")
